@@ -1,7 +1,6 @@
 from django.shortcuts import render
 import math, re, cmath
 from .models import ConverterEquation
-import numpy
 
 def js_math(transfer_function):
     num_points = 1000
