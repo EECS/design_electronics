@@ -1,5 +1,6 @@
 import math, re, cmath
 import matplotlib.pyplot as plt
+import numpy
 
 def js_math(transfer_function):
     num_points = 10000
