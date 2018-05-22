@@ -1,0 +1,38 @@
+svg {
+    font: 10px sans-serif;
+}
+  
+rect {
+    fill: transparent;
+}
+
+.axis {
+    shape-rendering: crispEdges;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+}
+  
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1px;
+    clip-path: url(#clip);
+}
+  
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+    shape-rendering: crispEdges;
+}
+  
+.grid path {
+    stroke-width: 0;
+}
+
+.ui-field-contain input {
+    display: none;
+}
