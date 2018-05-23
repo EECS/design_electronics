@@ -61,6 +61,7 @@ def js_math(transfer_function):
 
 # Create your views here.
 def index(request):
+    context = {}
     #####################################
     #Index.html parameters
     #####################################
@@ -73,6 +74,10 @@ def index(request):
     show_power_electronics = True
     show_ana_electronics = False
     show_dig_electronics = True
+    ###### Context Update ##########
+    context.update({'show_testimonials': show_testimonials, 'paid_site': paid_site, 'trial_length': trial_length, 'header_title': header_title,
+                    'tag_break_lines': tag_break_lines, 'show_power_electronics': show_power_electronics, 'show_ana_electronics': show_ana_electronics,
+                    'show_dig_electronics':show_dig_electronics})
 
     #####################################
     #Circuit Parameters
@@ -87,6 +92,10 @@ def index(request):
     inductance = 10 #microhenries
     capacitance = 100 #microfarads
     load_res = 1.67 #ohms
+    ###### Context Update ##########
+    context.update({'input_voltage': input_voltage, 'output_voltage': output_voltage, 'output_current': output_current, 'q1_on_res': q1_on_res,
+                    'd1_on_volt': d1_on_volt, 'inductor_res': inductor_res, 'capacitor_res': capacitor_res, 'inductance': inductance,
+                    'capacitance': capacitance})
 
     #####################################
     #Model Parameters
@@ -99,48 +108,92 @@ def index(request):
         output_impedance = modelQuery[0].output_impedance
         duty_output_transfer = modelQuery[0].duty_output_transfer
 
-    #####################################
-    #Bode Plot parameters
-    #####################################
-    bode_x_range, mags, phases = js_math(output_impedance)
-    phase_min = min(phases)
-    print(phase_min)
-    phase_min += round(0.5*phase_min)
+    ########################################
+    #Bode Plot parameters - Output Impedance
+    ########################################
+    bode_x_range_output_impedance, mags_output_impedance, phases_output_impedance = js_math(output_impedance)
+    phase_min_output_impedance = min(phases_output_impedance)
+    phase_min_output_impedance += round(0.5*phase_min_output_impedance)
 
-    phase_max = max(phases)
-    phase_max += round(0.5*phase_max)
+    phase_max_output_impedance = max(phases_output_impedance)
+    phase_max_output_impedance += round(0.5*phase_max_output_impedance)
 
-    mags_min = min(mags)
-    mags_min += round(0.1*mags_min)
+    mags_min_output_impedance = min(mags_output_impedance)
+    mags_min_output_impedance += round(0.1*mags_min_output_impedance)
 
-    mags_max = max(mags)
-    mags_max += round(0.1*mags_max)
+    mags_max_output_impedance = max(mags_output_impedance)
+    mags_max_output_impedance += round(0.1*mags_max_output_impedance)
+    ###### Context Update ##########
+    context.update({'bode_x_range_output_impedance': bode_x_range_output_impedance,'mags_output_impedance': mags_output_impedance,
+                    'phases_output_impedance': phases_output_impedance, "phase_min_output_impedance": phase_min_output_impedance,
+                    'phase_max_output_impedance': phase_max_output_impedance, 'mags_min_output_impedance': mags_min_output_impedance,
+                    'mags_max_output_impedance': mags_max_output_impedance})
+
+    ########################################
+    #Bode Plot parameters - Input Impedance
+    ########################################
+    bode_x_range_input_impedance, mags_input_impedance, phases_input_impedance = js_math(input_impedance)
+    phase_min_input_impedance = min(phases_input_impedance)
+    phase_min_input_impedance += round(0.5*phase_min_input_impedance)
+
+    phase_max_input_impedance = max(phases_input_impedance)
+    phase_max_input_impedance += round(0.5*phase_max_input_impedance)
+
+    mags_min_input_impedance = min(mags_input_impedance)
+    mags_min_input_impedance += round(0.1*mags_min_input_impedance)
+
+    mags_max_input_impedance = max(mags_input_impedance)
+    mags_max_input_impedance += round(0.1*mags_max_input_impedance)
+    ###### Context Update ##########
+    context.update({'mags_input_impedance': mags_input_impedance,
+                    'phases_input_impedance': phases_input_impedance, "phase_min_input_impedance": phase_min_input_impedance,
+                    'phase_max_input_impedance': phase_max_input_impedance, 'mags_min_input_impedance': mags_min_input_impedance,
+                    'mags_max_input_impedance': mags_max_input_impedance})
+
+    ################################################
+    #Bode Plot parameters - Input to Output Transfer
+    ################################################
+    bode_x_range_input_output_transfer, mags_input_output_transfer, phases_input_output_transfer = js_math(input_output_transfer)
+    phase_min_input_output_transfer = min(phases_input_output_transfer)
+    phase_min_input_output_transfer += round(0.5*phase_min_input_output_transfer)
+
+    phase_max_input_output_transfer = max(phases_input_output_transfer)
+    phase_max_input_output_transfer += round(0.5*phase_max_input_output_transfer)
+
+    mags_min_input_output_transfer = min(mags_input_output_transfer)
+    mags_min_input_output_transfer += round(0.1*mags_min_input_output_transfer)
+
+    mags_max_input_output_transfer = max(mags_input_output_transfer)
+    mags_max_input_output_transfer += round(0.1*mags_max_input_output_transfer)
+    ###### Context Update ##########
+    context.update({'mags_input_output_transfer': mags_input_output_transfer,
+                    'phases_input_output_transfer': phases_input_output_transfer, "phase_min_input_output_transfer": phase_min_input_output_transfer,
+                    'phase_max_input_output_transfer': phase_max_input_output_transfer, 'mags_min_input_output_transfer': mags_min_input_output_transfer,
+                    'mags_max_input_output_transfer': mags_max_input_output_transfer})
+
+    ################################################
+    #Bode Plot parameters - Duty to Output Transfer
+    ################################################
+    bode_x_range_duty_output_transfer, mags_duty_output_transfer, phases_duty_output_transfer = js_math(duty_output_transfer)
+    phase_min_duty_output_transfer = min(phases_duty_output_transfer)
+    phase_min_duty_output_transfer += round(0.5*phase_min_duty_output_transfer)
+
+    phase_max_duty_output_transfer = max(phases_duty_output_transfer)
+    phase_max_duty_output_transfer += round(0.5*phase_max_duty_output_transfer)
+
+    mags_min_duty_output_transfer = min(mags_duty_output_transfer)
+    mags_min_duty_output_transfer += round(0.1*mags_min_duty_output_transfer)
+
+    mags_max_duty_output_transfer = max(mags_duty_output_transfer)
+    mags_max_duty_output_transfer += round(0.1*mags_max_duty_output_transfer)
+    ###### Context Update ##########
+    context.update({'mags_duty_output_transfer': mags_duty_output_transfer,
+                    'phases_duty_output_transfer': phases_duty_output_transfer, "phase_min_duty_output_transfer": phase_min_duty_output_transfer,
+                    'phase_max_duty_output_transfer': phase_max_duty_output_transfer, 'mags_min_duty_output_transfer': mags_min_duty_output_transfer,
+                    'mags_max_duty_output_transfer': mags_max_duty_output_transfer})
 
     return render(
         request,
         'index.html',
-        context={'header_title': header_title,
-                'show_testimonials': show_testimonials,
-                'trial_length':trial_length,
-                'tag_break_lines': tag_break_lines,
-                'paid_site':paid_site,
-                'show_power_electronics':show_power_electronics,
-                'show_ana_electronics':show_ana_electronics,
-                'show_dig_electronics':show_dig_electronics,
-                'input_voltage':input_voltage,
-                'output_voltage':output_voltage,
-                'output_current':output_current,
-                'q1_on_res':q1_on_res,
-                'd1_on_volt':d1_on_volt,
-                'inductor_res':inductor_res,
-                'capacitor_res':capacitor_res,
-                'inductance':inductance,
-                'capacitance':capacitance,
-                'bode_x_range': bode_x_range,
-                'mags': mags,
-                'phases':phases,
-                'mags_min':mags_min,
-                'mags_max':mags_max,
-                'phase_min':phase_min,
-                'phase_max':phase_max}
+        context=context
     )

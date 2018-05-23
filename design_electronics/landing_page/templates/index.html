@@ -3,13 +3,37 @@
 {% block dynamicPlots %}
   <script>
     //Global variable for range of bode plots on the x-axis
-    range = JSON.parse('{{ bode_x_range }}');
-    db_mag_data = JSON.parse('{{ mags }}');
-    phase_data = JSON.parse('{{ phases }}');
-    mags_min = JSON.parse('{{ mags_min }}');
-    mags_max = JSON.parse('{{ mags_max }}');
-    phase_min = JSON.parse('{{ phase_min }}');
-    phase_max = JSON.parse('{{ phase_max }}');
+    range = JSON.parse('{{ bode_x_range_output_impedance }}');
+    mags_output_impedance = JSON.parse('{{ mags_output_impedance }}');
+    phases_output_impedance = JSON.parse('{{ phases_output_impedance }}');
+    mags_min_output_impedance = JSON.parse('{{ mags_min_output_impedance }}');
+    mags_max_output_impedance = JSON.parse('{{ mags_max_output_impedance }}');
+    phase_min_output_impedance = JSON.parse('{{ phase_min_output_impedance }}');
+    phase_max_output_impedance = JSON.parse('{{ phase_max_output_impedance }}');
+
+    //Global variables for range of input impedance bode plots
+    mags_input_impedance = JSON.parse('{{ mags_input_impedance }}');
+    phases_input_impedance = JSON.parse('{{ phases_input_impedance }}');
+    mags_min_input_impedance = JSON.parse('{{ mags_min_input_impedance }}');
+    mags_max_input_impedance = JSON.parse('{{ mags_max_input_impedance }}');
+    phase_min_input_impedance = JSON.parse('{{ phase_min_input_impedance }}');
+    phase_max_input_impedance = JSON.parse('{{ phase_max_input_impedance }}');
+
+    //Global variables for range of input to output transfer bode plots
+    mags_input_output_transfer = JSON.parse('{{ mags_input_output_transfer }}');
+    phases_input_output_transfer = JSON.parse('{{ phases_input_output_transfer }}');
+    mags_min_input_output_transfer = JSON.parse('{{ mags_min_input_output_transfer }}');
+    mags_max_input_output_transfer = JSON.parse('{{ mags_max_input_output_transfer }}');
+    phase_min_input_output_transfer = JSON.parse('{{ phase_min_input_output_transfer }}');
+    phase_max_input_output_transfer = JSON.parse('{{ phase_max_input_output_transfer }}');
+
+    //Global variables for range of input to output transfer bode plots
+    mags_duty_output_transfer = JSON.parse('{{ mags_duty_output_transfer }}');
+    phases_duty_output_transfer = JSON.parse('{{ phases_duty_output_transfer }}');
+    mags_min_duty_output_transfer = JSON.parse('{{ mags_min_duty_output_transfer }}');
+    mags_max_duty_output_transfer = JSON.parse('{{ mags_max_duty_output_transfer }}');
+    phase_min_duty_output_transfer = JSON.parse('{{ phase_min_duty_output_transfer }}');
+    phase_max_duty_output_transfer = JSON.parse('{{ phase_max_duty_output_transfer }}');
   </script>
 
 {% endblock %}
