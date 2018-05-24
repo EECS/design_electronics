@@ -10,6 +10,8 @@
     mags_max_output_impedance = JSON.parse('{{ mags_max_output_impedance }}');
     phase_min_output_impedance = JSON.parse('{{ phase_min_output_impedance }}');
     phase_max_output_impedance = JSON.parse('{{ phase_max_output_impedance }}');
+    out_imped_mag_div = "{{ out_imped_mag_div }}";
+    out_imped_phs_div = "{{ out_imped_phs_div }}";
 
     //Global variables for range of input impedance bode plots
     mags_input_impedance = JSON.parse('{{ mags_input_impedance }}');
@@ -18,6 +20,8 @@
     mags_max_input_impedance = JSON.parse('{{ mags_max_input_impedance }}');
     phase_min_input_impedance = JSON.parse('{{ phase_min_input_impedance }}');
     phase_max_input_impedance = JSON.parse('{{ phase_max_input_impedance }}');
+    in_imped_mag_div = "{{ in_imped_mag_div }}";
+    in_imped_phs_div = "{{ in_imped_phs_div }}";
 
     //Global variables for range of input to output transfer bode plots
     mags_input_output_transfer = JSON.parse('{{ mags_input_output_transfer }}');
@@ -26,14 +30,18 @@
     mags_max_input_output_transfer = JSON.parse('{{ mags_max_input_output_transfer }}');
     phase_min_input_output_transfer = JSON.parse('{{ phase_min_input_output_transfer }}');
     phase_max_input_output_transfer = JSON.parse('{{ phase_max_input_output_transfer }}');
+    in_out_mag_div = "{{ in_out_mag_div }}";
+    in_out_phs_div = "{{ in_out_phs_div }}";
 
-    //Global variables for range of input to output transfer bode plots
+    //Global variables for range of duty to output transfer bode plots
     mags_duty_output_transfer = JSON.parse('{{ mags_duty_output_transfer }}');
     phases_duty_output_transfer = JSON.parse('{{ phases_duty_output_transfer }}');
     mags_min_duty_output_transfer = JSON.parse('{{ mags_min_duty_output_transfer }}');
     mags_max_duty_output_transfer = JSON.parse('{{ mags_max_duty_output_transfer }}');
     phase_min_duty_output_transfer = JSON.parse('{{ phase_min_duty_output_transfer }}');
     phase_max_duty_output_transfer = JSON.parse('{{ phase_max_duty_output_transfer }}');
+    duty_out_mag_div = "{{ duty_out_mag_div }}";
+    duty_out_phs_div = "{{ duty_out_phs_div }}";
   </script>
 
 {% endblock %}
@@ -176,8 +184,17 @@
     </div>
 
     <div id="example-design-row-plots">
-      <div id="plotmag"></div>
-      <div id="plotphs" style="margin-top: -10px;">
+      <div id= {{ out_imped_mag_div }}></div>
+      <div id= {{ out_imped_phs_div }} style="margin-top: -10px;"></div>
+
+      <div id= {{ in_imped_mag_div }}></div>
+      <div id= {{ in_imped_phs_div }} style="margin-top: -10px;"></div>
+
+      <div id= {{ in_out_mag_div }}></div>
+      <div id= {{ in_out_phs_div }} style="margin-top: -10px;"></div>
+
+      <div id= {{ duty_out_mag_div }}></div>
+      <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
     </div>
 </div>
 {% endblock %}

@@ -111,6 +111,8 @@ def index(request):
     ########################################
     #Bode Plot parameters - Output Impedance
     ########################################
+    out_imped_mag_div = "out-imped-mag-div"
+    out_imped_phs_div = "out-imped-phs-div"
     bode_x_range_output_impedance, mags_output_impedance, phases_output_impedance = js_math(output_impedance)
     phase_min_output_impedance = min(phases_output_impedance)
     phase_min_output_impedance += round(0.5*phase_min_output_impedance)
@@ -127,11 +129,13 @@ def index(request):
     context.update({'bode_x_range_output_impedance': bode_x_range_output_impedance,'mags_output_impedance': mags_output_impedance,
                     'phases_output_impedance': phases_output_impedance, "phase_min_output_impedance": phase_min_output_impedance,
                     'phase_max_output_impedance': phase_max_output_impedance, 'mags_min_output_impedance': mags_min_output_impedance,
-                    'mags_max_output_impedance': mags_max_output_impedance})
+                    'mags_max_output_impedance': mags_max_output_impedance, 'out_imped_mag_div': out_imped_mag_div, 'out_imped_phs_div': out_imped_phs_div})
 
     ########################################
     #Bode Plot parameters - Input Impedance
     ########################################
+    in_imped_mag_div = "in-imped-mag-div"
+    in_imped_phs_div = "in-imped-phs-div"
     bode_x_range_input_impedance, mags_input_impedance, phases_input_impedance = js_math(input_impedance)
     phase_min_input_impedance = min(phases_input_impedance)
     phase_min_input_impedance += round(0.5*phase_min_input_impedance)
@@ -148,11 +152,13 @@ def index(request):
     context.update({'mags_input_impedance': mags_input_impedance,
                     'phases_input_impedance': phases_input_impedance, "phase_min_input_impedance": phase_min_input_impedance,
                     'phase_max_input_impedance': phase_max_input_impedance, 'mags_min_input_impedance': mags_min_input_impedance,
-                    'mags_max_input_impedance': mags_max_input_impedance})
+                    'mags_max_input_impedance': mags_max_input_impedance, 'in_imped_mag_div': in_imped_mag_div, 'in_imped_phs_div': in_imped_phs_div})
 
     ################################################
     #Bode Plot parameters - Input to Output Transfer
     ################################################
+    in_out_mag_div = "in-out-mag-div"
+    in_out_phs_div = "in-out-phs-div"
     bode_x_range_input_output_transfer, mags_input_output_transfer, phases_input_output_transfer = js_math(input_output_transfer)
     phase_min_input_output_transfer = min(phases_input_output_transfer)
     phase_min_input_output_transfer += round(0.5*phase_min_input_output_transfer)
@@ -169,11 +175,13 @@ def index(request):
     context.update({'mags_input_output_transfer': mags_input_output_transfer,
                     'phases_input_output_transfer': phases_input_output_transfer, "phase_min_input_output_transfer": phase_min_input_output_transfer,
                     'phase_max_input_output_transfer': phase_max_input_output_transfer, 'mags_min_input_output_transfer': mags_min_input_output_transfer,
-                    'mags_max_input_output_transfer': mags_max_input_output_transfer})
+                    'mags_max_input_output_transfer': mags_max_input_output_transfer, 'in_out_mag_div': in_out_mag_div, 'in_out_phs_div': in_out_phs_div})
 
     ################################################
     #Bode Plot parameters - Duty to Output Transfer
     ################################################
+    duty_out_mag_div = "duty-out-mag-div"
+    duty_out_phs_div = "duty-out-phs-div"
     bode_x_range_duty_output_transfer, mags_duty_output_transfer, phases_duty_output_transfer = js_math(duty_output_transfer)
     phase_min_duty_output_transfer = min(phases_duty_output_transfer)
     phase_min_duty_output_transfer += round(0.5*phase_min_duty_output_transfer)
@@ -190,7 +198,7 @@ def index(request):
     context.update({'mags_duty_output_transfer': mags_duty_output_transfer,
                     'phases_duty_output_transfer': phases_duty_output_transfer, "phase_min_duty_output_transfer": phase_min_duty_output_transfer,
                     'phase_max_duty_output_transfer': phase_max_duty_output_transfer, 'mags_min_duty_output_transfer': mags_min_duty_output_transfer,
-                    'mags_max_duty_output_transfer': mags_max_duty_output_transfer})
+                    'mags_max_duty_output_transfer': mags_max_duty_output_transfer, 'duty_out_mag_div': duty_out_mag_div, 'duty_out_phs_div': duty_out_phs_div})
 
     return render(
         request,
