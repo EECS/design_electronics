@@ -5,6 +5,7 @@ document.getElementById('centerGraph').onclick = centerGraph;
 document.getElementById('calculateAdjNodes').onclick = calculateAdjNodes;
 document.getElementById('getNodeNumber').onclick = getNodeNumber;
 document.getElementById('exportJson').onclick = exportJson;
+document.getElementById('importJson').onclick = importJson;
 
 var totalNodes = 0;
 
@@ -147,7 +148,22 @@ function getNodeNumber(){
 };
 
 function exportJson(){
-    console.log(cy.json());
+    console.log(cy.elements().jsons());
+};
+
+function importJson(){
+    var importJSONString = prompt("Please enter the JSON to be imported.");
+    importJSONString = JSON.parse(importJSONString);
+
+    if(importJSONString != null && typeof importJSONString == 'object'){
+        cy.remove("node");
+        cy.remove("edge");
+        cy.add(importJSONString);
+        totalNodes = cy.nodes().length;
+    }else{
+        console.log("Invalid input");
+    }
+
 };
 
 function protectInput(input){
@@ -157,4 +173,3 @@ function protectInput(input){
         return null;
     }
 };
-

@@ -2,6 +2,20 @@ from django.shortcuts import render
 import math, re, cmath
 from .models import ConverterEquation
 
+#####################################
+#Circuit Parameters
+#####################################
+input_voltage = 24
+output_voltage = 5
+output_current = 3
+q1_on_res = 25 #milliOhms
+d1_on_volt = 0.7
+inductor_res = 5 #milliohms
+capacitor_res = 10 #milliohms
+inductance = 10 #microhenries
+capacitance = 10 #microfarads
+load_res = output_voltage/output_current #ohms
+
 def js_math(transfer_function):
     num_points = 1000
 
@@ -12,7 +26,8 @@ def js_math(transfer_function):
     bode_x_range = [step for step in range(start_frequency, end_frequency*1000, step_size)]
 
     #Define circuit parameters to graph
-    vals = {"R1": '100', "R2":'10000'}
+    vals = {"Vin": str(input_voltage), "Von":str(d1_on_volt), 'IL':str(output_voltage/load_res), "RQ":str(q1_on_res/1000),
+            'L': str(inductance/1e6), 'RL':str(inductor_res/1e3), "Rc":str(capacitor_res/1e3), "C": str(capacitance/1e6), 'Rload': str(load_res), "D": str(output_voltage/input_voltage)}
     #Replace symbols with values defined in vals dictionary
     for k, v in vals.items():
         #Find key and only the key. Example, finds R1 and not R11 by separating on the non-word boundary.
@@ -80,19 +95,8 @@ def index(request):
                     'show_dig_electronics':show_dig_electronics})
 
     #####################################
-    #Circuit Parameters
+    #Circuit Parameters Context Update  #
     #####################################
-    input_voltage = 24
-    output_voltage = 5
-    output_current = 3
-    q1_on_res = 25 #milliOhms
-    d1_on_volt = 0.7
-    inductor_res = 5 #milliohms
-    capacitor_res = 10 #milliohms
-    inductance = 10 #microhenries
-    capacitance = 100 #microfarads
-    load_res = 1.67 #ohms
-    ###### Context Update ##########
     context.update({'input_voltage': input_voltage, 'output_voltage': output_voltage, 'output_current': output_current, 'q1_on_res': q1_on_res,
                     'd1_on_volt': d1_on_volt, 'inductor_res': inductor_res, 'capacitor_res': capacitor_res, 'inductance': inductance,
                     'capacitance': capacitance})
