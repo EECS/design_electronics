@@ -12,8 +12,6 @@ $addEdgeWindow.dialog({
     height: 350,
     width:400,
     modal:true,
-    position: 'center',
-    overlay: { opacity: 0.5, background: 'black'},
     buttons: { 
         Ok: function() {
             startEdge = $("#addEdgeStartEdge").val();
@@ -33,8 +31,6 @@ $changeEdgeWindow.dialog({
     height: 350,
     width:400,
     modal:true,
-    position: 'center',
-    overlay: { opacity: 0.5, background: 'black'},
     buttons: { 
         Ok: function() {
             startNode = $("#changeEdgeStartNode").val();
@@ -49,15 +45,11 @@ $changeEdgeWindow.dialog({
     }
 });
 
-var showDialog = function(dial){
-    dial.dialog();
-    dial.dialog("open");
-};
-
 $("#addEdge").click(function(){
-    showDialog($addEdgeWindow);
+    $addEdgeWindow.dialog();
+    $addEdgeWindow.dialog("open");
 });
 
 $("#changeEdgeGain").click(function(){
-    showDialog($changeEdgeWindow);
+    $changeEdgeWindow.dialog("open");
 });

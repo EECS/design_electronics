@@ -1,6 +1,6 @@
 body{
     text-align: center;
-    font-family: AtlasGrotesk;
+    font-family: "Whitney SSm A", "Whitney SSm B", "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
     font-weight: 100;
 }
 
@@ -9,18 +9,32 @@ a{
     text-decoration: none;
 }
 
+.flex{
+    display: flex;
+}
+
+.black-border{
+    border-style: solid;
+    border-color:black;
+    border-width: 1px;
+}
+
+.grey-bottom-border{
+    border-bottom-style: solid;
+    border-bottom-color:grey;
+    border-bottom-width: 1px;
+}
+
 #header-row{
     display: flex;
     position: fixed;
-    width: 100%;
     background-color: #c2def0;
-    padding:25px;
     font-size: x-large;
 }
 
 #header-support{
-    margin-left: auto;
     display: flex;
+    margin-left: auto;
 }
 
 #right-hdr-btns{
@@ -30,29 +44,25 @@ a{
 #home-row{
     display: flex;
     background-color: #c2def0;
-    height: 800px;
     text-align: left;
 }
 
 #home-row-content{
-    margin: 20%;
+    margin: 10%;
     display: flex;
 }
 
 #home-row-content h2{
-    font-size: 18pt;
+    font-size: 16pt;
 }
 
 #home-row-content h1{
-    font-size: 36pt;
+    font-size: 32pt;
 }
 
 
 #content-row{
     padding: 5% 20%;
-    border-bottom-style: solid;
-    border-bottom-color:black;
-    border-bottom-width: 1px;
 }
 
 #content-row-header{
@@ -88,7 +98,7 @@ a{
 
 #contact-row-content{
     padding: 5% 20%;
-    border-style: solid;
-    border-color:black;
-    border-width: 1px;
+    border-top-style: solid;
+    border-top-color:grey;
+    border-top-width: 1px;
 }

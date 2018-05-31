@@ -108,9 +108,13 @@
 <!-- Card deck portion of the landing page -->
 <div id="content-row-content">
     <h4>
-      The design center houses all of the tools that are needed to simplify circuit design. Whereas other resources provide equations
-      and cookie-cutter solutions to designs, the design center will give the designer an intuitive understanding of the mechanics of
-      the design, enabling a deep understanding of the circuitry and ability to intelligently modify the design after construction.
+    The design center houses all of the tools that are needed to simplify circuit design. <br><br>
+
+    Whereas other resources provide equations and cookie-cutter solutions to designs, the design center will give the designer an intuitive understanding of the mechanics of
+    the design, enabling a deep understanding of the circuitry and ability to intelligently modify the design after construction.<br><br>
+
+    The main tool that is housed in the Design Center is the bode plot. The ability to see the bode plot of a system allows a designer to understand the full range of 
+    operation of a system. The designer can rapidly change the input parameters of a system and understand its behavior to a wide variety of scenarios instantly.
     </h4>
 </div>
 
@@ -183,34 +187,48 @@
       </div>
     </div>
 
-    <div id="example-design-row-plots">
-      <div id= {{ out_imped_mag_div }}></div>
-      <div id= {{ out_imped_phs_div }} style="margin-top: -10px;"></div>
-
-      <div id= {{ in_imped_mag_div }}></div>
-      <div id= {{ in_imped_phs_div }} style="margin-top: -10px;"></div>
-
-      <div id= {{ in_out_mag_div }}></div>
-      <div id= {{ in_out_phs_div }} style="margin-top: -10px;"></div>
-
-      <div id= {{ duty_out_mag_div }}></div>
-      <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
+    <div id="example-design-row-plots" class="flex">
+        <div>
+            <div class="black-border">
+                <h4>Output Impedance Bode Plots</h4>
+                <div id= {{ out_imped_mag_div }}></div>
+                <div id= {{ out_imped_phs_div }} style="margin-top: -10px;"></div>
+            </div>
+            <div class="black-border">
+                <h4>Input Impedance Bode Plots</h4>
+                <div id= {{ in_imped_mag_div }}></div>
+                <div id= {{ in_imped_phs_div }} style="margin-top: -10px;"></div>
+            </div>
+        </div>
+    
+        <div>
+            <div class="black-border">
+                <h4>Input Voltage to Output Voltage Transfer Function Bode Plots</h4>
+                <div id= {{ in_out_mag_div }}></div>
+                <div id= {{ in_out_phs_div }} style="margin-top: -10px;"></div>
+            </div>
+            <div class="black-border">
+                <h4>Duty Cycle to Output Voltage Transfer Function Bode Plots</h4>
+                <div id= {{ duty_out_mag_div }}></div>
+                <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block contact_row %}
 <div id="contact-row-content">
-  <div>Contact me using the links below:</div>
-  <a class="btn btn-block btn-social btn-google">
-    <span class="fa fa-google"></span>
-    GMAIL
-  </a>
-  <a class="btn btn-block btn-social btn-linkedin">
+    <h4>Contact me using the links below:</h4>
+    <a class="btn btn-block">
+      <span class="fa fa-google"></span>
+      GMAIL
+    </a>
+    <a class="btn btn-block">
       <span class="fa fa-linkedin"></span>
       LINKEDIN
     </a>
-    <a class="btn btn-block btn-social btn-github">
+    <a class="btn btn-block">
         <span class="fa fa-github"></span>
         GITHUB
       </a>
