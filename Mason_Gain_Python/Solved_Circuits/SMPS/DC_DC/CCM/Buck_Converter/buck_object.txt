@@ -174,7 +174,7 @@
       "id": "icvo",
       "source": "ic",
       "target": "vo",
-      "gain": "Rc+(1/s*C)"
+      "gain": "Rc+(1/(s*C))"
     },
     "position": {},
     "group": "edges",
@@ -270,7 +270,7 @@
       "id": "vlil",
       "source": "vl",
       "target": "il",
-      "gain": "(1/s*L)"
+      "gain": "(1/(s*L))"
     },
     "position": {},
     "group": "edges",

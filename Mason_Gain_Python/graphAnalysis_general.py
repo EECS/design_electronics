@@ -265,8 +265,13 @@ if __name__ == '__main__':
     #Length is equal to total nodes in graph.
     #Graph indices in nextPoints are equal to their nodes.
     #points = [Node([1], ["(1)"]), Node([2, 3], ["(1/R2)", "(1/R1)"]), Node([4], ["(1)"])]
+    #
+    #****************************************************************************
+    #EXTREMELY IMPORTANT:
+    #MAKE SURE TO PUT S*C IN BRACKETS FOR CAPACITORS!!!!! E.G. (1/(S*C))
+    #****************************************************************************
     nextPoints = [[3],[3,2],[],[4],[7,5,6,2],[3],[3],[8],[9,3],[7]]
-    gains = [['(D)'],['(Vin-Von-IL*RQ)','(IL)'],[],['((1/s*L))'],['(1)','(RL)','(D*RQ)','(D)'],['(-1)'],['(-1)'],['(Rc+(1/s*C))'],['(1/Rload)','(-1)'],['(-1)']]
+    gains = [['(D)'],['(Vin-Von-IL*RQ)','(IL)'],[],['((1/(s*L)))'],['(1)','(RL)','(D*RQ)','(D)'],['(-1)'],['(-1)'],['(Rc+(1/(s*C)))'],['(1/Rload)','(-1)'],['(-1)']]
     forwardPathCreation(1,8)
     loopCreation()
     delta = getDelta()

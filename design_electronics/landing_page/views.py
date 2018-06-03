@@ -13,24 +13,24 @@ q1_on_res = 5 #milliOhms
 d1_on_volt = 0.7
 inductor_res = 5 #milliohms
 capacitor_res = 10 #milliohms
-inductance = round(((input_voltage-output_voltage)/((0.2*output_current)*(output_voltage/input_voltage)*(1/fs)))*1e6)
+inductance = ((input_voltage-output_voltage)/(0.2*output_current))*(output_voltage/input_voltage)*(1/fs)
 capacitance = 100 #microfarads
 load_res = output_voltage/output_current #ohms
 
 def js_math(transfer_function):
-    num_points = 1000
+    num_points = 2000
 
     #print("Transfer function is: " + str(transfer_function) + "\n")
 
     start_frequency = 1 #Hz
-    end_frequency = 11 #kHz
+    end_frequency = 50 #kHz
     step_size = int(((end_frequency*1000)-start_frequency)/num_points)
 
     bode_x_range = [step for step in range(start_frequency, end_frequency*1000, step_size)]
 
     #Define circuit parameters to graph
     vals = {"Vin": str(input_voltage), "Von":str(d1_on_volt), 'IL':str(output_voltage/load_res), "RQ":str(q1_on_res/1000),
-            'L': str(inductance/1e6), 'RL':str(inductor_res/1e3), "Rc":str(capacitor_res/1e3), "C": str(capacitance/1e6), 'Rload': str(load_res), "D": str(output_voltage/input_voltage)}
+            'L': str(inductance), 'RL':str(inductor_res/1000), "Rc":str(capacitor_res/1000), "C": str(capacitance/1000000), 'Rload': str(load_res), "D": str(output_voltage/input_voltage)}
     #Replace symbols with values defined in vals dictionary
     for k, v in vals.items():
         #Find key and only the key. Example, finds R1 and not R11 by separating on the non-word boundary.
@@ -48,7 +48,7 @@ def js_math(transfer_function):
         denominator = str(1)
     
     #Print transfer function for debugging purposes.
-    print("Transfer function is: " + str(transfer_function) + "\n")
+    #print("Transfer function is: " + str(transfer_function) + "\n")
 
     phases = []
     mags = []
@@ -57,6 +57,7 @@ def js_math(transfer_function):
     #the angular frequency representation.
     for f in bode_x_range:
         complex_replace = str(2j*cmath.pi*f)
+        complex_replace = "("+complex_replace+")"
 
         if denom_start != -1:
             num = numerator.replace("s", complex_replace)
@@ -70,7 +71,6 @@ def js_math(transfer_function):
 
         mags.append(20*math.log10(abs(c_transfer)))
         phases.append(cmath.phase(c_transfer)*180/cmath.pi)
-
 
     #Find and print -3dB point if in list of analyzed frequencies
     #print(next((bode_x_range[mags.index(i)] for i in mags if i <= -3), 'Increase Frequency Range to see -3 dB point of Transfer Function'))
@@ -103,7 +103,7 @@ def index(request):
     #Circuit Parameters Context Update  #
     #####################################
     context.update({'input_voltage': input_voltage, 'output_voltage': output_voltage, 'output_current': output_current, 'q1_on_res': q1_on_res,
-                    'd1_on_volt': d1_on_volt, 'inductor_res': inductor_res, 'capacitor_res': capacitor_res, 'inductance': round(inductance/1e6),
+                    'd1_on_volt': d1_on_volt, 'inductor_res': inductor_res, 'capacitor_res': capacitor_res, 'inductance': round(inductance*1e6),
                     'capacitance': capacitance})
 
     #####################################
