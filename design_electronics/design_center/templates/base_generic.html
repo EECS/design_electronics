@@ -31,26 +31,35 @@
       {% endblock %}
     </div>
     
-    <div id="home-row" class="row">
-      {% block home %}
-      {% endblock %}
-    </div>
-
-    <div id="content-row" class="row grey-bottom-border">
-      {% block content %}
-      {% endblock %}
-    </div>
-
-    <div id="example-design" class="row">
-      {% block example_design %}
-      {% endblock %}
-    </div>
-
-    <div id="contact-row" class="row">
-        {% block contact_row %}
+    <div id="content" class="row flex">
+      <div id="left-sidebar">
+        {% block sidebar %}
         {% endblock %}
-    </div>
+      </div>
+  
+      <div>
+        <div id="home-row" class="row">
+          {% block home %}
+          {% endblock %}
+        </div>
     
+        <div id="content-row" class="row grey-bottom-border">
+          {% block content %}
+          {% endblock %}
+        </div>
+    
+        <div id="example-design" class="row">
+          {% block example_design %}
+          {% endblock %}
+        </div>
+    
+        <div id="contact-row" class="row">
+            {% block contact_row %}
+            {% endblock %}
+        </div>
+      </div>
+    </div>
+
   </div>
 </body>
 <footer>

@@ -28,7 +28,6 @@ a{
 #header-row{
     display: flex;
     position: fixed;
-    background-color: #c2def0;
     font-size: x-large;
 }
 
@@ -43,7 +42,6 @@ a{
 
 #home-row{
     display: flex;
-    background-color: #c2def0;
     text-align: left;
 }
 

@@ -181,8 +181,13 @@ def generate_bode(context, input_output_transfer, input_impedance, output_impeda
                     'mags_max_duty_output_transfer': mags_max_duty_output_transfer, 'duty_out_mag_div': duty_out_mag_div, 'duty_out_phs_div': duty_out_phs_div})
 
 # Create your views here.
-def index(request):
+def home(request):
     context = {}
+    #####################################
+    #Index.html parameters
+    #####################################
+    landing_page_url = "/"
+    context.update({"landing_page_url": landing_page_url})
     #####################################
     #Index.html parameters
     #####################################
@@ -222,6 +227,6 @@ def index(request):
 
     return render(
         request,
-        'index.html',
+        'home.html',
         context=context
     )

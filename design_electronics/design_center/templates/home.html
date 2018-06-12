@@ -54,7 +54,7 @@
 {% block header %}
 
 <div id = "site-title"class="col-6">
-    <div id="home-button" type="button"> <a href="#home-row">{{header_title}}</a></div>
+    <div id="home-button" type="button"> <a href="{{landing_page_url}}">{{header_title}}</a></div>
 </div>
 
 <div id="header-support" class="col-6">
@@ -71,10 +71,14 @@
 
 {% endblock %}
 
+{% block sidebar%}
+<h1>TEST</h1>
+{% endblock %}
+
 {% block home %}
 <div id="home-row-content">
   <div>
-    <h1>Professional circuit design in 5 minutes.</h1>
+    <h1>Professional circuit design in 20 minutes.</h1>
     {% for i in tag_break_lines %}
     <br>
     {% endfor %}
