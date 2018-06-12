@@ -79,44 +79,15 @@ def js_math(transfer_function):
 
     return bode_x_range, mags, phases
 
-# Create your views here.
-def index(request):
-    context = {}
-    #####################################
-    #Index.html parameters
-    #####################################
-    show_testimonials = False
-    paid_site = False
-    trial_length = 14
-    header_title = "Design Electronics"
-    tag_break_lines = range(10)
-
-    show_power_electronics = True
-    show_ana_electronics = False
-    show_dig_electronics = True
-    ###### Context Update ##########
-    context.update({'show_testimonials': show_testimonials, 'paid_site': paid_site, 'trial_length': trial_length, 'header_title': header_title,
-                    'tag_break_lines': tag_break_lines, 'show_power_electronics': show_power_electronics, 'show_ana_electronics': show_ana_electronics,
-                    'show_dig_electronics':show_dig_electronics})
-
-    #####################################
-    #Circuit Parameters Context Update  #
-    #####################################
-    context.update({'input_voltage': input_voltage, 'output_voltage': output_voltage, 'output_current': output_current, 'q1_on_res': q1_on_res,
-                    'd1_on_volt': d1_on_volt, 'inductor_res': inductor_res, 'capacitor_res': capacitor_res, 'inductance': round(inductance*1e6),
-                    'capacitance': capacitance})
-
-    #####################################
-    #Model Parameters
-    #####################################
-    modelQuery = ConverterEquation.objects.filter(name="Landing Page Example")
-
-    if len(modelQuery) > 0:
-        input_output_transfer = modelQuery[0].input_output_transfer
-        input_impedance = modelQuery[0].input_impedance
-        output_impedance = modelQuery[0].output_impedance
-        duty_output_transfer = modelQuery[0].duty_output_transfer
-
+def generate_bode(context, input_output_transfer, input_impedance, output_impedance, duty_output_transfer):
+    """
+    Creates bode plots and updates the context statement to be used to create webpage
+    context - Dictionary to return to webpage on generation
+    input_output_transfer - Input to output transfer function
+    input_impedance - Input impedance transfer function
+    output_impedance - Output impedance transfer function
+    duty_output_transfer - Duty to output transfer function
+    """
     ########################################
     #Bode Plot parameters - Output Impedance
     ########################################
@@ -208,6 +179,46 @@ def index(request):
                     'phases_duty_output_transfer': phases_duty_output_transfer, "phase_min_duty_output_transfer": phase_min_duty_output_transfer,
                     'phase_max_duty_output_transfer': phase_max_duty_output_transfer, 'mags_min_duty_output_transfer': mags_min_duty_output_transfer,
                     'mags_max_duty_output_transfer': mags_max_duty_output_transfer, 'duty_out_mag_div': duty_out_mag_div, 'duty_out_phs_div': duty_out_phs_div})
+
+# Create your views here.
+def index(request):
+    context = {}
+    #####################################
+    #Index.html parameters
+    #####################################
+    show_testimonials = False
+    paid_site = False
+    trial_length = 14
+    header_title = "Design Electronics"
+    tag_break_lines = range(10)
+
+    show_power_electronics = True
+    show_ana_electronics = False
+    show_dig_electronics = True
+    ###### Context Update ##########
+    context.update({'show_testimonials': show_testimonials, 'paid_site': paid_site, 'trial_length': trial_length, 'header_title': header_title,
+                    'tag_break_lines': tag_break_lines, 'show_power_electronics': show_power_electronics, 'show_ana_electronics': show_ana_electronics,
+                    'show_dig_electronics':show_dig_electronics})
+
+    #####################################
+    #Circuit Parameters Context Update  #
+    #####################################
+    context.update({'input_voltage': input_voltage, 'output_voltage': output_voltage, 'output_current': output_current, 'q1_on_res': q1_on_res,
+                    'd1_on_volt': d1_on_volt, 'inductor_res': inductor_res, 'capacitor_res': capacitor_res, 'inductance': round(inductance*1e6),
+                    'capacitance': capacitance})
+
+    #####################################
+    #Model Parameters
+    #####################################
+    modelQuery = ConverterEquation.objects.filter(name="Landing Page Example")
+
+    if len(modelQuery) > 0:
+        input_output_transfer = modelQuery[0].input_output_transfer
+        input_impedance = modelQuery[0].input_impedance
+        output_impedance = modelQuery[0].output_impedance
+        duty_output_transfer = modelQuery[0].duty_output_transfer
+
+    generate_bode(context, input_output_transfer, input_impedance, output_impedance, duty_output_transfer)
 
     return render(
         request,

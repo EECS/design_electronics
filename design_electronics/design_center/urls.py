@@ -17,5 +17,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('/design-center', views.index, name="index")
+    path('', views.index, name="index")
 ]

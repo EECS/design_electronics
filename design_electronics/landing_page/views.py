@@ -16,6 +16,7 @@ capacitor_res = 10 #milliohms
 inductance = ((input_voltage-output_voltage)/(0.2*output_current))*(output_voltage/input_voltage)*(1/fs)
 capacitance = 100 #microfarads
 load_res = output_voltage/output_current #ohms
+design_center_url = "/design-center"
 
 def js_math(transfer_function):
     num_points = 5000
@@ -82,6 +83,10 @@ def js_math(transfer_function):
 # Create your views here.
 def index(request):
     context = {}
+    #####################################
+    #Other web page parameters
+    #####################################
+    context.update({'design_center_url': design_center_url})
     #####################################
     #Index.html parameters
     #####################################
