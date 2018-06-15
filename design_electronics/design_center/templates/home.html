@@ -1,4 +1,4 @@
-{% extends "base_generic.html" %}
+{% extends "generic.html" %}
 
 {% block dynamicPlots %}
   <script>
@@ -53,19 +53,19 @@
 
 {% block header %}
 
-<div id = "site-title"class="col-6">
+<div id = "site-title">
     <div id="home-button" type="button"> <a href="{{landing_page_url}}">{{header_title}}</a></div>
 </div>
 
-<div id="header-support" class="col-6">
+<div id="header-support">
   {% if show_testimonials %}
-  <div id="right-hdr-btns"> <a href="">Testimonials</a></div>
+  <div class="right-hdr-btns"> <a href="">Testimonials</a></div>
   {% endif %}
 
-  <div id="right-hdr-btns"><a href="{{ design_center_url }}">Design Center</a></div>
-  <div id="right-hdr-btns"><a href="#contact-row">Contact</a></div>
+  <div class="right-hdr-btns"><a href="{{ design_center_url }}">Design Center</a></div>
+  <div class="right-hdr-btns"><a href="#contact-row">Contact</a></div>
   {% if paid_site%}
-  <div id="right-hdr-btns">Try Free for {{trial_length}} Days </div>
+  <div class="right-hdr-btns">Try Free for {{trial_length}} Days </div>
   {% endif %}
 </div>
 
@@ -94,7 +94,7 @@
 
   <div id="home-row-picture">
     {% load static %}
-    <img src="{% static '/img/power-converter.jpg' %}" class="rounded" alt="Power Converter" height="400 px">
+    <img src="{% static 'design_center/img/power-converter.jpg' %}" class="rounded" alt="Power Converter" height="400 px">
   </div>
 
 </div>
@@ -164,7 +164,7 @@
 
     <div id="example-design-picture">
       {% load static %}
-      <img src="{% static '/img/buck-converter.jpg' %}" alt="Buck Converter" height="400 px">
+      <img src="{% static 'design_center/img/buck-converter.jpg' %}" alt="Buck Converter" height="400 px">
     </div>
 
     <div id="example-design-input-title">

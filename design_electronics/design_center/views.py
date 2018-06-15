@@ -1,6 +1,8 @@
 from django.shortcuts import render
 import math, re, cmath
-from .models import ConverterEquation
+from .models import PowerElectronics
+
+context = {}
 
 #####################################
 #Circuit Parameters
@@ -16,6 +18,9 @@ capacitor_res = 10 #milliohms
 inductance = ((input_voltage-output_voltage)/(0.2*output_current))*(output_voltage/input_voltage)*(1/fs)
 capacitance = 100 #microfarads
 load_res = output_voltage/output_current #ohms
+
+def generate_sidebar():
+    pass
 
 def js_math(transfer_function):
     num_points = 5000
@@ -79,7 +84,7 @@ def js_math(transfer_function):
 
     return bode_x_range, mags, phases
 
-def generate_bode(context, input_output_transfer, input_impedance, output_impedance, duty_output_transfer):
+def generate_bode(input_output_transfer, input_impedance, output_impedance, duty_output_transfer):
     """
     Creates bode plots and updates the context statement to be used to create webpage
     context - Dictionary to return to webpage on generation
@@ -182,7 +187,6 @@ def generate_bode(context, input_output_transfer, input_impedance, output_impeda
 
 # Create your views here.
 def home(request):
-    context = {}
     #####################################
     #Index.html parameters
     #####################################
@@ -223,7 +227,8 @@ def home(request):
         output_impedance = modelQuery[0].output_impedance
         duty_output_transfer = modelQuery[0].duty_output_transfer
 
-    generate_bode(context, input_output_transfer, input_impedance, output_impedance, duty_output_transfer)
+    generate_sidebar()
+    generate_bode(input_output_transfer, input_impedance, output_impedance, duty_output_transfer)
 
     return render(
         request,
