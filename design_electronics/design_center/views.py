@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import math, re, cmath
-from .models import PowerElectronics
+#Import Power Electronics portion of the website for left sidebar
+from .models import DCDC
 
 context = {}
 
@@ -19,8 +20,23 @@ inductance = ((input_voltage-output_voltage)/(0.2*output_current))*(output_volta
 capacitance = 100 #microfarads
 load_res = output_voltage/output_current #ohms
 
-def generate_sidebar():
-    pass
+def generate_sidebar(pe_list, smps_list, dc_dc_types, dc_dc_list):
+    """ Generates the sidebar for the webpage. Passed the following variables:
+    Returns a sidebar_list 4th dimensional list variable with the following indices:
+    sidebar_list[pe_circuit_type]...
+    e.g.sidebar_list[smps][dc-dc][ccm/dcm][buck-converter]
+    """
+    sidebar_list = []
+    sidebar_list.append([pe[1]for pe in pe_list])
+    sidebar_list.append([[smps[1] for smps in smps_list]])
+    sidebar_list.append([[[dctypes[1] for dctypes in dc_dc_types]]])
+
+    for dc in dc_dc_list:
+        print(dc.dcdc_type)
+        if dc.dcdc_type == "Continuous Conduction Mode":
+            sidebar_list.append([[[[dc.name]]]])
+
+    print("TEST "+ str(sidebar_list))
 
 def js_math(transfer_function):
     num_points = 5000
@@ -87,7 +103,6 @@ def js_math(transfer_function):
 def generate_bode(input_output_transfer, input_impedance, output_impedance, duty_output_transfer):
     """
     Creates bode plots and updates the context statement to be used to create webpage
-    context - Dictionary to return to webpage on generation
     input_output_transfer - Input to output transfer function
     input_impedance - Input impedance transfer function
     output_impedance - Output impedance transfer function
@@ -192,9 +207,7 @@ def home(request):
     #####################################
     landing_page_url = "/"
     context.update({"landing_page_url": landing_page_url})
-    #####################################
-    #Index.html parameters
-    #####################################
+
     show_testimonials = False
     paid_site = False
     trial_length = 14
@@ -219,16 +232,22 @@ def home(request):
     #####################################
     #Model Parameters
     #####################################
-    modelQuery = ConverterEquation.objects.filter(name="Landing Page Example")
+    dc_dc_query = DCDC.objects.all()
 
-    if len(modelQuery) > 0:
-        input_output_transfer = modelQuery[0].input_output_transfer
-        input_impedance = modelQuery[0].input_impedance
-        output_impedance = modelQuery[0].output_impedance
-        duty_output_transfer = modelQuery[0].duty_output_transfer
+    if len(dc_dc_query) != 0:
+        power_types = dc_dc_query[0].POWER_ELECTRONIC_CIRCUIT_TYPES
+        smps_types = dc_dc_query[0].SMPS_TYPES
+        dc_dc_types = dc_dc_query[0].DCDC_TYPES
+        dc_dc_list = [o for o in dc_dc_query]
 
-    generate_sidebar()
-    generate_bode(input_output_transfer, input_impedance, output_impedance, duty_output_transfer)
+    generate_sidebar(power_types, smps_types, dc_dc_types, dc_dc_list)
+    #if len(modelQuery) > 0:
+    #    input_output_transfer = modelQuery[0].input_output_transfer
+    #    input_impedance = modelQuery[0].input_impedance
+    #    output_impedance = modelQuery[0].output_impedance
+    #    duty_output_transfer = modelQuery[0].duty_output_transfer
+
+    #generate_bode(input_output_transfer, input_impedance, output_impedance, duty_output_transfer)
 
     return render(
         request,

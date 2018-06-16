@@ -26,7 +26,6 @@ class SMPS(models.Model):
     """
     Model representing Switch Mode Power Supply Circuits
     """
-    pe_circuit_type = models.ForeignKey(PowerElectronics, on_delete=models.CASCADE)
 
     SMPS_TYPES = [
         ("DCDC", "DC-DC Converters")
@@ -50,14 +49,20 @@ class DCDC(models.Model):
     """
     Model representing Power Electronic circuits
     """
+    POWER_ELECTRONIC_CIRCUIT_TYPES = PowerElectronics.POWER_ELECTRONIC_CIRCUIT_TYPES
+
+    SMPS_TYPES = SMPS.SMPS_TYPES
+
     DCDC_TYPES = [
-        ("CCM", "Continuous Conduction Mode"),
-        ("DCM", "Discontinuous Conduction Mode")
+        ("CCM", "Continuous Conduction Mode")
     ]
+
+    pe_circuit_type = models.ForeignKey(PowerElectronics, on_delete=models.CASCADE, default=str(1))
 
     smps_circuit_type = models.ForeignKey(SMPS, on_delete=models.CASCADE)
 
     dcdc_type = models.CharField(max_length=200, help_text="Enter the type of DC-DC converter to be modeled.", choices=DCDC_TYPES)
+
     name = models.CharField(max_length=200, help_text="Enter the name of this converter in the admin page.")
     url = models.CharField(max_length=200, help_text="Enter the url to be used to access this model.")
 
