@@ -24,19 +24,40 @@ def generate_sidebar(pe_list, smps_list, dc_dc_types, dc_dc_list):
     """ Generates the sidebar for the webpage. Passed the following variables:
     Returns a sidebar_list 4th dimensional list variable with the following indices:
     sidebar_list[pe_circuit_type]...
-    e.g.sidebar_list[smps][dc-dc][ccm/dcm][buck-converter]
+    e.g.sidebar_list[smps][dc-dc][ccm/dcm][[buck-converter]]
     """
     sidebar_list = []
     sidebar_list.append([pe[1]for pe in pe_list])
     sidebar_list.append([[smps[1] for smps in smps_list]])
     sidebar_list.append([[[dctypes[1] for dctypes in dc_dc_types]]])
 
-    for dc in dc_dc_list:
-        print(dc.dcdc_type)
-        if dc.dcdc_type == "Continuous Conduction Mode":
-            sidebar_list.append([[[[dc.name]]]])
+    ccm_converters = []
+    dcm_converters = []
 
-    print("TEST "+ str(sidebar_list))
+    for dc in dc_dc_list:
+        converter_index = 3
+        ccm_index = 0
+        dcm_index = 1
+        if dc.dcdc_type == "CCM":
+            #List does not contain any converters yet, handle 0 edge case.
+            #Add first CCM converter as well as blank list for first DCM converter
+            #to handle 0 edge case.
+            if len(sidebar_list) == converter_index:
+                sidebar_list.append([[[[dc],[]]]])
+            else:
+                sidebar_list[converter_index][ccm_index].append(dc)
+        elif dc.dcdc_type == "DCM":
+            #List does not contain any converters yet, handle 0 edge case.
+            #Add first DCM converter as well as blank list for first CCM converter
+            #to handle 0 edge case.
+            if len(sidebar_list) == converter_index:
+                sidebar_list.append([[[[],[dc]]]])
+            else:
+                sidebar_list[converter_index][dcm_index].append(dc)
+    
+    context.update({"sidebar_list": sidebar_list})
+
+    #print("TEST "+ str(sidebar_list))
 
 def js_math(transfer_function):
     num_points = 5000
