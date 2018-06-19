@@ -72,9 +72,24 @@
 {% endblock %}
 
 {% block sidebar%}
-<h1>TEST</h1>
-{% for pe in sidebar_list[0] %}
-{% endfor %}
+<ul>
+  Power Electronics
+    {% for pe_type in sidebar_list.0 %}
+        {% set pe_row = loop.index0 %}
+        <li>
+            <ul>
+                {{pe_row}}
+                {{ pe_type }}
+                {% for smps_type in sidebar_list.1.0 %}
+                    <li>
+                        <ul>{{ smps_type }}</ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
 
 {% block home %}
