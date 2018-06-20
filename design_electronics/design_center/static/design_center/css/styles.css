@@ -42,7 +42,7 @@ a{
 
 #left-sidebar{
     margin-top:50px;
-    position: fixed;
+    text-align: left;
     border-style:solid;
     border-color:black;
     background:white;

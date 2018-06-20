@@ -64,7 +64,7 @@ class DCDC(models.Model):
     dcdc_type = models.CharField(max_length=200, help_text="Enter the type of DC-DC converter to be modeled.", choices=DCDC_TYPES)
 
     name = models.CharField(max_length=200, help_text="Enter the name of this converter in the admin page.")
-    url = models.CharField(max_length=200, help_text="Enter the url to be used to access this model.")
+    url = models.CharField(max_length=200, help_text="Enter the url to be used to access this model.", default=str(1))
 
     input_output_transfer = models.TextField(max_length=5000, help_text="Enter the input to output transfer function of the converter.")
     input_impedance = models.TextField(max_length=5000, help_text="Enter the input impedance of the converter.")

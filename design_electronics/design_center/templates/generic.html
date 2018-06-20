@@ -15,11 +15,10 @@
   {% endblock %}
   
   <!-- Add additional CSS in static file -->
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'design_center/css/styles.css' %}">
-  <link rel="stylesheet" href="{% static 'design_center/css/bode-styles.css' %}">
-  <link rel="stylesheet" href="{% static 'design_center/css/bootstrap-social.css' %}">
-  <link rel="stylesheet" href="{% static 'design_center/css/font-awesome.css' %}">
+  <link rel="stylesheet" href="{{ static }}design_center/css/styles.css">
+  <link rel="stylesheet" href="{{ static }}design_center/css/bode-styles.css">
+  <link rel="stylesheet" href="{{ static }}design_center/css/bootstrap-social.css">
+  <link rel="stylesheet" href="{{ static }}design_center/css/font-awesome.css">
 </head>
 
 <body>
@@ -33,26 +32,16 @@
     
     <div id="content" class="row flex">
       <div id="left-sidebar">
-        {% block sidebar %}
+        {% block left_sidebar %}
         {% endblock %}
       </div>
   
       <div>
-        <div id="home-row" class="row col-md-8">
-          {% block home %}
+        <div id="ee-content" class="row col-md-8">
+          {% block ee_content %}
           {% endblock %}
         </div>
-    
-        <div id="content-row" class="row grey-bottom-border">
-          {% block content %}
-          {% endblock %}
-        </div>
-    
-        <div id="example-design" class="row">
-          {% block example_design %}
-          {% endblock %}
-        </div>
-    
+
         <div id="contact-row" class="row">
             {% block contact_row %}
             {% endblock %}
@@ -64,7 +53,6 @@
 </body>
 <footer>
   <!-- Add ability to include javascript plots into website -->
-  {% load static %}
-  <script src="{% static 'design_center/js/plotBode.js' %}" type="text/javascript"></script>
+  <script src="{{ static }}design_center/js/plotBode.js" type="text/javascript"></script>
 </footer>
 </html>

@@ -5,21 +5,6 @@ from .models import DCDC
 
 context = {}
 
-#####################################
-#Circuit Parameters
-#####################################
-fs = 100000
-input_voltage = 24
-output_voltage = 12
-output_current = 1
-q1_on_res = 5 #milliOhms
-d1_on_volt = 0.7
-inductor_res = 5 #milliohms
-capacitor_res = 10 #milliohms
-inductance = ((input_voltage-output_voltage)/(0.2*output_current))*(output_voltage/input_voltage)*(1/fs)
-capacitance = 100 #microfarads
-load_res = output_voltage/output_current #ohms
-
 def generate_sidebar(pe_list, smps_list, dc_dc_types, dc_dc_list):
     """ Generates the sidebar for the webpage. Passed the following variables:
     Returns a sidebar_list 4th dimensional list variable with the following indices:
@@ -224,42 +209,43 @@ def generate_bode(input_output_transfer, input_impedance, output_impedance, duty
 # Create your views here.
 def home(request):
     #####################################
-    #Index.html parameters
+    #Generic website parameters
     #####################################
     landing_page_url = "/"
-    context.update({"landing_page_url": landing_page_url})
-
-    show_testimonials = False
-    paid_site = False
-    trial_length = 14
+    design_center_url = "design-center"
     header_title = "Design Electronics"
-    tag_break_lines = range(10)
-
-    show_power_electronics = True
-    show_ana_electronics = False
-    show_dig_electronics = True
-    ###### Context Update ##########
-    context.update({'show_testimonials': show_testimonials, 'paid_site': paid_site, 'trial_length': trial_length, 'header_title': header_title,
-                    'tag_break_lines': tag_break_lines, 'show_power_electronics': show_power_electronics, 'show_ana_electronics': show_ana_electronics,
-                    'show_dig_electronics':show_dig_electronics})
-
-    #####################################
-    #Circuit Parameters Context Update  #
-    #####################################
-    context.update({'input_voltage': input_voltage, 'output_voltage': output_voltage, 'output_current': output_current, 'q1_on_res': q1_on_res,
-                    'd1_on_volt': d1_on_volt, 'inductor_res': inductor_res, 'capacitor_res': capacitor_res, 'inductance': round(inductance*1e6),
-                    'capacitance': capacitance})
+    context.update({"landing_page_url": landing_page_url, "design_center_url": design_center_url, 'header_title': header_title})
 
     #####################################
     #Model Parameters
     #####################################
-    dc_dc_query = DCDC.objects.all()
+    #Create list of all models in database.
+    models = []
 
+    #Query DC DC converters.
+    dc_dc_query = DCDC.objects.all()
+    models.append(dc_dc_query)
+
+    #Assumes that DC DC converter model has at least one entry.
     if len(dc_dc_query) != 0:
         power_types = dc_dc_query[0].POWER_ELECTRONIC_CIRCUIT_TYPES
         smps_types = dc_dc_query[0].SMPS_TYPES
         dc_dc_types = dc_dc_query[0].DCDC_TYPES
         dc_dc_list = [o for o in dc_dc_query]
+
+    #####################################
+    #Current Circuit Analysis Update    #
+    #####################################
+    default_circuit = "dcm-buck"
+    analyzed_circuit = request.path.strip("/"+design_center_url)
+
+    #Handle design-center page default design shown.
+    if len(analyzed_circuit) == 0:
+        analyzed_circuit = default_circuit
+
+    ABSOLUTE_ROOT = request.build_absolute_uri('/')[:-1].strip("/")
+    print("TEST: "+ str(ABSOLUTE_ROOT))
+    ####HANDLE 404.#########
 
     generate_sidebar(power_types, smps_types, dc_dc_types, dc_dc_list)
     #if len(modelQuery) > 0:
