@@ -236,23 +236,43 @@ def home(request):
     #####################################
     #Current Circuit Analysis Update    #
     #####################################
-    default_circuit = "dcm-buck"
-    analyzed_circuit = request.path.strip("/"+design_center_url)
+    default_circuit_url = "ccm-buck-converter"
+    analyzed_circuit_url = request.path.rsplit("/", 1)[1]
 
     #Handle design-center page default design shown.
-    if len(analyzed_circuit) == 0:
-        analyzed_circuit = default_circuit
+    if analyzed_circuit_url == design_center_url:
+        analyzed_circuit_url = default_circuit_url
 
-    ABSOLUTE_ROOT = request.build_absolute_uri('/')[:-1].strip("/")
-    print("TEST: "+ str(ABSOLUTE_ROOT))
     ####HANDLE 404.#########
 
+    analyzed_circuit_object = None
+    circuit_found = False
+
+    #Loop through all models and select a model object to be displayed on webpage.
+    for circuit_type in models:
+        filtered_circuit = circuit_type.filter(url=analyzed_circuit_url)
+        if len(filtered_circuit) == 1:
+            circuit_found = True
+            analyzed_circuit_object = filtered_circuit[0]
+            break
+
+    if not circuit_found:
+        #Throw 404
+        pass
+    
+    context.update({'analyzed_circuit_object': analyzed_circuit_object})
+    #####################################
+    #Generate the sidebar.              #
+    #####################################
     generate_sidebar(power_types, smps_types, dc_dc_types, dc_dc_list)
-    #if len(modelQuery) > 0:
-    #    input_output_transfer = modelQuery[0].input_output_transfer
-    #    input_impedance = modelQuery[0].input_impedance
-    #    output_impedance = modelQuery[0].output_impedance
-    #    duty_output_transfer = modelQuery[0].duty_output_transfer
+
+    #####################################
+    #Generate bode plot data.           #
+    #####################################
+    input_output_transfer = analyzed_circuit_object.input_output_transfer
+    input_impedance = analyzed_circuit_object.input_impedance
+    output_impedance = analyzed_circuit_object.output_impedance
+    duty_output_transfer = analyzed_circuit_object.duty_output_transfer
 
     #generate_bode(input_output_transfer, input_impedance, output_impedance, duty_output_transfer)
 

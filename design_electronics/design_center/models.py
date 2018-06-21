@@ -66,6 +66,8 @@ class DCDC(models.Model):
     name = models.CharField(max_length=200, help_text="Enter the name of this converter in the admin page.")
     url = models.CharField(max_length=200, help_text="Enter the url to be used to access this model.", default=str(1))
 
+    description = models.TextField(help_text="Enter a description of the circuit to be modeled.", default=str(1))
+
     input_output_transfer = models.TextField(max_length=5000, help_text="Enter the input to output transfer function of the converter.")
     input_impedance = models.TextField(max_length=5000, help_text="Enter the input impedance of the converter.")
     output_impedance = models.TextField(max_length=5000, help_text="Enter the output impedance of the converter.")

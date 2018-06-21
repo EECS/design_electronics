@@ -58,15 +58,8 @@
 </div>
 
 <div id="header-support">
-  {% if show_testimonials %}
-  <div class="right-hdr-btns"> <a href="">Testimonials</a></div>
-  {% endif %}
-
   <div class="right-hdr-btns"><a href="{{ ABSOLUTE_ROOT }}/{{design_center_url}}">Design Center</a></div>
   <div class="right-hdr-btns"><a href="#contact-row">Contact</a></div>
-  {% if paid_site%}
-  <div class="right-hdr-btns">Try Free for {{trial_length}} Days </div>
-  {% endif %}
 </div>
 
 {% endblock %}
@@ -115,89 +108,52 @@
 {% endblock %}
 
 {% block ee_content %}
-<div id="home-row-content">
-  <div>
-    <h1>Professional circuit design in 20 minutes.</h1>
-    {% for i in tag_break_lines %}
-    <br>
-    {% endfor %}
-    <h2>Design Electronics provides a simplified understanding to complex circuit design problems.</h2>
-    <br>
-    {% if paid_site%}
-    <button type="button" class="btn btn-primary">Try Free for {{trial_length}} Days</button>
-    <br>
-    <p>or <u>purchase now</u>.</p>
-    {% endif %}
+<div id="ee-content">
+    <div>
+        {% if analyzed_circuit_object.dcdc_type %}
+            <h1>{{analyzed_circuit_object.dcdc_type}} {{ analyzed_circuit_object.name }}</h1>
+        {%else%}
+            <h1>THIS SHOULDN'T BE POSSIBLE.</h1>
+        {% endif %}
 
-    <div id="example-design-row-plots" class="flex">
-        <div>
-            <div class="black-border">
-              <h4>Duty Cycle to Output Voltage Transfer Function Bode Plots</h4>
-              <div id= {{ duty_out_mag_div }}></div>
-              <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
+        <div id="ee-content-picture">
+            <img src="{{ static }}design_center/img/{{analyzed_circuit_object.url}}.jpg" class="rounded" alt="Picture of Circuit to be analyzed.">
+        </div>
+
+        <div id="ee-content-description">
+            <h2>{{analyzed_circuit_object.description}}</h2>
+        </div>
+
+        <div id="bode-plots" class="flex">
+            <div>
+                <div class="black-border">
+                  <h4>Duty Cycle to Output Voltage Transfer Function Bode Plots</h4>
+                  <div id= {{ duty_out_mag_div }}></div>
+                  <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
+                </div>
+                <div class="black-border">
+                  <h4>Output Impedance Bode Plots</h4>
+                  <div id= {{ out_imped_mag_div }}></div>
+                  <div id= {{ out_imped_phs_div }} style="margin-top: -10px;"></div>
+                </div>
             </div>
-            <div class="black-border">
-              <h4>Output Impedance Bode Plots</h4>
-              <div id= {{ out_imped_mag_div }}></div>
-              <div id= {{ out_imped_phs_div }} style="margin-top: -10px;"></div>
+
+            <div>
+                <div class="black-border">
+                  <h4>Input Voltage to Output Voltage Transfer Function Bode Plots</h4>
+                  <div id= {{ in_out_mag_div }}></div>
+                  <div id= {{ in_out_phs_div }} style="margin-top: -10px;"></div>
+                </div>
+                <div class="black-border">
+                  <h4>Input Impedance Bode Plots</h4>
+                  <div id= {{ in_imped_mag_div }}></div>
+                  <div id= {{ in_imped_phs_div }} style="margin-top: -10px;"></div>
+                </div>
             </div>
         </div>
-    
-        <div>
-            <div class="black-border">
-              <h4>Input Voltage to Output Voltage Transfer Function Bode Plots</h4>
-              <div id= {{ in_out_mag_div }}></div>
-              <div id= {{ in_out_phs_div }} style="margin-top: -10px;"></div>
-            </div>
-            <div class="black-border">
-              <h4>Input Impedance Bode Plots</h4>
-              <div id= {{ in_imped_mag_div }}></div>
-              <div id= {{ in_imped_phs_div }} style="margin-top: -10px;"></div>
-            </div>
-        </div>
-    </div>
-  </div>
-  
-
-  <div id="home-row-picture">
-    <img src="{{ static }}design_center/img/power-converter.jpg" class="rounded" alt="Power Converter" height="400 px">
-  </div>
-
-</div>
-
-{% endblock %}
-
-{% block example_design %}
-<div id="example-design-content">
-    <div id="example-title">
-      <h3>Example Design in the Design Center</h4>
-    </div>
-
-    <div id="example-design-picture">
-      <img src="{{ static }}design_center/img/buck-converter.jpg" alt="Buck Converter" height="400 px">
-    </div>
-
-    <div id="example-design-input-title">
-      <h4>Input Parameters</h4>
-    </div>
-
-    <div id="example-parameters">
-      <div id="example-parameters-left-column">
-        <p>Input Voltage: {{input_voltage}} V</p>
-        <p>Output Current: {{output_current}} A</p>
-        <p>Output Capacitance: {{capacitance}} &micro;F</p>
-        <p>Output Capacitor Resistance: {{capacitor_res}} m&#8486;</p>
-        <p>D1 On Voltage: {{d1_on_volt}} V</p>
-      </div>
-
-      <div id="example-parameters-right-column">
-        <p>Output Voltage: {{output_voltage}} V</p>
-        <p>Output Inductance: {{inductance}} &micro;H</p>
-        <p>Inductor DC Resistance: {{inductor_res}} m&#8486;</p>
-        <p>Q1 On Resistance: {{q1_on_res}} m&#8486;</p>
-      </div>
     </div>
 </div>
+
 {% endblock %}
 
 {% block contact_row %}
