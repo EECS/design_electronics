@@ -121,7 +121,20 @@
         </div>
 
         <div id="ee-content-description">
-            <h2>{{analyzed_circuit_object.description}}</h2>
+            <h3><u>Circuit Description:</u></h3>
+            <p class="left-text">{{analyzed_circuit_object.description|safe}}</p>
+        </div>
+
+        <div id="ee-content-input-params">
+            <h3><u>Design Parameters:</u></h3>
+        </div>
+
+        <div id="ee-content-rec-comps">
+            <h3><u>Recommended Component Values:</u></h3>
+        </div>
+
+        <div id="ee-content-sel-comps">
+            <h3><u>Selected Component Values:</u></h3>
         </div>
 
         <div id="bode-plots" class="flex">

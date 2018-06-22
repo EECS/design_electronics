@@ -19,6 +19,10 @@ img{
     display: flex;
 }
 
+.left-text{
+    text-align: left;
+}
+
 .fixed{
     position: fixed;
 }
@@ -63,10 +67,6 @@ img{
 
 #ee-content{
     margin: 10%;
-}
-
-#ee-content-description{
-    text-align: left;
 }
 
 #contact-row-content{
