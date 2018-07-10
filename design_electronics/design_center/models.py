@@ -46,12 +46,21 @@ class SMPS(models.Model):
         pass
 
 class DesignParamChoices(models.Model):
-    DESIGN_PARAM_CHOICES = [
-        ("Vin", "Input Voltage"),
-        ("Vout", "Output Voltage")
-    ]
+    params = models.CharField(max_length = 100)
 
-    description = models.CharField(max_length=300, choices=DESIGN_PARAM_CHOICES)
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.params
+        
+    def __unicode__(self):
+        return self.params
+
+    class Meta:
+        ordering = ['params']
+        verbose_name = "param"
+        verbose_name_plural = "params"
 
 class DCDC(models.Model):
     """

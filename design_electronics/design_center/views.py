@@ -5,6 +5,9 @@ from .models import DCDC
 
 context = {}
 
+def test_print(test):
+    print("Test: "+str(test))
+
 def generate_sidebar(pe_list, smps_list, dc_dc_types, dc_dc_list):
     """ Generates the sidebar for the webpage. Passed the following variables:
     Returns a sidebar_list 4th dimensional list variable with the following indices:
@@ -269,6 +272,7 @@ def home(request):
     #####################################
     #Generate bode plot data.           #
     #####################################
+    test_print(analyzed_circuit_object)
     input_output_transfer = analyzed_circuit_object.input_output_transfer
     input_impedance = analyzed_circuit_object.input_impedance
     output_impedance = analyzed_circuit_object.output_impedance

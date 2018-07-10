@@ -1,4 +1,5 @@
 from django import forms
 
-class NameForm(forms.Form):
-    
+class DesignParamForm(forms.ModelForm):
+    class Meta:
+        model = DesignParamChoices
