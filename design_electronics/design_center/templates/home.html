@@ -127,6 +127,9 @@
 
         <div id="ee-content-input-params">
             <h3><u>Design Parameters:</u></h3>
+            {% for param in design_param_form %}
+            <p class="left-text">{{param}}:</p>
+            {% endfor %}
         </div>
 
         <div id="ee-content-rec-comps">

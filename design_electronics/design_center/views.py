@@ -2,6 +2,8 @@ from django.shortcuts import render
 import math, re, cmath
 #Import Power Electronics portion of the website for left sidebar
 from .models import DCDC
+#Import design parameter forms
+from .forms import DesignParamForm
 
 context = {}
 
@@ -270,9 +272,15 @@ def home(request):
     generate_sidebar(power_types, smps_types, dc_dc_types, dc_dc_list)
 
     #####################################
+    #Generate the design parameters.    #
+    #####################################
+    #test_print(analyzed_circuit_object.design_params)
+    design_param_form = DesignParamForm(analyzed_circuit_object.design_params.all())
+    context.update({'design_param_form':design_param_form})
+
+    #####################################
     #Generate bode plot data.           #
     #####################################
-    test_print(analyzed_circuit_object)
     input_output_transfer = analyzed_circuit_object.input_output_transfer
     input_impedance = analyzed_circuit_object.input_impedance
     output_impedance = analyzed_circuit_object.output_impedance
