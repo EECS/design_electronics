@@ -128,17 +128,8 @@
         <div id="ee-content-input-params">
             <h3><u>Design Parameters:</u></h3>
 
-            {{design_param_form.non_field_errors}}
+            {% crispy(design_param_form) %}
 
-            {% for field in design_param_form_fields %}
-            
-            <div class="paramWrapper">
-                {{ field.errors }}
-                <label for="{{ field }}" class="left-text">{{ field }}</label>
-                {{ field }}
-            </div>
-
-            {% endfor %}
         </div>
 
         <div id="ee-content-rec-comps">

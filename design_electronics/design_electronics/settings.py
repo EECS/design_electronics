@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'landing_page.apps.LandingPageConfig',
-    'design_center.apps.DesignCenterConfig'
+    'design_center.apps.DesignCenterConfig',
+    'crispy_forms',
+    'django_jinja'
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,6 @@
 from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 DESIGN_PARAM_LIST = ["Fs", "Io", "RipIo", "RipVo", "VD1", "Vin", "Vo"]
 
@@ -12,7 +14,15 @@ class DesignParamForm(forms.Form):
     abbrev_params = {}
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(DesignParamForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = "id-designParamForm"
+        self.helper.form_class = 'blueForms'
+        self.helper.form_method = 'post'
+        self.helper.form_action = 'submit_survey'
+
+        self.helper.add_input(Submit('submit', 'Submit'))
+
         #Loop through all parameters to be used
         #to build the form.
         for param in args[0]:

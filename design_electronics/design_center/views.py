@@ -276,8 +276,7 @@ def home(request):
     #####################################
     
     design_param_form = DesignParamForm(analyzed_circuit_object.design_params.all())
-    design_param_form_fields = design_param_form.get_fields()
-    context.update({'design_param_form_fields':design_param_form_fields, 'design_param_form': design_param_form })
+    context.update({'design_param_form': design_param_form })
     test_print(design_param_form.get_fields())
 
     #####################################
