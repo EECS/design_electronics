@@ -127,8 +127,17 @@
 
         <div id="ee-content-input-params">
             <h3><u>Design Parameters:</u></h3>
-            {% for param in design_param_form %}
-            <p class="left-text">{{param}}:</p>
+
+            {{design_param_form.non_field_errors}}
+
+            {% for field in design_param_form_fields %}
+            
+            <div class="paramWrapper">
+                {{ field.errors }}
+                <label for="{{ field }}" class="left-text">{{ field }}</label>
+                {{ field }}
+            </div>
+
             {% endfor %}
         </div>
 

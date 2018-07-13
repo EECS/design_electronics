@@ -274,9 +274,11 @@ def home(request):
     #####################################
     #Generate the design parameters.    #
     #####################################
-    #test_print(analyzed_circuit_object.design_params)
+    
     design_param_form = DesignParamForm(analyzed_circuit_object.design_params.all())
-    context.update({'design_param_form':design_param_form})
+    design_param_form_fields = design_param_form.get_fields()
+    context.update({'design_param_form_fields':design_param_form_fields, 'design_param_form': design_param_form })
+    test_print(design_param_form.get_fields())
 
     #####################################
     #Generate bode plot data.           #
