@@ -3,6 +3,6 @@ from django_jinja import library
 import jinja2
 
 def crispy(form):
-    return as_crispy_form(form, 'Bootstrap3', form.helper.label_class, form.helper.field_class)
+    return as_crispy_form(form, 'bootstrap3', form.helper.label_class, form.helper.field_class)
 
 jinja2.filters.FILTERS['crispy'] = crispy
