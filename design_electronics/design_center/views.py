@@ -277,7 +277,7 @@ def home(request):
     
     design_param_form = DesignParamForm(analyzed_circuit_object.design_params.all())
     context.update({'design_param_form': design_param_form })
-    test_print(design_param_form.get_fields())
+    #test_print(design_param_form.get_fields())
 
     #####################################
     #Generate bode plot data.           #

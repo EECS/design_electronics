@@ -25,20 +25,22 @@ class DesignParamForm(forms.Form):
 
         #Loop through all parameters to be used
         #to build the form.
-        for param in args[0]:
-            #Param list will be a comma separated, two entry
-            #string with the abbreviation as the first entry
-            #and the full parameter name as the second entry.
-            parsed_param = str(param).split(",")
-            abbrev_param = parsed_param[0].strip()
-            field_name = parsed_param[1].strip()
-
-            self.fields[field_name] = forms.DecimalField(required=True, min_value=0.001, decimal_places=2)
-            self.abbrev_params[abbrev_param] = field_name
-            #print(field_name)
+        #for param in args[0]:
+        #    #Param list will be a comma separated, two entry
+        #    #string with the abbreviation as the first entry
+        #    #and the full parameter name as the second entry.
+        #    parsed_param = str(param).split(",")
+        #    abbrev_param = parsed_param[0].strip()
+        #    field_name = parsed_param[1].strip()
+#
+        #    print(self.fields)
+        #    #self.fields[field_name] = forms.DecimalField(required=True, min_value=0.001, decimal_places=2)
+        #    self.abbrev_params[abbrev_param] = field_name
+        #    break
+        #    #print(field_name)
     
     def __str__(self):
-        return str(self.fields)
+        return str(self.helper)
     
     def clean(self):
         for param in DESIGN_PARAM_LIST:
@@ -50,6 +52,4 @@ class DesignParamForm(forms.Form):
                 elif abbrev_param  == "RipVo" and self.cleaned_data[self.abbrev_params["Vo"]] < clean_val:
                     self.add_error(param, "Value cannot be lower than output voltage.")
     
-    def get_fields(self):
-        for field in self.fields:
-            yield field
+    test_field = forms.DecimalField(required=True, min_value=0.001, decimal_places=2, label="Test Field")
