@@ -1,8 +1,5 @@
 from django import forms
-from .models import DCDC
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout
-from crispy_forms.bootstrap import StrictButton
 
 class DesignParamForm(forms.Form):
     '''
@@ -11,6 +8,7 @@ class DesignParamForm(forms.Form):
     argument, must be passed the DCDC converter object parameters to create
     the form completely.
     '''
+    abbrev_params = {}
 
     def __init__(self, data = None, *args, **kwargs):
         super(DesignParamForm, self).__init__(data, *args, **kwargs)
@@ -30,5 +28,31 @@ class DesignParamForm(forms.Form):
             #and the full parameter name as the second entry.
             parsed_param = str(param).split(",")
             abbrev_param = parsed_param[0].strip()
-            field_name = parsed_param[1].strip().capitalize()
-            self.fields[field_name] = forms.DecimalField(required=True, min_value=0.001, decimal_places=2)
+            field_name = parsed_param[1].strip().title()
+            print(field_name)
+
+            self.abbrev_params.update({abbrev_param:field_name})
+
+            self.fields[field_name] = forms.DecimalField(required=True, min_value=0.001)
+
+            if "voltage" in field_name.lower():
+                self.fields[field_name].help_text = "V"
+            elif "current" in field_name.lower():
+                self.fields[field_name].help_text = "A"
+            elif "frequency" in field_name.lower():
+                self.fields[field_name].help_text = "kHz"
+        
+        print(self.abbrev_params)
+    
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        
+        if len(cleaned_data) > 0:
+            if self.cleaned_data[self.abbrev_params["Io"]] <= self.cleaned_data[self.abbrev_params["RipIo"]]:
+                print("here")
+                self.add_error(self.abbrev_params["RipIo"], "Value cannot be equal to or lower than output current.")
+            
+            if self.cleaned_data[self.abbrev_params["Vo"]] < self.cleaned_data[self.abbrev_params["RipVo"]]:
+                print("here")
+                self.add_error(self.abbrev_params["RipVo"], "Value cannot be equal to or lower than than output voltage.")
+

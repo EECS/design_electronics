@@ -62,6 +62,23 @@ class DesignParamChoices(models.Model):
         verbose_name = "param"
         verbose_name_plural = "params"
 
+class DCDCRecommendedComponents(models.Model):
+    components = models.CharField(max_length = 100)
+
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.components
+        
+    def __unicode__(self):
+        return self.components
+
+    class Meta:
+        ordering = ['components']
+        verbose_name = "component"
+        verbose_name_plural = "Components"
+
 class DCDC(models.Model):
     """
     Model representing Power Electronic circuits
@@ -86,6 +103,8 @@ class DCDC(models.Model):
     description = models.TextField(help_text="Enter a description of the circuit to be modeled.", default=str(1))
 
     design_params = models.ManyToManyField(DesignParamChoices)
+
+    recommended_components = models.ManyToManyField(DCDCRecommendedComponents)
 
     input_output_transfer = models.TextField(max_length=5000, help_text="Enter the input to output transfer function of the converter.")
     input_impedance = models.TextField(max_length=5000, help_text="Enter the input impedance of the converter.")

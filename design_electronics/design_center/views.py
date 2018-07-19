@@ -280,6 +280,11 @@ def home(request):
     context.update({'design_param_form': design_param_form })
     #test_print(design_param_form.get_fields())
 
+    if request.method == "POST":
+        form = DesignParamForm(request.POST, analyzed_circuit_object.design_params.all())
+        if form.is_valid():
+            generate_rec_dcdc_components(form.cleaned_data)
+
     #####################################
     #Generate bode plot data.           #
     #####################################

@@ -15,6 +15,10 @@ img{
     max-width: 100%;
 }
 
+strong{
+    display: none;
+}
+
 .flex{
     display: flex;
 }
