@@ -127,10 +127,14 @@
 
         <div id="ee-content-input-params">
             <h3><u>Design Parameters:</u></h3>
+                <p class="left-text">
+                    Please enter the design parameters for the converter below. If desired,
+                    recommended component values can be generated based upon these values. These
+                    parameters are required if analysis of the converter is requested.
+                </p>
+                
 
             <form id='input-param-form' class="form-horizontal" method='post'>
-                {{ csrf_token }}
-                {{design_param_form.media}}
                 {{design_param_form|crispy}}
                 <div>
                     <input type="submit" name="submit" value="Submit" class="btn btn-primary" id="submit-id-submit">
