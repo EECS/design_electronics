@@ -138,7 +138,7 @@
                 {{design_param_form|crispy}}
                 <div>
                     <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
-                    <input type="submit" name="submit" value="Generate Recommended Components" class="btn btn-primary" id="submit-id-submit">
+                    <input type="submit" name="submitdesignparams" value="Generate Recommended Components" class="btn btn-primary" id="submit-id-submitdesignparams">
                 </div>
             </form>
 
@@ -146,10 +146,38 @@
 
         <div id="ee-content-rec-comps">
             <h3><u>Recommended Component Values:</u></h3>
+            {% for component in rec_dcdc_comps %}
+            <p class="left-text">
+                {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}}: {{rec_dcdc_comps[loop.index0][2]}}
+
+                <!-- If recommended components have been generated, append units. -->
+                {% if rec_dcdc_comps[loop.index0][3] %}
+                    &micro;{{rec_dcdc_comps[loop.index0][3]}}
+                {% else %}
+                    {{rec_dcdc_comps[loop.index0][3]}}
+                {% endif %}
+            </p>
+            {% endfor %}
         </div>
 
         <div id="ee-content-sel-comps">
             <h3><u>Selected Component Values:</u></h3>
+            <p class="left-text">
+                Please enter the selected component values for the converter below.
+            </p>
+            
+
+            <form id='input-param-form' class="form-horizontal" method='post'>
+                {{design_comp_form|crispy}}
+                <div>
+                    <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+                    <input type="submit" name="submitcompvalues" value="Generate Converter Analysis" class="btn btn-primary" id="submit-id-submitcompparams">
+                </div>
+            </form>
+        </div>
+
+        <div id="ee-content-analysis-results">
+            <h3><u>Analysis Results of Converter:</u></h3>
         </div>
 
         <div id="bode-plots" class="flex">

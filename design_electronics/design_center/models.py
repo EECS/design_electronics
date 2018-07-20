@@ -62,6 +62,23 @@ class DesignParamChoices(models.Model):
         verbose_name = "param"
         verbose_name_plural = "params"
 
+class DCDCSelectedComponents(models.Model):
+    selected_components_for_analysis = models.CharField(max_length = 100)
+
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.selected_components_for_analysis
+        
+    def __unicode__(self):
+        return self.selected_components_for_analysis
+
+    class Meta:
+        ordering = ['selected_components_for_analysis']
+        verbose_name = "Selected Component"
+        verbose_name_plural = "Selected Components"
+
 class DCDCRecommendedComponents(models.Model):
     components = models.CharField(max_length = 100)
     circuit_name = models.CharField(max_length=200, help_text="Enter the name of this converter in the admin page.", default=str(1))
@@ -108,6 +125,8 @@ class DCDC(models.Model):
 
     recommended_components = models.ManyToManyField(DCDCRecommendedComponents)
 
+    selected_components = models.ManyToManyField(DCDCSelectedComponents)
+
     input_output_transfer = models.TextField(max_length=5000, help_text="Enter the input to output transfer function of the converter.")
     input_impedance = models.TextField(max_length=5000, help_text="Enter the input impedance of the converter.")
     output_impedance = models.TextField(max_length=5000, help_text="Enter the output impedance of the converter.")
@@ -117,7 +136,7 @@ class DCDC(models.Model):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.name
+        return self.dcdc_type+ " " + self.name
         
     def get_absolute_url(self):
         """

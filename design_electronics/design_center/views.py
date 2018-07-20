@@ -3,7 +3,7 @@ import math, re, cmath
 #Import Power Electronics portion of the website for left sidebar
 from .models import DCDC
 #Import design parameter forms
-from .forms import DesignParamForm, abbrev_params
+from .forms import DesignParamForm, DesignCompForm, abbrev_params
 
 context = {}
 
@@ -13,16 +13,21 @@ def generate_rec_dcdc_components(analyzed_circuit_object, cleaned_data=None):
     Inputs: cleaned_data dictionary generated from 
 
     Outputs: Void, updates the context dictionary with the recommended component
-    values.
+    values in the rec_dcdc_comps variable. Example of updated rec_dcdc_comps:
+    [["Output Capacitor", "C1", "100" (uF), "F"], ["Output Inductor", "L1", "10" (uH), "H"]]
     '''
     rec_dcdc_comps = []
-    if cleaned_data == None:
-        context.update({"rec_dcdc_comps": rec_dcdc_comps})
-    else:
-        #Retrieve all components for which recommended design selection will occur.
-        dcdc_comp_equations = analyzed_circuit_object.recommended_components.all()
+    
+    #Retrieve all components for which recommended design selection will occur.
+    dcdc_comp_equations = analyzed_circuit_object.recommended_components.all()
 
-        for comp in dcdc_comp_equations:
+    for comp in dcdc_comp_equations:
+        parsed_name = comp.components.split(",")
+
+        #Initial load of the page.
+        if cleaned_data == None:
+            rec_dcdc_comps.append([parsed_name[1], parsed_name[0],"Enter design parameters to generate recommended component values.", ""])
+        else:
             #Component design equation.
             eq = comp.equation
             print(eq)
@@ -45,8 +50,18 @@ def generate_rec_dcdc_components(analyzed_circuit_object, cleaned_data=None):
             num = eval(numerator)
             denom = eval(denominator)
 
-            print(num)
-            print(denom)
+            if denom == 0:
+                rec_dcdc_comps.append([parsed_name[1], parsed_name[0], "Invalid input parameters, equation caused an infinite value.", ""])
+            else:
+
+                if "c" in parsed_name[0].lower():
+                    units = "F"
+                else:
+                    units = "H"
+
+                rec_dcdc_comps.append([parsed_name[1], parsed_name[0], str((num/denom)*1e6), units])
+
+    context.update({"rec_dcdc_comps": rec_dcdc_comps})
 
 
 def test_print(test):
@@ -314,18 +329,25 @@ def home(request):
     generate_sidebar(power_types, smps_types, dc_dc_types, dc_dc_list)
 
     #####################################
-    #Generate the design parameters.    #
+    #Generate the design parameters and #
+    #selected components forms.         #
     #####################################
     design_param_form = DesignParamForm(None, analyzed_circuit_object.design_params.all())
-    context.update({'design_param_form': design_param_form })
+    design_comp_form = DesignCompForm(None, analyzed_circuit_object.selected_components.all())
+
+    context.update({'design_param_form': design_param_form, 'design_comp_form':design_comp_form })
 
     #####################################
     #Generate the recommended components#
+    # or selected components.           #
     #####################################
     if request.method == "POST":
-        form = DesignParamForm(request.POST, analyzed_circuit_object.design_params.all())
-        if form.is_valid():
-            generate_rec_dcdc_components(analyzed_circuit_object, form.cleaned_data)
+        if "submitdesignparams" in request.POST:
+            form = DesignParamForm(request.POST, analyzed_circuit_object.design_params.all())
+            if form.is_valid():
+                generate_rec_dcdc_components(analyzed_circuit_object, form.cleaned_data)
+        elif "submitcompvalues" in request.POST:
+            pass
     else:
         generate_rec_dcdc_components(analyzed_circuit_object, None)
 
