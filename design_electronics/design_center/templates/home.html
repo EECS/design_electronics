@@ -134,7 +134,7 @@
                 </p>
                 
 
-            <form id='input-param-form' class="form-horizontal" method='post'>
+            <form id='input-param-form' class="form-horizontal" method='post' data-autosubmit>
                 {{design_param_form|crispy}}
                 <div>
                     <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
@@ -167,11 +167,11 @@
             </p>
             
 
-            <form id='input-param-form' class="form-horizontal" method='post'>
+            <form id='input-param-form' class="form-horizontal" method='post' data-autosubmit>
                 {{design_comp_form|crispy}}
                 <div>
                     <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
-                    <input type="submit" name="submitcompvalues" value="Generate Converter Analysis" class="btn btn-primary" id="submit-id-submitcompparams">
+                    <input type="button" name="submitcompvalues" value="Generate Converter Analysis" class="btn btn-primary" id="submit-id-submitcompparams">
                 </div>
             </form>
         </div>
@@ -228,4 +228,31 @@
         GITHUB
       </a>
 </div>
+{% endblock %}
+
+{% block ajax_support %}
+<script>
+    (function($) {
+      $.fn.autosubmit = function() {
+        this.submit(function(event) {
+          event.preventDefault();
+          var form = $(this);
+          $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize()
+          }).done(function(data) {
+            // Optionally alert the user of success here...
+          }).fail(function(data) {
+            // Optionally alert the user of an error here...
+          });
+        });
+        return this;
+      }
+    })(jQuery)
+
+    $(function() {
+        $('form[data-autosubmit]').autosubmit();
+    });
+</script>
 {% endblock %}

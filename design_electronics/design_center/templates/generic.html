@@ -1,58 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  {% block title %}
-  {% endblock %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script src="http://mathjs.org/js/lib/math.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Add dynamic updates to bode Plots -->
-  {% block dynamicPlots %}
-  {% endblock %}
-  
-  <!-- Add additional CSS in static file -->
-  <link rel="stylesheet" href="{{ static }}design_center/css/styles.css">
-  <link rel="stylesheet" href="{{ static }}design_center/css/bode-styles.css">
-  <link rel="stylesheet" href="{{ static }}design_center/css/bootstrap-social.css">
-  <link rel="stylesheet" href="{{ static }}design_center/css/font-awesome.css">
-</head>
-
-<body>
-
-  <div id="container-custom" class="container-fluid">
-    
-    <div id="header-row" class="row grey-bottom-border">
-      {% block header %}
+    <head>
+      {% block title %}
       {% endblock %}
-    </div>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+      <script src="http://mathjs.org/js/lib/math.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <!-- Add dynamic updates to bode Plots -->
+      {% block dynamicPlots %}
+      {% endblock %}
     
-    <div id="content" class="row flex">
-      <div id="left-sidebar">
-        {% block left_sidebar %}
-        {% endblock %}
-      </div>
-  
-      <div>
-        <div id="ee-content" class="row col-md-8">
-          {% block ee_content %}
+      <!-- Add additional CSS in static file -->
+      <link rel="stylesheet" href="{{ static }}design_center/css/styles.css">
+      <link rel="stylesheet" href="{{ static }}design_center/css/bode-styles.css">
+      <link rel="stylesheet" href="{{ static }}design_center/css/bootstrap-social.css">
+      <link rel="stylesheet" href="{{ static }}design_center/css/font-awesome.css">
+    </head>
+
+    <body>
+
+      <div id="container-custom" class="container-fluid">
+
+        <div id="header-row" class="row grey-bottom-border">
+          {% block header %}
           {% endblock %}
         </div>
 
-        <div id="contact-row" class="row">
-            {% block contact_row %}
+        <div id="content" class="row flex">
+          <div id="left-sidebar">
+            {% block left_sidebar %}
             {% endblock %}
-        </div>
-      </div>
-    </div>
+          </div>
+      
+          <div>
+            <div id="ee-content" class="row col-md-8">
+              {% block ee_content %}
+              {% endblock %}
+            </div>
 
-  </div>
-</body>
-<footer>
-  <!-- Add ability to include javascript plots into website -->
-  <script src="{{ static }}design_center/js/plotBode.js" type="text/javascript"></script>
-</footer>
+            <div id="contact-row" class="row">
+                {% block contact_row %}
+                {% endblock %}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </body>
+    <footer>
+    </footer>
+    <!-- Add ability to include javascript plots into website -->
+    <script src="{{ static }}design_center/js/plotBode.js" type="text/javascript"></script>
+    {% block ajax_support %}
+    {% endblock %}
 </html>

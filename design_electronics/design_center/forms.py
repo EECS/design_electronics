@@ -1,7 +1,8 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 
-abbrev_params = {}
+abbrev_design_params = {}
+abbrev_component_params = {}
 
 class DesignParamForm(forms.Form):
     '''
@@ -30,9 +31,8 @@ class DesignParamForm(forms.Form):
             parsed_param = str(param).split(",")
             abbrev_param = parsed_param[0].strip()
             field_name = parsed_param[1].strip().title()
-            print("field_name is: "+str(field_name))
 
-            abbrev_params.update({abbrev_param:field_name})
+            abbrev_design_params.update({abbrev_param:field_name})
 
             self.fields[field_name] = forms.DecimalField(required=True, min_value=0.001)
 
@@ -48,12 +48,12 @@ class DesignParamForm(forms.Form):
         
         if len(cleaned_data) > 0:
             #Convert to Fs input parameter to kHz
-            self.cleaned_data[abbrev_params["Fs"]] = self.cleaned_data[abbrev_params["Fs"]]*1000
-        #    if self.cleaned_data[abbrev_params["Io"]] <= self.cleaned_data[abbrev_params["RipIo"]]:
-        #        self.add_error(abbrev_params["RipIo"], "Value cannot be equal to or lower than output current.")
+            self.cleaned_data[abbrev_design_params["Fs"]] = self.cleaned_data[abbrev_design_params["Fs"]]*1000
+        #    if self.cleaned_data[abbrev_design_params["Io"]] <= self.cleaned_data[abbrev_design_params["RipIo"]]:
+        #        self.add_error(abbrev_design_params["RipIo"], "Value cannot be equal to or lower than output current.")
         #    
-        #    if self.cleaned_data[abbrev_params["Vo"]] < self.cleaned_data[abbrev_params["RipVo"]]:
-        #        self.add_error(abbrev_params["RipVo"], "Value cannot be equal to or lower than than output voltage.")
+        #    if self.cleaned_data[abbrev_design_params["Vo"]] < self.cleaned_data[abbrev_design_params["RipVo"]]:
+        #        self.add_error(abbrev_design_params["RipVo"], "Value cannot be equal to or lower than than output voltage.")
 
 class DesignCompForm(forms.Form):
     '''
@@ -72,7 +72,6 @@ class DesignCompForm(forms.Form):
         self.helper.field_class = 'col-lg-8'
         self.helper.form_method = 'post'
         self.helper.form_action = 'submit_survey'
-        print(args)
 
         #Loop through all parameters to be used
         #to build the form.
@@ -80,12 +79,11 @@ class DesignCompForm(forms.Form):
             #Param list will be a comma separated, two entry
             #string with the abbreviation as the first entry
             #and the full parameter name as the second entry.
-            print("param is "+ str(param))
             parsed_param = str(param).split(",")
             abbrev_param = parsed_param[0].strip()
             field_name = parsed_param[1].strip().title()
 
-            abbrev_params.update({abbrev_param:field_name})
+            abbrev_component_params.update({abbrev_param:field_name})
 
             self.fields[field_name] = forms.DecimalField(required=True)
 

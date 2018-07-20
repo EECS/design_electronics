@@ -3,7 +3,7 @@ import math, re, cmath
 #Import Power Electronics portion of the website for left sidebar
 from .models import DCDC
 #Import design parameter forms
-from .forms import DesignParamForm, DesignCompForm, abbrev_params
+from .forms import DesignParamForm, DesignCompForm, abbrev_design_params, abbrev_component_params
 
 context = {}
 
@@ -30,12 +30,12 @@ def generate_rec_dcdc_components(analyzed_circuit_object, cleaned_data=None):
         else:
             #Component design equation.
             eq = comp.equation
-            print(eq)
 
             #Loop through all keys (abbreviations) and replace with cleaned value.
-            for k, v in abbrev_params.items():
+            for k, v in abbrev_design_params.items():
+                print("k is: "+ str(k))
                 #Find key and only the key. Example, finds R1 and not R11 by separating on the non-word boundary.
-                eq = re.sub(r"\b"+k+r"\b", str(cleaned_data[abbrev_params[k]]), eq)
+                eq = re.sub(r"\b"+k+r"\b", str(cleaned_data[abbrev_design_params[k]]), eq)
 
             denom_start = eq.find("/")
 
@@ -343,9 +343,9 @@ def home(request):
     #####################################
     if request.method == "POST":
         if "submitdesignparams" in request.POST:
-            form = DesignParamForm(request.POST, analyzed_circuit_object.design_params.all())
-            if form.is_valid():
-                generate_rec_dcdc_components(analyzed_circuit_object, form.cleaned_data)
+            design_param_form = DesignParamForm(request.POST, analyzed_circuit_object.design_params.all())
+            if design_param_form.is_valid():
+                generate_rec_dcdc_components(analyzed_circuit_object, design_param_form.cleaned_data)
         elif "submitcompvalues" in request.POST:
             pass
     else:
