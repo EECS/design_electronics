@@ -64,12 +64,14 @@ class DesignParamChoices(models.Model):
 
 class DCDCRecommendedComponents(models.Model):
     components = models.CharField(max_length = 100)
+    circuit_name = models.CharField(max_length=200, help_text="Enter the name of this converter in the admin page.", default=str(1))
+    equation = models.TextField(max_length=5000, help_text="Enter the equation used to generate this recommended component.", default=str(1))
 
     def __str__(self):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.components
+        return self.components + ", " + self.circuit_name
         
     def __unicode__(self):
         return self.components

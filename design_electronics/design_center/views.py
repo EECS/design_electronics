@@ -3,9 +3,51 @@ import math, re, cmath
 #Import Power Electronics portion of the website for left sidebar
 from .models import DCDC
 #Import design parameter forms
-from .forms import DesignParamForm
+from .forms import DesignParamForm, abbrev_params
 
 context = {}
+
+def generate_rec_dcdc_components(analyzed_circuit_object, cleaned_data=None):
+    '''
+    Generates recommended component values for design for DC/DC converters.
+    Inputs: cleaned_data dictionary generated from 
+
+    Outputs: Void, updates the context dictionary with the recommended component
+    values.
+    '''
+    rec_dcdc_comps = []
+    if cleaned_data == None:
+        context.update({"rec_dcdc_comps": rec_dcdc_comps})
+    else:
+        #Retrieve all components for which recommended design selection will occur.
+        dcdc_comp_equations = analyzed_circuit_object.recommended_components.all()
+
+        for comp in dcdc_comp_equations:
+            #Component design equation.
+            eq = comp.equation
+            print(eq)
+
+            #Loop through all keys (abbreviations) and replace with cleaned value.
+            for k, v in abbrev_params.items():
+                #Find key and only the key. Example, finds R1 and not R11 by separating on the non-word boundary.
+                eq = re.sub(r"\b"+k+r"\b", str(cleaned_data[abbrev_params[k]]), eq)
+
+            denom_start = eq.find("/")
+
+            #Create numerator and denominator strings of the transfer function.
+            if denom_start != -1:
+                numerator = eq[:denom_start]
+                denominator = eq[denom_start+1:]
+            else:
+                numerator = eq
+                denominator = str(1)
+
+            num = eval(numerator)
+            denom = eval(denominator)
+
+            print(num)
+            print(denom)
+
 
 def test_print(test):
     print("Test: "+str(test))
@@ -274,16 +316,18 @@ def home(request):
     #####################################
     #Generate the design parameters.    #
     #####################################
-    
     design_param_form = DesignParamForm(None, analyzed_circuit_object.design_params.all())
-    #print("design_param_form shown here: " + str(design_param_form.fields))
     context.update({'design_param_form': design_param_form })
-    #test_print(design_param_form.get_fields())
 
+    #####################################
+    #Generate the recommended components#
+    #####################################
     if request.method == "POST":
         form = DesignParamForm(request.POST, analyzed_circuit_object.design_params.all())
         if form.is_valid():
-            generate_rec_dcdc_components(form.cleaned_data)
+            generate_rec_dcdc_components(analyzed_circuit_object, form.cleaned_data)
+    else:
+        generate_rec_dcdc_components(analyzed_circuit_object, None)
 
     #####################################
     #Generate bode plot data.           #
