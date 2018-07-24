@@ -138,7 +138,8 @@
                 {{design_param_form|crispy}}
                 <div>
                     <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
-                    <input type="submit" name="submitdesignparams" value="Generate Recommended Components" class="btn btn-primary" id="submit-id-submitdesignparams">
+                    <input type="hidden" name="submitdesignparams">
+                    <input type="submit" name="submitform" value="Generate Recommended Components" class="btn btn-primary" id="submit-id-submitdesignparams">
                 </div>
             </form>
 
@@ -146,18 +147,12 @@
 
         <div id="ee-content-rec-comps">
             <h3><u>Recommended Component Values:</u></h3>
-            {% for component in rec_dcdc_comps %}
-            <p class="left-text">
-                {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}}: {{rec_dcdc_comps[loop.index0][2]}}
-
-                <!-- If recommended components have been generated, append units. -->
-                {% if rec_dcdc_comps[loop.index0][3] %}
-                    &micro;{{rec_dcdc_comps[loop.index0][3]}}
-                {% else %}
-                    {{rec_dcdc_comps[loop.index0][3]}}
-                {% endif %}
+            
+            <p id="ee-content-rec-comps-ajax" class="left-text">
+                {% for component in rec_dcdc_comps %}
+                    {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}}: {{rec_dcdc_comps[loop.index0][2]}} <br>
+                {% endfor %}
             </p>
-            {% endfor %}
         </div>
 
         <div id="ee-content-sel-comps">
@@ -171,7 +166,7 @@
                 {{design_comp_form|crispy}}
                 <div>
                     <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
-                    <input type="button" name="submitcompvalues" value="Generate Converter Analysis" class="btn btn-primary" id="submit-id-submitcompparams">
+                    <input type="submit" name="submitcompvalues" value="Generate Converter Analysis" class="btn btn-primary" id="submit-id-submitcompparams">
                 </div>
             </form>
         </div>
@@ -240,9 +235,17 @@
           $.ajax({
             type: form.attr('method'),
             url: form.attr('action'),
-            data: form.serialize()
+            data: form.serialize(),
+            success: function(json){
+                var toReturn = ""
+                for(i = 0; i < json.length; i++){
+                    toReturn += json[i][0] + ", " + json[i][1] + ": " + json[i][2]+ " &micro;"+ json[i][3] +"<br>";
+                    console.log(toReturn);
+                };
+                $("#ee-content-rec-comps-ajax").html(toReturn);
+            }
           }).done(function(data) {
-            // Optionally alert the user of success here...
+
           }).fail(function(data) {
             // Optionally alert the user of an error here...
           });

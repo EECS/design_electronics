@@ -1,5 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Div
 
 abbrev_design_params = {}
 abbrev_component_params = {}
@@ -21,6 +22,12 @@ class DesignParamForm(forms.Form):
         self.helper.field_class = 'col-lg-8'
         self.helper.form_method = 'post'
         self.helper.form_action = 'submit_survey'
+        self.helper.layout = Layout(
+            Div(
+                Div('field1', css_class="col-xs-6"),
+                Div('field3', css_class='col-xs-6'),
+                css_class='row-fluid'), 
+            )
 
         #Loop through all parameters to be used
         #to build the form.
@@ -95,13 +102,17 @@ class DesignCompForm(forms.Form):
                 self.fields[field_name].help_text = "Ohms"
             elif "voltage" in field_name.lower():
                 self.fields[field_name].help_text = "V"
+            elif "current" in field_name.lower():
+                self.fields[field_name].help_text = "A"
+            elif "frequency" in field_name.lower():
+                self.fields[field_name].help_text = "kHz"
 
     def clean(self):
         cleaned_data = self.cleaned_data
         
-        #if len(cleaned_data) > 0:
-        #    #Convert to Fs input parameter to kHz
-        #    self.cleaned_data[abbrev_params["Fs"]] = self.cleaned_data[abbrev_params["Fs"]]*1000
+        if len(cleaned_data) > 0:
+            #Convert to Fs input parameter to kHz
+            self.cleaned_data[abbrev_params["Fs"]] = self.cleaned_data[abbrev_params["Fs"]]*1000
         #    if self.cleaned_data[abbrev_params["Io"]] <= self.cleaned_data[abbrev_params["RipIo"]]:
         #        self.add_error(abbrev_params["RipIo"], "Value cannot be equal to or lower than output current.")
         #    

@@ -4,6 +4,8 @@ import math, re, cmath
 from .models import DCDC
 #Import design parameter forms
 from .forms import DesignParamForm, DesignCompForm, abbrev_design_params, abbrev_component_params
+from itertools import chain
+from django.http import JsonResponse
 
 context = {}
 
@@ -33,7 +35,6 @@ def generate_rec_dcdc_components(analyzed_circuit_object, cleaned_data=None):
 
             #Loop through all keys (abbreviations) and replace with cleaned value.
             for k, v in abbrev_design_params.items():
-                print("k is: "+ str(k))
                 #Find key and only the key. Example, finds R1 and not R11 by separating on the non-word boundary.
                 eq = re.sub(r"\b"+k+r"\b", str(cleaned_data[abbrev_design_params[k]]), eq)
 
@@ -332,8 +333,11 @@ def home(request):
     #Generate the design parameters and #
     #selected components forms.         #
     #####################################
-    design_param_form = DesignParamForm(None, analyzed_circuit_object.design_params.all())
-    design_comp_form = DesignCompForm(None, analyzed_circuit_object.selected_components.all())
+    design_parameters_circuit_object = analyzed_circuit_object.design_params.all()
+    selected_components_circuit_object = analyzed_circuit_object.selected_components.all()
+
+    design_param_form = DesignParamForm(None, design_parameters_circuit_object)
+    design_comp_form = DesignCompForm(None, list(chain(design_parameters_circuit_object, selected_components_circuit_object)))
 
     context.update({'design_param_form': design_param_form, 'design_comp_form':design_comp_form })
 
@@ -343,11 +347,16 @@ def home(request):
     #####################################
     if request.method == "POST":
         if "submitdesignparams" in request.POST:
-            design_param_form = DesignParamForm(request.POST, analyzed_circuit_object.design_params.all())
+            design_param_form = DesignParamForm(request.POST, design_parameters_circuit_object)
             if design_param_form.is_valid():
                 generate_rec_dcdc_components(analyzed_circuit_object, design_param_form.cleaned_data)
+
+                return JsonResponse(context["rec_dcdc_comps"], safe=False)
+
         elif "submitcompvalues" in request.POST:
             pass
+        else:
+            print("DIDN'T WORK")
     else:
         generate_rec_dcdc_components(analyzed_circuit_object, None)
 
