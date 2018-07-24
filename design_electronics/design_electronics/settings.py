@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'landing_page.apps.LandingPageConfig',
     'design_center.apps.DesignCenterConfig',
     'crispy_forms',
-    'django_jinja'
+    'django_jinja',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -92,6 +93,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'design_electronics.wsgi.application'
 
+# Add a setting ASGI_APPLICATION to point at the application in routing.py
+ASGI_APPLICATION = 'design_electronics.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -148,3 +151,14 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+
+# Add a new CHANNEL_LAYERS setting that points to a redis instance
+# According to the Channels docs, only the redis layer is updated to match Channels 2.
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLalyer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)]
+        }
+    }
+}
