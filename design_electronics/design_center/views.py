@@ -25,13 +25,14 @@ def generate_rec_dcdc_components(analyzed_circuit_object, cleaned_data=None):
 
     for comp in dcdc_comp_equations:
         parsed_name = comp.components.split(",")
+        #Component design equation.
+        eq_symbols = comp.equation
+        eq = eq_symbols
 
         #Initial load of the page.
         if cleaned_data == None:
-            rec_dcdc_comps.append([parsed_name[1], parsed_name[0],"Enter design parameters to generate recommended component values.", ""])
+            rec_dcdc_comps.append([parsed_name[1], parsed_name[0], eq_symbols, "Enter design parameters to generate recommended component values.", ""])
         else:
-            #Component design equation.
-            eq = comp.equation
 
             #Loop through all keys (abbreviations) and replace with cleaned value.
             for k, v in abbrev_design_params.items():
@@ -60,7 +61,7 @@ def generate_rec_dcdc_components(analyzed_circuit_object, cleaned_data=None):
                 else:
                     units = "H"
 
-                rec_dcdc_comps.append([parsed_name[1], parsed_name[0], str((num/denom)*1e6), units])
+                rec_dcdc_comps.append([parsed_name[1], parsed_name[0], eq_symbols, str(round((num/denom)*1e6, 2)), units])
 
     context.update({"rec_dcdc_comps": rec_dcdc_comps})
 
@@ -337,7 +338,7 @@ def home(request):
     selected_components_circuit_object = analyzed_circuit_object.selected_components.all()
 
     design_param_form = DesignParamForm(None, design_parameters_circuit_object)
-    design_comp_form = DesignCompForm(None, list(chain(design_parameters_circuit_object, selected_components_circuit_object)))
+    design_comp_form = DesignCompForm(None, selected_components_circuit_object)
 
     context.update({'design_param_form': design_param_form, 'design_comp_form':design_comp_form })
 
@@ -350,15 +351,24 @@ def home(request):
             design_param_form = DesignParamForm(request.POST, design_parameters_circuit_object)
             if design_param_form.is_valid():
                 generate_rec_dcdc_components(analyzed_circuit_object, design_param_form.cleaned_data)
+                print(context.keys())
 
                 return JsonResponse(context["rec_dcdc_comps"], safe=False)
 
         elif "submitcompvalues" in request.POST:
-            pass
+            #Checks if the first recommended component has been populated
+            #given valid design parameters. Validation method is to check if
+            # units have been populated.
+            if context["rec_dcdc_comps"][0][4] != '':
+                print("Design parameters received.")
+            else:
+                print("Design parameters not received. Please enter design parameters and submit, and then resubmit the selected component values.")
+                return JsonResponse("Test", safe=False)
         else:
             print("DIDN'T WORK")
     else:
         generate_rec_dcdc_components(analyzed_circuit_object, None)
+        print(context.keys())
 
     #####################################
     #Generate bode plot data.           #

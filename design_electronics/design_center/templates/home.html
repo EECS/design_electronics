@@ -126,11 +126,10 @@
         </div>
 
         <div id="ee-content-input-params">
-            <h3><u>Design Parameters:</u></h3>
+            <h3><u>Design Parameters for Component Selection:</u></h3>
                 <p class="left-text">
-                    Please enter the design parameters for the converter below. If desired,
-                    recommended component values can be generated based upon these values. These
-                    parameters are required if analysis of the converter is requested.
+                    Please enter the design parameters for the converter below to be used
+                    to recommend component sizing in the converter.
                 </p>
                 
 
@@ -139,7 +138,7 @@
                 <div>
                     <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
                     <input type="hidden" name="submitdesignparams">
-                    <input type="submit" name="submitform" value="Generate Recommended Components" class="btn btn-primary" id="submit-id-submitdesignparams">
+                    <input type="submit" name="submitform" value="Enter Design Parameters" class="btn btn-primary" id="submit-id-submitdesignparams">
                 </div>
             </form>
 
@@ -148,10 +147,17 @@
         <div id="ee-content-rec-comps">
             <h3><u>Recommended Component Values:</u></h3>
             
-            <p id="ee-content-rec-comps-ajax" class="left-text">
+            <p class="left-text">
                 {% for component in rec_dcdc_comps %}
-                    {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}}: {{rec_dcdc_comps[loop.index0][2]}} <br>
+                    {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}} Selection Equation: <span lang="latex">{{rec_dcdc_comps[loop.index0][2]}}</span> <br>
                 {% endfor %}
+                <br>
+                <span id="ee-content-rec-comps-ajax" >
+                    {% for component in rec_dcdc_comps %}
+                        {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}} Value: {{rec_dcdc_comps[loop.index0][3]}} <br>
+                    {% endfor %}
+                </span>
+                
             </p>
         </div>
 
@@ -162,17 +168,21 @@
             </p>
             
 
-            <form id='input-param-form' class="form-horizontal" method='post' data-autosubmit>
+            <form id='input-param-form' class="form-horizontal" method='post' data-analysissubmit>
                 {{design_comp_form|crispy}}
                 <div>
                     <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
-                    <input type="submit" name="submitcompvalues" value="Generate Converter Analysis" class="btn btn-primary" id="submit-id-submitcompparams">
+                    <input type="hidden" name="submitcompvalues">
+                    <input type="submit" name="submitform" value="Generate Converter Analysis" class="btn btn-primary" id="submit-id-submitcompparams">
                 </div>
             </form>
         </div>
 
         <div id="ee-content-analysis-results">
             <h3><u>Analysis Results of Converter:</u></h3>
+            <span id="ee-content-analysis-ajax" >
+                Test
+            </span>
         </div>
 
         <div id="bode-plots" class="flex">
@@ -239,8 +249,7 @@
             success: function(json){
                 var toReturn = ""
                 for(i = 0; i < json.length; i++){
-                    toReturn += json[i][0] + ", " + json[i][1] + ": " + json[i][2]+ " &micro;"+ json[i][3] +"<br>";
-                    console.log(toReturn);
+                    toReturn += json[i][0] + ", " + json[i][1] + " Value: " + json[i][3]+ " &micro;"+ json[i][4] +"<br><br>";
                 };
                 $("#ee-content-rec-comps-ajax").html(toReturn);
             }
@@ -258,4 +267,36 @@
         $('form[data-autosubmit]').autosubmit();
     });
 </script>
+
+<script>
+    (function($) {
+      $.fn.analysissubmit = function() {
+        this.submit(function(event) {
+          event.preventDefault();
+          var form = $(this);
+          $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function(json){
+                var toReturn = "SUBMITTED"
+                $("#ee-content-analysis-ajax").html(toReturn);
+            }
+          }).done(function(data) {
+
+          }).fail(function(data) {
+            // Optionally alert the user of an error here...
+          });
+        });
+        return this;
+      }
+    })(jQuery)
+
+    $(function() {
+        $('form[data-analysissubmit]').analysissubmit();
+    });
+</script>
+
+<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+
 {% endblock %}
