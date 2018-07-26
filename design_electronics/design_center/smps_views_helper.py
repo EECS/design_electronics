@@ -3,19 +3,20 @@ import math, re, cmath
 from .forms import abbrev_design_params, abbrev_component_params
 from itertools import chain
 
-def analyze_converter(analyzed_circuit_object, context, cleaned_data=None):
+def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
     '''
-    Generates recommended component values for design for DC/DC converters.
-    Inputs: cleaned_data dictionary generated from 
+    Analyzes the converter for design for DC/DC converters.
+    Inputs: model circuit object, context list,
+    cleaned_data dictionary generated from form  
 
     Outputs: Void, updates the context dictionary with the recommended component
     values in the rec_dcdc_comps variable. Example of updated rec_dcdc_comps:
     [["Output Capacitor", "C1", "100" (uF), "F"], ["Output Inductor", "L1", "10" (uH), "H"]]
     '''
-    rec_dcdc_comps = []
+    analyzed_equations = []
     
     #Retrieve all components for which recommended design selection will occur.
-    dcdc_comp_equations = analyzed_circuit_object.recommended_components.all()
+    dcdc_analysis_eqs = analyzed_circuit_object.recommended_components.all()
 
     for comp in dcdc_comp_equations:
         parsed_name = comp.components.split(",")

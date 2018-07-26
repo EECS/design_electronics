@@ -60,7 +60,7 @@ class DesignParamChoices(models.Model):
     class Meta:
         ordering = ['params']
         verbose_name = "param"
-        verbose_name_plural = "params"
+        verbose_name_plural = "Design Parameters"
 
 class DCDCSelectedComponents(models.Model):
     selected_components_for_analysis = models.CharField(max_length = 100)
@@ -77,7 +77,7 @@ class DCDCSelectedComponents(models.Model):
     class Meta:
         ordering = ['selected_components_for_analysis']
         verbose_name = "Selected Component"
-        verbose_name_plural = "Selected Components"
+        verbose_name_plural = "DC/DC Selected Components"
 
 class DCDCRecommendedComponents(models.Model):
     components = models.CharField(max_length = 100)
@@ -96,7 +96,26 @@ class DCDCRecommendedComponents(models.Model):
     class Meta:
         ordering = ['components']
         verbose_name = "component"
-        verbose_name_plural = "Components"
+        verbose_name_plural = "DC/DC Recommended Components"
+
+class DCDCOpenLoopAnalysisEquations(models.Model):
+    circuit_url = models.CharField(max_length = 200)
+    equation_name = models.CharField(max_length = 200)
+    equation = models.TextField(max_length=1000, help_text="Enter the equation to be used to analyze the converter.", default=str(1))
+
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.circuit_url + ", " + self.equation_name
+        
+    def __unicode__(self):
+        return self.circuit_url
+
+    class Meta:
+        ordering = ['circuit_url']
+        verbose_name = "DC/DC Analysis Equation"
+        verbose_name_plural = "DC/DC Open-Loop Analysis Equations"
 
 class DCDC(models.Model):
     """
@@ -127,11 +146,7 @@ class DCDC(models.Model):
 
     selected_components = models.ManyToManyField(DCDCSelectedComponents)
 
-    #Open-loop analysis of converter.
-    ideal_duty_ratio = models.CharField(max_length=200, help_text="Enter the ideal duty ratio of the converter.", default=str(1))
-    ideal_ripple_current = models.CharField(max_length=200, help_text="Enter the ideal ripple current of the converter.", default=str(1))
-    ideal_ripple_voltage = models.CharField(max_length=200, help_text="Enter the ideal ripple voltage of the converter.", default=str(1))
-    efficiency = models.TextField(max_length=1000, help_text="Enter the efficiency of the converter.", default=str(1))
+    open_loop_analysis_equations = models.ManyToManyField(DCDCOpenLoopAnalysisEquations)
 
     #Open loop bode plots of the converter.
     input_output_transfer = models.TextField(max_length=5000, help_text="Enter the input to output transfer function of the converter.")
@@ -150,3 +165,8 @@ class DCDC(models.Model):
         Returns the url to access.
         """
         pass
+    
+    class Meta:
+        ordering = ['name']
+        verbose_name = "DC/DC Model"
+        verbose_name_plural = "DC/DC Models"

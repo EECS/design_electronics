@@ -6,7 +6,7 @@ from itertools import chain
 from .models import DCDC
 #Import design parameter forms
 from .forms import DesignParamForm, DesignCompForm, abbrev_design_params, abbrev_component_params
-from .smps_views_helper import generate_rec_dcdc_components, analyze_converter, generate_sidebar
+from .smps_views_helper import generate_rec_dcdc_components, analyze_dcdc_converter, generate_sidebar
 from .smps_views_helper import js_math, generate_bode
 
 context = {}
@@ -117,9 +117,11 @@ def home(request):
                 return JsonResponse("Test", safe=False)
         else:
             print("DIDN'T WORK")
+
     #GET method, populate recommended components section with default text.
     else:
         generate_rec_dcdc_components(analyzed_circuit_object, context, None)
+        analyze_dcdc_converter(analyzed_circuit_object, context, None)
 
     #####################################
     #Generate bode plot data.           #
