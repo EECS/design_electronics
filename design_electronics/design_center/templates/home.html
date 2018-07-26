@@ -249,7 +249,13 @@
             success: function(json){
                 var toReturn = ""
                 for(i = 0; i < json.length; i++){
-                    toReturn += json[i][0] + ", " + json[i][1] + " Value: " + json[i][3]+ " &micro;"+ json[i][4] +"<br><br>";
+                    toReturn += json[i][0] + ", " + json[i][1] + " Value: ";
+                    console.log(json[i][4].length);
+                    if (json[i][4].length == 0){
+                        toReturn += "<br><br>";
+                    }else{
+                        toReturn += json[i][3]+ " &micro;"+ json[i][4] +"<br><br>";
+                    }
                 };
                 $("#ee-content-rec-comps-ajax").html(toReturn);
             }

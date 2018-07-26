@@ -131,7 +131,7 @@ class DCDC(models.Model):
     ideal_duty_ratio = models.CharField(max_length=200, help_text="Enter the ideal duty ratio of the converter.", default=str(1))
     ideal_ripple_current = models.CharField(max_length=200, help_text="Enter the ideal ripple current of the converter.", default=str(1))
     ideal_ripple_voltage = models.CharField(max_length=200, help_text="Enter the ideal ripple voltage of the converter.", default=str(1))
-    efficiency = models.CharField(max_length=200, help_text="Enter the efficiency of the converter.", default=str(1))
+    efficiency = models.TextField(max_length=1000, help_text="Enter the efficiency of the converter.", default=str(1))
 
     #Open loop bode plots of the converter.
     input_output_transfer = models.TextField(max_length=5000, help_text="Enter the input to output transfer function of the converter.")
