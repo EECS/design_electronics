@@ -18,22 +18,6 @@
   },
   {
     "data": {
-      "id": "iliin",
-      "source": "il",
-      "target": "iin",
-      "gain": "(Vo/Vin)"
-    },
-    "position": {},
-    "group": "edges",
-    "removed": false,
-    "selected": false,
-    "selectable": true,
-    "locked": false,
-    "grabbable": true,
-    "classes": ""
-  },
-  {
-    "data": {
       "id": "iin",
       "nodeNumber": 1
     },
@@ -170,6 +154,39 @@
   },
   {
     "data": {
+      "id": "-von",
+      "nodeNumber": 9
+    },
+    "position": {
+      "x": 174.73288730102385,
+      "y": 204.72410673805635
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "iliin",
+      "source": "il",
+      "target": "iin",
+      "gain": "D"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
       "id": "icvo",
       "source": "ic",
       "target": "vo",
@@ -189,7 +206,7 @@
       "id": "voio",
       "source": "vo",
       "target": "io",
-      "gain": "(Io/Vo)"
+      "gain": "1/Rload"
     },
     "position": {},
     "group": "edges",
@@ -333,7 +350,7 @@
       "id": "vinvl",
       "source": "vin",
       "target": "vl",
-      "gain": "(Vo/Vin)"
+      "gain": "D"
     },
     "position": {},
     "group": "edges",
@@ -346,27 +363,10 @@
   },
   {
     "data": {
-      "id": "-von",
-      "nodeNumber": 9
-    },
-    "position": {
-      "x": 174.73288730102385,
-      "y": 204.72410673805635
-    },
-    "group": "nodes",
-    "removed": false,
-    "selected": false,
-    "selectable": true,
-    "locked": false,
-    "grabbable": true,
-    "classes": ""
-  },
-  {
-    "data": {
       "id": "-vonvl",
       "source": "-von",
       "target": "vl",
-      "gain": "(1-(Vo/Vin))"
+      "gain": "1-D"
     },
     "position": {},
     "group": "edges",

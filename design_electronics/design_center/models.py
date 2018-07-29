@@ -102,6 +102,7 @@ class DCDCOpenLoopAnalysisEquations(models.Model):
     circuit_url = models.CharField(max_length = 200)
     equation_name = models.CharField(max_length = 200)
     equation = models.TextField(max_length=1000, help_text="Enter the equation to be used to analyze the converter.", default=str(1))
+    units = models.CharField(max_length = 200, help_text="Enter the units of the resulting equation.", default=str(1))
 
     def __str__(self):
         """

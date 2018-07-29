@@ -109,12 +109,14 @@ class DesignCompForm(forms.Form):
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        
+        print(cleaned_data)
+        print(cleaned_data.keys())
+
         if len(cleaned_data) > 0:
             #Convert to Fs input parameter to kHz
-            self.cleaned_data[abbrev_params["Fs"]] = self.cleaned_data[abbrev_params["Fs"]]*1000
-        #    if self.cleaned_data[abbrev_params["Io"]] <= self.cleaned_data[abbrev_params["RipIo"]]:
-        #        self.add_error(abbrev_params["RipIo"], "Value cannot be equal to or lower than output current.")
-        #    
-        #    if self.cleaned_data[abbrev_params["Vo"]] < self.cleaned_data[abbrev_params["RipVo"]]:
-        #        self.add_error(abbrev_params["RipVo"], "Value cannot be equal to or lower than than output voltage.")
+            if "Fs" in abbrev_component_params and abbrev_component_params["Fs"] in cleaned_data.values():
+                self.cleaned_data[abbrev_params["Fs"]] = cleaned_data[abbrev_params["Fs"]]*1000
+
+            for k in cleaned_data.keys():
+                if "capacitor" in k.lower() or "inductor" in k.lower():
+                    self.cleaned_data[k] = self.cleaned_data[k]/1000000

@@ -149,7 +149,7 @@
             
             <p class="left-text">
                 {% for component in rec_dcdc_comps %}
-                    {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}} Selection Equation: <span lang="latex">{{rec_dcdc_comps[loop.index0][2]}}</span> <br>
+                    {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}} Selection Equation: <span lang="latex">{{rec_dcdc_comps[loop.index0][2]}}</span> <br><br>
                 {% endfor %}
                 <br>
                 <span id="ee-content-rec-comps-ajax" >
@@ -180,9 +180,18 @@
 
         <div id="ee-content-analysis-results">
             <h3><u>Analysis Results of Converter:</u></h3>
-            <span id="ee-content-analysis-ajax" >
-                Test
-            </span>
+            <p class="left-text">
+                    {% for component in analyzed_equations %}
+                        {{analyzed_equations[loop.index0][0]}} Equation: <span lang="latex">{{analyzed_equations[loop.index0][1]}}</span> <br><br>
+                    {% endfor %}
+                    <br>
+                    <span id="ee-content-analysis-ajax" >
+                        {% for component in analyzed_equations %}
+                        {{analyzed_equations[loop.index0][0]}} Value: {{analyzed_equations[loop.index0][2]}} <br><br>
+                        {% endfor %}
+                    </span>
+                    
+                </p>
         </div>
 
         <div id="bode-plots" class="flex">
@@ -250,7 +259,6 @@
                 var toReturn = ""
                 for(i = 0; i < json.length; i++){
                     toReturn += json[i][0] + ", " + json[i][1] + " Value: ";
-                    console.log(json[i][4].length);
                     if (json[i][4].length == 0){
                         toReturn += "<br><br>";
                     }else{
@@ -285,7 +293,15 @@
             url: form.attr('action'),
             data: form.serialize(),
             success: function(json){
-                var toReturn = "SUBMITTED"
+                var toReturn = ""
+                for(i = 0; i < json.length; i++){
+                    toReturn += json[i][0] + ": " + json[i][1];
+                    if (json[i][2] == "None"){
+                        toReturn += "<br><br>";
+                    }else{
+                        toReturn += " " + json[i][2] + "<br><br>";
+                    }
+                };
                 $("#ee-content-analysis-ajax").html(toReturn);
             }
           }).done(function(data) {

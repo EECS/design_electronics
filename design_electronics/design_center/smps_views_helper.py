@@ -1,7 +1,6 @@
 import math, re, cmath
 #Import design parameter forms
 from .forms import abbrev_design_params, abbrev_component_params
-from itertools import chain
 
 def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
     '''
@@ -16,23 +15,34 @@ def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
     analyzed_equations = []
     
     #Retrieve all components for which recommended design selection will occur.
-    dcdc_analysis_eqs = analyzed_circuit_object.recommended_components.all()
+    dcdc_analysis_eqs = analyzed_circuit_object.open_loop_analysis_equations.all()
 
-    for comp in dcdc_comp_equations:
-        parsed_name = comp.components.split(",")
-        #Component design equation.
+    for comp in dcdc_analysis_eqs:
+        parsed_name = comp.equation_name
+        units = comp.units
+
+        #Equation with symbols
         eq_symbols = comp.equation
         eq = eq_symbols
 
         #Initial load of the page.
         if cleaned_data == None:
-            rec_dcdc_comps.append([parsed_name[1], parsed_name[0], eq_symbols, "Enter design parameters to generate recommended component values.", ""])
+            #if units == str(None):
+            #    units = ''
+            enter_text = "Enter design parameters and component values."
+            analyzed_equations.append([parsed_name, eq_symbols,enter_text])
+
         else:
 
+            #Create dictionary with all parameters to use for substition.
+            total_params = abbrev_design_params.copy()
+            total_params.update(abbrev_component_params)
+
             #Loop through all keys (abbreviations) and replace with cleaned value.
-            for k, v in abbrev_design_params.items():
-                #Find key and only the key. Example, finds R1 and not R11 by separating on the non-word boundary.
-                eq = re.sub(r"\b"+k+r"\b", str(cleaned_data[abbrev_design_params[k]]), eq)
+            for k, v in total_params.items():
+                if total_params[k] in cleaned_data:
+                    #Find key and only the key. Example, finds R1 and not R11 by separating on the non-word boundary.
+                    eq = re.sub(r"\b"+k+r"\b", str(cleaned_data[total_params[k]]), eq)
 
             denom_start = eq.find("/")
 
@@ -48,17 +58,11 @@ def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
             denom = eval(denominator)
 
             if denom == 0:
-                rec_dcdc_comps.append([parsed_name[1], parsed_name[0], "Invalid input parameters, equation caused an infinite value.", ""])
+                analyzed_equations.append([parsed_name, "Invalid input parameters, equation caused an infinite value.", ""])
             else:
+                analyzed_equations.append([parsed_name, str(round((num/denom), 3)), units])
 
-                if "c" in parsed_name[0].lower():
-                    units = "F"
-                else:
-                    units = "H"
-
-                rec_dcdc_comps.append([parsed_name[1], parsed_name[0], eq_symbols, str(round((num/denom)*1e6, 2)), units])
-
-    context.update({"rec_dcdc_comps": rec_dcdc_comps})
+    context.update({"analyzed_equations": analyzed_equations})
 
 def generate_rec_dcdc_components(analyzed_circuit_object, context, cleaned_data=None):
     '''

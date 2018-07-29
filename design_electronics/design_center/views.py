@@ -10,6 +10,7 @@ from .smps_views_helper import generate_rec_dcdc_components, analyze_dcdc_conver
 from .smps_views_helper import js_math, generate_bode
 
 context = {}
+design_param_form = 0
 
 # Create your views here.
 def home(request):
@@ -78,10 +79,11 @@ def home(request):
     design_parameters_circuit_object = analyzed_circuit_object.design_params.all()
     selected_components_circuit_object = analyzed_circuit_object.selected_components.all()
 
-    design_param_form = DesignParamForm(None, design_parameters_circuit_object)
-    design_comp_form = DesignCompForm(None, selected_components_circuit_object)
+    if request.method == "GET":
+        design_param_form = DesignParamForm(None, design_parameters_circuit_object)
+        design_comp_form = DesignCompForm(None, selected_components_circuit_object)
 
-    context.update({'design_param_form': design_param_form, 'design_comp_form':design_comp_form })
+        context.update({'design_param_form': design_param_form, 'design_comp_form':design_comp_form })
 
     #####################################
     #Generate the recommended components#
@@ -93,6 +95,7 @@ def home(request):
             design_param_form = DesignParamForm(request.POST, design_parameters_circuit_object)
             if design_param_form.is_valid():
                 generate_rec_dcdc_components(analyzed_circuit_object, context, design_param_form.cleaned_data)
+                context.update({'design_param_form': design_param_form})
             else:
                 #The entered data was not valid
                 generate_rec_dcdc_components(analyzed_circuit_object, context, None)
@@ -105,14 +108,19 @@ def home(request):
             #given valid design parameters. Validation method is to check if
             # units have been populated.
             if context["rec_dcdc_comps"][0][4] != '':
-                design_comp_form = DesignParamForm(request.POST, selected_components_circuit_object)
+                design_comp_form = DesignCompForm(request.POST, selected_components_circuit_object)
                 if design_comp_form.is_valid():
-                    #analyze_converter(context)
-                    pass
+                    design_param_form = context["design_param_form"]
+                    analyze_dcdc_converter(analyzed_circuit_object, context, dict(chain(design_comp_form.cleaned_data.items(), 
+                                                                                        design_param_form.cleaned_data.items())))
+                    context.update({'design_comp_form': design_comp_form})
                 else:
                     #The entered data was not valid.
                     pass
+
+                return JsonResponse(context["analyzed_equations"], safe=False)
             else:
+
                 print("Design parameters not received. Please enter design parameters and submit, and then resubmit the selected component values.")
                 return JsonResponse("Test", safe=False)
         else:

@@ -1,11 +1,12 @@
-import pickle
-
 loopGains = []
 loopPaths = []
 loopPathSets = []
 forwardPaths = []
 forwardPathSets = []
 forwardPathGains = []
+nextPoints = 0
+gains = 0
+
 
 def getForwardPaths(traversal, currentPoint, endPoint, currentGain, currentPath):
     if currentPoint == endPoint:
@@ -261,7 +262,22 @@ def masonGainFormula(delta_I, delta):
 
     return numerator+"/"+denominator
 
-if __name__ == '__main__':
+def reset_globals():
+    global loopGains
+    global loopPaths
+    global loopPathSets
+    global forwardPaths
+    global forwardPathSets
+    global forwardPathGains
+
+    loopGains = []
+    loopPaths = []
+    loopPathSets = []
+    forwardPaths = []
+    forwardPathSets = []
+    forwardPathGains = []
+
+def genGraphAnalysis(nextPoints_input, gains_input, startPath, endPath):
     #Length is equal to total nodes in graph.
     #Graph indices in nextPoints are equal to their nodes.
     #points = [Node([1], ["(1)"]), Node([2, 3], ["(1/R2)", "(1/R1)"]), Node([4], ["(1)"])]
@@ -270,19 +286,16 @@ if __name__ == '__main__':
     #EXTREMELY IMPORTANT:
     #MAKE SURE TO PUT S*C IN BRACKETS FOR CAPACITORS!!!!! E.G. (1/(S*C))
     #****************************************************************************
-    nextPoints = [[3],[3,2],[],[4],[7,5,6,2],[3],[3],[8],[9,3],[7]]
-    gains = [['((Vo/Vin))'],['(Vin-VD1-IL*RQ1)','(IL)'],[],['((1/(s*L1)))'],['(1)','(RL1)','((Vo/Vin)*RQ1)','((Vo/Vin))'],['(-1)'],['(-1)'],['(RC1+(1/(s*C1)))'],['((Io/Vo))','(-1)'],['(-1)']]
-    forwardPathCreation(1,8)
+    global nextPoints
+    nextPoints = nextPoints_input
+    global gains
+    gains = gains_input
+    forwardPathCreation(startPath,endPath)
     loopCreation()
     delta = getDelta()
     delta_I = getDeltaI(delta)
 
     masonGain = masonGainFormula(delta_I, delta)
-    
-    filename = "Test.pickle"
-    
-    with open(filename, 'wb') as f:
-        pickle.dump(masonGain, f)
 
     print("Forward Paths are " + str(forwardPaths)+"\n")
     print("Forward Path Gains are " + str(forwardPathGains)+"\n")
@@ -294,3 +307,8 @@ if __name__ == '__main__':
     
     print("Delta " + str(delta)+"\n")
     print("Mason Gain Formula: " + str(masonGain)+"\n")
+    print("ANALYSIS COMPLETE\n")
+
+    reset_globals()
+
+    return masonGain
