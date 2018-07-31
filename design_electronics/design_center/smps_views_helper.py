@@ -60,7 +60,12 @@ def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
             if denom == 0:
                 analyzed_equations.append([parsed_name, "Invalid input parameters, equation caused an infinite value.", ""])
             else:
-                analyzed_equations.append([parsed_name, str(round((num/denom), 3)), units])
+                if "efficiency" in parsed_name.lower():
+                    result = str(round((num/denom)*100, 2))
+                else:
+                    result = str(round((num/denom), 3))
+
+                analyzed_equations.append([parsed_name, result, units])
 
     context.update({"analyzed_equations": analyzed_equations})
 

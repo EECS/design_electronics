@@ -1,0 +1,38 @@
+ID Dictionary: {'vin': 0, 'iin': 1, 'vl': 2, 'il': 3, 'vrl': 4, 'vrq': 5, 'ic': 6, 'vo': 7, 'io': 8, '-von': 9}
+
+Input Impedance analysis:
+
+Standard form of Equation: D**2*(C1*RC1*s + C1*Rload*s + 1)/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RQ1 + RL1) + L1*s*(C1*RC1*s + 1) + Rload*(C1*RC1*s + 1) + (D*RQ1 + RL1)*(C1*RC1*s + 1))
+
+DC Value of Standard Form Equation: D**2/(D*RQ1 + RL1 + Rload)
+
+Output Impedance analysis:
+
+Standard form of Equation: -(C1*L1*Rload*s**2 + C1*Rload*s*(D*RQ1 + RL1) + L1*s*(C1*RC1*s + 1) + Rload*(C1*RC1*s + 1) + (D*RQ1 + RL1)*(C1*RC1*s + 1))/(Rload*(C1*RC1*s + 1)*(D*RQ1 + L1*s + RL1))
+
+DC Value of Standard Form Equation: (-D*RQ1 - RL1 - Rload)/(Rload*(D*RQ1 + RL1))
+
+Input to Output analysis:
+
+Standard form of Equation: D*Rload*(C1*RC1*s + 1)/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RQ1 + RL1) + L1*s*(C1*RC1*s + 1) + Rload*(C1*RC1*s + 1) + (D*RQ1 + RL1)*(C1*RC1*s + 1))
+
+DC Value of Standard Form Equation: D*Rload/(D*RQ1 + RL1 + Rload)
+
+Input to Output Analysis, Diode contribution:
+
+Standard form of Equation: -Rload*(D - 1)*(C1*RC1*s + 1)/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RQ1 + RL1) + L1*s*(C1*RC1*s + 1) + Rload*(C1*RC1*s + 1) + (D*RQ1 + RL1)*(C1*RC1*s + 1))
+
+DC Value of Standard Form Equation: -Rload*(D - 1)/(D*RQ1 + RL1 + Rload)
+
+Input to Output Current Analysis:
+
+Standard form of Equation: (C1*L1*Rload*s**2 + C1*Rload*s*(D*RQ1 + RL1) + L1*s*(C1*RC1*s + 1) + Rload*(C1*RC1*s + 1) + (D*RQ1 + RL1)*(C1*RC1*s + 1))/(D*Rload*(C1*RC1*s + 1))
+
+DC Value of Standard Form Equation: (D*RQ1 + RL1 + Rload)/(D*Rload)
+
+Efficiency equation: (((((((-RL1*Vo + Rload*VD1 - Rload*Vo)/(RQ1*Vo + Rload*VD1 - Rload*Vin)*Rload/((-RL1*Vo + Rload*VD1 - Rload*Vo)/(RQ1*Vo + Rload*VD1 - Rload*Vin)*RQ1 + RL1 + Rload))*(Vin)))+(((-Rload*((-RL1*Vo + Rload*VD1 - Rload*Vo)/(RQ1*Vo + Rload*VD1 - Rload*Vin) - 1)/((-RL1*Vo + Rload*VD1 - Rload*Vo)/(RQ1*Vo + Rload*VD1 - Rload*Vin)*RQ1 + RL1 + Rload))*(-VD1)))))*(((((-RL1*Vo + Rload*VD1 - Rload*Vo)/(RQ1*Vo + Rload*VD1 - Rload*Vin)*RQ1 + RL1 + Rload)/((-RL1*Vo + Rload*VD1 - Rload*Vo)/(RQ1*Vo + Rload*VD1 - Rload*Vin)*Rload))/(Vin))))
+
+Efficiency equation simplified: (-VD1*(-RL1*Vo - RQ1*Vo + Rload*Vin - Rload*Vo) + Vin*(RL1*Vo - Rload*VD1 + Rload*Vo))/(Vin*(RL1*Vo - Rload*VD1 + Rload*Vo))
+
+Duty Cycle: (-RL1*Vo + Rload*VD1 - Rload*Vo)/(RQ1*Vo + Rload*VD1 - Rload*Vin)
+
