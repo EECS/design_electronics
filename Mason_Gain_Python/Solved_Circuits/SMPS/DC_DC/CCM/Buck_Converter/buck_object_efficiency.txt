@@ -90,8 +90,8 @@
       "nodeNumber": 5
     },
     "position": {
-      "x": 727.7076803705,
-      "y": 30.088719068817706
+      "x": 648.7076768093644,
+      "y": 21.08871866311871
     },
     "group": "nodes",
     "removed": false,
@@ -154,14 +154,13 @@
   },
   {
     "data": {
-      "id": "-von",
-      "nodeNumber": 9
+      "id": "vinvl",
+      "source": "vin",
+      "target": "vl",
+      "gain": "D"
     },
-    "position": {
-      "x": 174.73288730102385,
-      "y": 204.72410673805635
-    },
-    "group": "nodes",
+    "position": {},
+    "group": "edges",
     "removed": false,
     "selected": false,
     "selectable": true,
@@ -347,13 +346,14 @@
   },
   {
     "data": {
-      "id": "vinvl",
-      "source": "vin",
-      "target": "vl",
-      "gain": "D"
+      "id": "von",
+      "nodeNumber": 9
     },
-    "position": {},
-    "group": "edges",
+    "position": {
+      "x": 171.9999840425064,
+      "y": 208.00000094663102
+    },
+    "group": "nodes",
     "removed": false,
     "selected": false,
     "selectable": true,
@@ -363,10 +363,10 @@
   },
   {
     "data": {
-      "id": "-vonvl",
-      "source": "-von",
+      "id": "vonvl",
+      "source": "von",
       "target": "vl",
-      "gain": "1-D"
+      "gain": "D-1"
     },
     "position": {},
     "group": "edges",

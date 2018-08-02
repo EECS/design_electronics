@@ -8,14 +8,22 @@ import ast, json, re
 circuitPath = "Solved_Circuits\SMPS\DC_DC\CCM\Buck_Converter"
 circuitNodesAnalyzed = "buck_nodes_gains_efficiency"
 circuitObjectAnalyzed = "buck_object_efficiency"
+EFFICIENCY_ANALAYSIS = True
+input_output_transfer_current = "D"
 
 
-outputFile = "efficiency_analysis"
+
+
+if EFFICIENCY_ANALAYSIS:
+    outputFile = "efficiency_analysis"
+else:
+    outputFile = "small_signal_analysis"
+
 #outputFile = "small_signal_analysis"
 
 outF = open(circuitPath+"\\"+outputFile+".txt", 'w')
 
-#r_load_equation = "(Vo/Io)"
+r_load_equation = "(Vo/Io)"
 
 def divStr(a, b):
     '''
@@ -41,14 +49,24 @@ def multStr(a, b):
     '''
     return "(("+str(a)+")*("+str(b)+"))"
 
+def calcInputCurrent():
+    #Calculate input current as a stand alone variable
+    current = sympy.simplify(multStr("Io", input_output_transfer_current))
+    #current = sympy.simplify(multStr("Io", "D"))
+    #efficiency_equation = re.sub(r"\b"+"D"+r"\b", duty_cycle_equation, efficiency_equation)
+    #print("current is "+ str(current))
+    return str(current)
+
 def calcDutyCycle():
     D = sympy.symbols("D")
     temp = solve(minStr(addStr(multStr("Vin", input_output_transfer), multStr("VD1", input_output_transfer_diode)), "Vo"), D)
-    print("DUTY CYCLE SOLVE:"+ str(temp))
+    #print("temp is "+ str(temp))
     return str(temp[0])
 
 def calcEfficiency():
-    return multStr(addStr(multStr(input_output_transfer, "Vin"), multStr(input_output_transfer_diode, "-VD1")), divStr(input_output_transfer_current, "Vin"))
+    efficiency = divStr(multStr("Vo", "Io"), multStr("Vin", input_current))
+    #print("Efficiency is "+ str(efficiency))
+    return efficiency
 
 #Gains must be on line 4, 1 based index, of the text file generated from mason_gain_js
 #Next nodes must be on line 2, 1 based index
@@ -89,15 +107,16 @@ output_impedance = genGraphAnalysis(nodes, gains, json_id_dict["io"], json_id_di
 #Input to output transfer function
 input_output_transfer = genGraphAnalysis(nodes, gains, json_id_dict["vin"], json_id_dict["vo"])
 #Input to output transfer function, diode contribution
-input_output_transfer_diode = genGraphAnalysis(nodes, gains, json_id_dict["-von"], json_id_dict["vo"])
+input_output_transfer_diode = genGraphAnalysis(nodes, gains, json_id_dict["von"], json_id_dict["vo"])
 #Input to output transfer function, current
-input_output_transfer_current = genGraphAnalysis(nodes, gains, json_id_dict["io"], json_id_dict["iin"])
+#input_output_transfer_current = genGraphAnalysis(nodes, gains, json_id_dict["il"], json_id_dict["iin"])
 
-transfers = [[input_impedance, "Input Impedance analysis:"], [output_impedance, "Output Impedance analysis:"], [input_output_transfer, "Input to Output analysis:"],
-            [input_output_transfer_diode, "Input to Output Analysis, Diode contribution:"], [input_output_transfer_current, "Input to Output Current Analysis:"]]
+transfers = [[input_impedance, "Input Impedance analysis:"], [output_impedance, "Output Impedance analysis:"], [input_output_transfer, "Input Voltage to Output Voltage analysis:"],
+            [input_output_transfer_diode, "Input Voltage to Output Voltage Analysis, Diode contribution:"]]
 
 s = sympy.symbols("s")
 for tran in transfers:
+    #Print the type of analysis.
     outStr = tran[1]+"\n"
     outF.write(outStr+"\n")
     print(outStr)
@@ -124,15 +143,21 @@ input_impedance = transfers[0][0]
 output_impedance = transfers[1][0]
 input_output_transfer = transfers[2][0]
 input_output_transfer_diode = transfers[3][0]
-input_output_transfer_current = transfers[4][0]
+#input_output_transfer_current = transfers[4][0]
+
+#Calculate input current
+input_current = calcInputCurrent()
 
 #Calculate efficiency:
 efficiency_equation = calcEfficiency()
 #print(efficiency_equation)
 duty_cycle_equation = calcDutyCycle()
 efficiency_equation = re.sub(r"\b"+"D"+r"\b", duty_cycle_equation, efficiency_equation)
-#efficiency_equation = re.sub(r"\b"+"Rload"+r"\b", r_load_equation, efficiency_equation)
-#duty_cycle_equation = re.sub(r"\b"+"Rload"+r"\b", r_load_equation, duty_cycle_equation)
+input_current = re.sub(r"\b"+"D"+r"\b", duty_cycle_equation, input_current)
+
+efficiency_equation = re.sub(r"\b"+"Rload"+r"\b", r_load_equation, efficiency_equation)
+input_current = re.sub(r"\b"+"Rload"+r"\b", r_load_equation, input_current)
+duty_cycle_equation = re.sub(r"\b"+"Rload"+r"\b", r_load_equation, duty_cycle_equation)
 
 duty_cycle_equation = sympy.simplify(duty_cycle_equation)
 
@@ -145,6 +170,10 @@ outF.write(outStr+"\n")
 print(outStr)
 
 outStr = "Duty Cycle: "+ str(duty_cycle_equation)+"\n"
+outF.write(outStr+"\n")
+print(outStr)
+
+outStr = "Input Current: "+ str(sympy.simplify(input_current))+"\n"
 outF.write(outStr+"\n")
 print(outStr)
 

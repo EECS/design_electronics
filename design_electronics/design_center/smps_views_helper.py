@@ -6,16 +6,18 @@ def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
     '''
     Analyzes the converter for design for DC/DC converters.
     Inputs: model circuit object, context list,
-    cleaned_data dictionary generated from form  
+    cleaned_data dictionary generated from form.
 
-    Outputs: Void, updates the context dictionary with the recommended component
-    values in the rec_dcdc_comps variable. Example of updated rec_dcdc_comps:
-    [["Output Capacitor", "C1", "100" (uF), "F"], ["Output Inductor", "L1", "10" (uH), "H"]]
+    Outputs: Void, updates the context dictionary with the recommended analyzed_equations
+    variable. Example of updated analyzed_equations:
+    [['Duty Ratio', 0.915, 'None'], ['Ideal Output Ripple Current', '0.097', 'A'], [
+    'Ideal Output Ripple Voltage', '0.02', 'V'], ['Efficiency', '99.45', '%']]
     '''
     analyzed_equations = []
     
     #Retrieve all components for which recommended design selection will occur.
     dcdc_analysis_eqs = analyzed_circuit_object.open_loop_analysis_equations.all()
+    print(dcdc_analysis_eqs)
 
     for comp in dcdc_analysis_eqs:
         parsed_name = comp.equation_name
@@ -61,11 +63,24 @@ def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
                 analyzed_equations.append([parsed_name, "Invalid input parameters, equation caused an infinite value.", ""])
             else:
                 if "efficiency" in parsed_name.lower():
-                    result = str(round((num/denom)*100, 2))
+                    result = (round((num/denom)*100, 2))
+                    #Efficiency of converter can go above 100% in an unfeasible scenario
+                    if result >= 100:
+                        result = "Values resulted in an unfeasible converter."
+                        units = "None"
+                    else:
+                        result = str(result)
                 else:
-                    result = str(round((num/denom), 3))
+                    result = (round((num/denom), 3))
+                    if "duty ratio" in parsed_name.lower():
+                        #Duty cycle will try to compensate for losses, it is possible that it can be above 1, which is not feasible.
+                        if result >= 1:
+                            result = "Values resulted in an unfeasible converter."
+                    else:
+                        result = str(result)
 
                 analyzed_equations.append([parsed_name, result, units])
+    print(analyzed_equations)
 
     context.update({"analyzed_equations": analyzed_equations})
 
