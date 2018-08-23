@@ -181,17 +181,28 @@
         <div id="ee-content-analysis-results">
             <h3><u>Analysis Results of Converter:</u></h3>
             <p class="left-text">
+                {% for component in analyzed_equations %}
+                    {{analyzed_equations[loop.index0][0]}} Equation: <span lang="latex">{{analyzed_equations[loop.index0][1]}}</span> <br><br>
+                {% endfor %}
+                <br>
+                <span id="ee-content-analysis-ajax" >
                     {% for component in analyzed_equations %}
-                        {{analyzed_equations[loop.index0][0]}} Equation: <span lang="latex">{{analyzed_equations[loop.index0][1]}}</span> <br><br>
+                    {{analyzed_equations[loop.index0][0]}} Value: {{analyzed_equations[loop.index0][2]}} <br><br>
                     {% endfor %}
-                    <br>
-                    <span id="ee-content-analysis-ajax" >
-                        {% for component in analyzed_equations %}
-                        {{analyzed_equations[loop.index0][0]}} Value: {{analyzed_equations[loop.index0][2]}} <br><br>
-                        {% endfor %}
-                    </span>
-                    
-                </p>
+                </span>
+            </p>
+        </div>
+
+        <div>
+            <form action = "" method = "post" gen-openloop-bodeplot>
+                <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+                <input type="hidden" name="generateopenplots">
+                <input type="submit" name="submitform" value="Generate Open-Loop Bode Plots" class="btn btn-primary" id="submit-id-generateopenplots">
+            </form>
+        </div>
+
+        <div>
+            <h3><u>Open Loop Bode Plots:</u></h3>
         </div>
 
         <div id="bode-plots" class="flex">
@@ -318,6 +329,34 @@
         $('form[data-analysissubmit]').analysissubmit();
     });
 </script>
+
+<script>
+        (function($) {
+          $.fn.openloopbode = function() {
+            this.submit(function(event) {
+              event.preventDefault();
+              var form = $(this);
+              $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function(json){
+
+                }
+              }).done(function(data) {
+    
+              }).fail(function(data) {
+                // Optionally alert the user of an error here...
+              });
+            });
+            return this;
+          }
+        })(jQuery)
+    
+        $(function() {
+            $('form[gen-openloop-bodeplot]').openloopbode();
+        });
+    </script>
 
 <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 

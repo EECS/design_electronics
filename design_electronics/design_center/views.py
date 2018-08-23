@@ -14,132 +14,156 @@ design_param_form = 0
 
 # Create your views here.
 def home(request):
-    #####################################
-    #Generic website parameters
-    #####################################
-    landing_page_url = "/"
-    design_center_url = "design-center"
-    header_title = "Design Electronics"
-    context.update({"landing_page_url": landing_page_url, "design_center_url": design_center_url, 'header_title': header_title})
-
-    #####################################
-    #Model Parameters
-    #####################################
-    #Create list of all models in database.
-    models = []
-
-    #Query DC DC converters.
-    dc_dc_query = DCDC.objects.all()
-    models.append(dc_dc_query)
-
-    #Assumes that DC DC converter model has at least one entry.
-    if len(dc_dc_query) != 0:
-        power_types = dc_dc_query[0].POWER_ELECTRONIC_CIRCUIT_TYPES
-        smps_types = dc_dc_query[0].SMPS_TYPES
-        dc_dc_types = dc_dc_query[0].DCDC_TYPES
-        dc_dc_list = [o for o in dc_dc_query]
-
-    #####################################
-    #Current Circuit Analysis Update    #
-    #####################################
-    default_circuit_url = "ccm-buck-converter"
-    analyzed_circuit_url = request.path.rsplit("/", 1)[1]
-
-    #Handle design-center page default design shown.
-    if analyzed_circuit_url == design_center_url:
-        analyzed_circuit_url = default_circuit_url
-
-    ####HANDLE 404.#########
-
-    analyzed_circuit_object = None
-    circuit_found = False
-
-    #Loop through all models and select a model object to be displayed on webpage.
-    for circuit_type in models:
-        filtered_circuit = circuit_type.filter(url=analyzed_circuit_url)
-        if len(filtered_circuit) == 1:
-            circuit_found = True
-            analyzed_circuit_object = filtered_circuit[0]
-            break
-
-    if not circuit_found:
-        #Throw 404
-        pass
-    
-    context.update({'analyzed_circuit_object': analyzed_circuit_object})
-    #####################################
-    #Generate the sidebar.              #
-    #####################################
-    generate_sidebar(power_types, smps_types, dc_dc_types, dc_dc_list, context)
-
-    #####################################
-    #Generate the design parameters and #
-    #selected components forms.         #
-    #####################################
-    design_parameters_circuit_object = analyzed_circuit_object.design_params.all()
-    selected_components_circuit_object = analyzed_circuit_object.selected_components.all()
+    #Design parameters received flag and recommended components updated flags set to false on page load.
+    design_param_updated = False
+    design_comp_updated = False
 
     if request.method == "GET":
+        #####################################
+        #Generic website parameters
+        #####################################
+        landing_page_url = "/"
+        design_center_url = "design-center"
+        header_title = "Design Electronics"
+        context.update({"landing_page_url": landing_page_url, "design_center_url": design_center_url, 'header_title': header_title})
+
+        #####################################
+        #Model Parameters
+        #####################################
+        #Create list of all models in database.
+        models = []
+
+        #Query DC DC converters.
+        dc_dc_query = DCDC.objects.all()
+        models.append(dc_dc_query)
+
+        #Assumes that DC DC converter model has at least one entry.
+        if len(dc_dc_query) != 0:
+            power_types = dc_dc_query[0].POWER_ELECTRONIC_CIRCUIT_TYPES
+            smps_types = dc_dc_query[0].SMPS_TYPES
+            dc_dc_types = dc_dc_query[0].DCDC_TYPES
+            dc_dc_list = [o for o in dc_dc_query]
+
+        #####################################
+        #Current Circuit Analysis Update    #
+        #####################################
+        default_circuit_url = "ccm-buck-converter"
+        analyzed_circuit_url = request.path.rsplit("/", 1)[1]
+
+        #Handle design-center page default design shown.
+        if analyzed_circuit_url == design_center_url:
+            analyzed_circuit_url = default_circuit_url
+
+        ####HANDLE 404.#########
+
+        analyzed_circuit_object = None
+        circuit_found = False
+
+        #Loop through all models and select a model object to be displayed on webpage.
+        for circuit_type in models:
+            filtered_circuit = circuit_type.filter(url=analyzed_circuit_url)
+            if len(filtered_circuit) == 1:
+                circuit_found = True
+                analyzed_circuit_object = filtered_circuit[0]
+                break
+
+        if not circuit_found:
+            #Throw 404
+            pass
+    
+        context.update({'analyzed_circuit_object': analyzed_circuit_object})
+
+        #####################################
+        #Generate the sidebar.              #
+        #####################################
+        generate_sidebar(power_types, smps_types, dc_dc_types, dc_dc_list, context)
+
+        #####################################
+        #Generate the design parameters and #
+        #selected components forms.         #
+        #####################################
+        design_parameters_circuit_object = analyzed_circuit_object.design_params.all()
+        selected_components_circuit_object = analyzed_circuit_object.selected_components.all()
+
+        context.update({'design_parameters_circuit_object': design_parameters_circuit_object})
+        context.update({'selected_components_circuit_object': selected_components_circuit_object})
+
         design_param_form = DesignParamForm(None, design_parameters_circuit_object)
         design_comp_form = DesignCompForm(None, selected_components_circuit_object)
 
         context.update({'design_param_form': design_param_form, 'design_comp_form':design_comp_form })
 
+        #GET method, populate recommended components section with default text.
+        generate_rec_dcdc_components(analyzed_circuit_object, context, None)
+        analyze_dcdc_converter(analyzed_circuit_object, context, None)
+
+        #Initial flags for receiving updated forms are set to false on initial page load.
+        context.update({'design_comp_updated': False})
+        context.update({'design_param_updated': False})
+
     #####################################
     #Generate the recommended components#
     #or analyze the circuit.
     #####################################
-    if request.method == "POST":
+    elif request.method == "POST":
+
         #Generate selected components.
         if "submitdesignparams" in request.POST:
-            design_param_form = DesignParamForm(request.POST, design_parameters_circuit_object)
+            design_param_form = DesignParamForm(request.POST, context["design_parameters_circuit_object"])
             if design_param_form.is_valid():
-                generate_rec_dcdc_components(analyzed_circuit_object, context, design_param_form.cleaned_data)
+                generate_rec_dcdc_components(context["analyzed_circuit_object"], context, design_param_form.cleaned_data)
+
+                #Update design parameter form
                 context.update({'design_param_form': design_param_form})
+                context.update({'design_param_updated': True})
             else:
                 #The entered data was not valid
-                generate_rec_dcdc_components(analyzed_circuit_object, context, None)
+                generate_rec_dcdc_components(context["analyzed_circuit_object"], context, None)
 
             return JsonResponse(context["rec_dcdc_comps"], safe=False)
 
         #Analyze the circuit.
         elif "submitcompvalues" in request.POST:
             #Checks if the first recommended component has been populated
-            #given valid design parameters. Validation method is to check if
-            # units have been populated.
-            if context["rec_dcdc_comps"][0][4] != '':
-                design_comp_form = DesignCompForm(request.POST, selected_components_circuit_object)
+            #given valid design parameters.
+            if context["design_param_updated"]:
+
+                design_comp_form = DesignCompForm(request.POST, context["selected_components_circuit_object"])
                 if design_comp_form.is_valid():
                     design_param_form = context["design_param_form"]
-                    analyze_dcdc_converter(analyzed_circuit_object, context, dict(chain(design_comp_form.cleaned_data.items(), 
+                    analyze_dcdc_converter(context["analyzed_circuit_object"], context, dict(chain(design_comp_form.cleaned_data.items(), 
                                                                                         design_param_form.cleaned_data.items())))
                     context.update({'design_comp_form': design_comp_form})
+                    context.update({'design_comp_updated': True})
                 else:
                     #The entered data was not valid.
-                    pass
+                    analyze_dcdc_converter(context["analyzed_circuit_object"], context, None)
 
                 return JsonResponse(context["analyzed_equations"], safe=False)
             else:
+                #Design parameters were not received, must enter design parameters
+                #before being able to analyze the converter.
+                analyze_dcdc_converter(context["analyzed_circuit_object"], context, None)
 
-                print("Design parameters not received. Please enter design parameters and submit, and then resubmit the selected component values.")
-                return JsonResponse("Test", safe=False)
-        else:
-            print("DIDN'T WORK")
+                return JsonResponse(context["analyzed_equations"], safe=False)
 
-    #GET method, populate recommended components section with default text.
-    else:
-        generate_rec_dcdc_components(analyzed_circuit_object, context, None)
-        analyze_dcdc_converter(analyzed_circuit_object, context, None)
+        #Generate open loop bode plots
+        elif "generateopenplots" in request.POST:
 
-    #####################################
-    #Generate bode plot data.           #
-    #####################################
-    input_output_transfer = analyzed_circuit_object.input_output_transfer
-    input_impedance = analyzed_circuit_object.input_impedance
-    output_impedance = analyzed_circuit_object.output_impedance
-    duty_output_transfer = analyzed_circuit_object.duty_output_transfer
+            #Both design parameter form and design component form must be filled out to 
+            #generate open loop plots.
+            if context["design_param_updated"] and context["design_comp_updated"]:
 
-    #generate_bode(input_output_transfer, input_impedance, output_impedance, duty_output_transfer, context)
+                design_comp_form = context["design_comp_form"]
+                design_param_form = context["design_param_form"]
+                generate_bode(context["analyzed_circuit_object"], context, dict(chain(design_comp_form.cleaned_data.items(), 
+                                                                                    design_param_form.cleaned_data.items())))
+
+                #return JsonResponse(context["analyzed_equations"], safe=False)
+            else:
+                #Design parameters were not received, must enter design parameters
+                #before being able to analyze the converter.
+                analyze_dcdc_converter(context["analyzed_circuit_object"], context, None)    
 
     return render(
         request,
