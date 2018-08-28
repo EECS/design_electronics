@@ -1,0 +1,34 @@
+ID Dictionary: {'vrl': 5, 'vl': 3, 'vin': 0, 'ic': 7, 'iin': 2, 'il': 4, 'io': 9, 'vo': 8, 'd': 1, 'vrq': 6}
+
+Input Impedance analysis:
+
+Standard form of Equation: (C1*L1*Rload*s**2 + C1*Rload*s*(D*RQ1 + RL1) + L1*s*(C1*RC1*s + 1) + Rload*(C1*RC1*s + 1) + (D*RQ1 + RL1)*(C1*RC1*s + 1))/(D**2*(C1*RC1*s + C1*Rload*s + 1))
+
+DC Value of Standard Form Equation: (D*RQ1 + RL1 + Rload)/D**2
+
+Output Impedance analysis:
+
+Standard form of Equation: -Rload*(C1*RC1*s + 1)*(D*RQ1 + L1*s + RL1)/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RQ1 + RL1) + L1*s*(C1*RC1*s + 1) + Rload*(C1*RC1*s + 1) + (D*RQ1 + RL1)*(C1*RC1*s + 1))
+
+DC Value of Standard Form Equation: -Rload*(D*RQ1 + RL1)/(D*RQ1 + RL1 + Rload)
+
+Duty to Output Voltage Transfer analysis:
+
+Standard form of Equation: -Rload*(C1*RC1*s + 1)*(Io*RQ1 + VD1 - Vin)/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RQ1 + RL1) + L1*s*(C1*RC1*s + 1) + Rload*(C1*RC1*s + 1) + (D*RQ1 + RL1)*(C1*RC1*s + 1))
+
+DC Value of Standard Form Equation: -Rload*(Io*RQ1 + VD1 - Vin)/(D*RQ1 + RL1 + Rload)
+
+Input Voltage to Output Voltage analysis:
+
+Standard form of Equation: D*Rload*(C1*RC1*s + 1)/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RQ1 + RL1) + L1*s*(C1*RC1*s + 1) + Rload*(C1*RC1*s + 1) + (D*RQ1 + RL1)*(C1*RC1*s + 1))
+
+DC Value of Standard Form Equation: D*Rload/(D*RQ1 + RL1 + Rload)
+
+Input Impedance Equation Simplified: (C1*L1*Vo*s**2 + C1*Vo*s*(D*RQ1 + RL1) + Io*(C1*RC1*s + 1)*(D*RQ1 + L1*s + RL1) + Vo*(C1*RC1*s + 1))/(D**2*(C1*Vo*s + Io*(C1*RC1*s + 1)))
+
+Output Impedance Equation Simplified: -Vo*(C1*RC1*s + 1)*(D*RQ1 + L1*s + RL1)/(C1*L1*Vo*s**2 + C1*Vo*s*(D*RQ1 + RL1) + Io*(C1*RC1*s + 1)*(D*RQ1 + L1*s + RL1) + Vo*(C1*RC1*s + 1))
+
+Duty Cycle to Output Voltage Equation Simplified: -Vo*(C1*RC1*s + 1)*(Io*RQ1 + VD1 - Vin)/(C1*L1*Vo*s**2 + C1*Vo*s*(D*RQ1 + RL1) + Io*(C1*RC1*s + 1)*(D*RQ1 + L1*s + RL1) + Vo*(C1*RC1*s + 1))
+
+Input Voltage to Output Voltage Equation Simplified: D*Vo*(C1*RC1*s + 1)/(C1*L1*Vo*s**2 + C1*Vo*s*(D*RQ1 + RL1) + Io*(C1*RC1*s + 1)*(D*RQ1 + L1*s + RL1) + Vo*(C1*RC1*s + 1))
+

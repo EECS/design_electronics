@@ -205,31 +205,28 @@
             <h3><u>Open Loop Bode Plots:</u></h3>
         </div>
 
-        <div id="bode-plots" class="flex">
-            <div>
-                <div class="black-border">
-                  <h4>Duty Cycle to Output Voltage Transfer Function Bode Plots</h4>
-                  <div id= {{ duty_out_mag_div }}></div>
-                  <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
-                </div>
-                <div class="black-border">
-                  <h4>Output Impedance Bode Plots</h4>
-                  <div id= {{ out_imped_mag_div }}></div>
-                  <div id= {{ out_imped_phs_div }} style="margin-top: -10px;"></div>
-                </div>
+        <div id="bode-plots">
+            <div class="black-border">
+              <h4>Duty Cycle to Output Voltage Transfer Function Bode Plots</h4>
+              <div id= {{ duty_out_mag_div }}></div>
+              <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
             </div>
 
-            <div>
-                <div class="black-border">
-                  <h4>Input Voltage to Output Voltage Transfer Function Bode Plots</h4>
-                  <div id= {{ in_out_mag_div }}></div>
-                  <div id= {{ in_out_phs_div }} style="margin-top: -10px;"></div>
-                </div>
-                <div class="black-border">
-                  <h4>Input Impedance Bode Plots</h4>
-                  <div id= {{ in_imped_mag_div }}></div>
-                  <div id= {{ in_imped_phs_div }} style="margin-top: -10px;"></div>
-                </div>
+            <div class="black-border">
+              <h4>Output Impedance Bode Plots</h4>
+              <div id= {{ out_imped_mag_div }}></div>
+              <div id= {{ out_imped_phs_div }} style="margin-top: -10px;"></div>
+            </div>
+
+            <div class="black-border">
+              <h4>Input Voltage to Output Voltage Transfer Function Bode Plots</h4>
+              <div id= {{ in_out_mag_div }}></div>
+              <div id= {{ in_out_phs_div }} style="margin-top: -10px;"></div>
+            </div>
+            <div class="black-border">
+              <h4>Input Impedance Bode Plots</h4>
+              <div id= {{ in_imped_mag_div }}></div>
+              <div id= {{ in_imped_phs_div }} style="margin-top: -10px;"></div>
             </div>
         </div>
     </div>
@@ -341,7 +338,24 @@
                 url: form.attr('action'),
                 data: form.serialize(),
                 success: function(json){
-
+                    //Update each bode plots mags and phases data
+                    // with updated data from analysis.
+                    graphs.forEach(function(element){
+                        for(i = 0; i <json.length; i++){
+                            var div = json[i][0];
+                            var bode;
+                            if(element.mag_plot_div == div){
+                                bode = element;
+                                bode.mags = json[i][1];
+                                bode.mags_min = json[i][2];
+                                bode.mags_max = json[i][3];
+                                bode.phases = json[i][4];
+                                bode.phases_min = json[i][5];
+                                bode.phases_max = json[i][6];
+                                bode.redraw();
+                            }
+                        };
+                    });
                 }
               }).done(function(data) {
     

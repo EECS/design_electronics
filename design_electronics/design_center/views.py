@@ -101,6 +101,9 @@ def home(request):
         context.update({'design_comp_updated': False})
         context.update({'design_param_updated': False})
 
+        #Populate bode plots with initial load of data.
+        generate_bode(analyzed_circuit_object, context, None, 5000)
+
     #####################################
     #Generate the recommended components#
     #or analyze the circuit.
@@ -156,10 +159,10 @@ def home(request):
 
                 design_comp_form = context["design_comp_form"]
                 design_param_form = context["design_param_form"]
-                generate_bode(context["analyzed_circuit_object"], context, dict(chain(design_comp_form.cleaned_data.items(), 
-                                                                                    design_param_form.cleaned_data.items())))
+                cleaned_data = dict(chain(design_comp_form.cleaned_data.items(), design_param_form.cleaned_data.items(), [("D",context["duty_cycle"])]))
+                updated_data = generate_bode(context["analyzed_circuit_object"], context, cleaned_data, 5000)
 
-                #return JsonResponse(context["analyzed_equations"], safe=False)
+                return JsonResponse(updated_data, safe=False)
             else:
                 #Design parameters were not received, must enter design parameters
                 #before being able to analyze the converter.

@@ -190,7 +190,7 @@
       "id": "voio",
       "source": "vo",
       "target": "io",
-      "gain": "(Io/Vo)"
+      "gain": "1/Rload"
     },
     "position": {},
     "group": "edges",
@@ -254,7 +254,7 @@
       "id": "ilvrq",
       "source": "il",
       "target": "vrq",
-      "gain": "(Vo/Vin)*RQ1"
+      "gain": "D*RQ1"
     },
     "position": {},
     "group": "edges",
@@ -334,7 +334,7 @@
       "id": "vinvl",
       "source": "vin",
       "target": "vl",
-      "gain": "(Vo/Vin)"
+      "gain": "D"
     },
     "position": {},
     "group": "edges",
@@ -350,7 +350,7 @@
       "id": "dvl",
       "source": "d",
       "target": "vl",
-      "gain": "Vin-VD1-IL*RQ1"
+      "gain": "Vin-VD1-Io*RQ1"
     },
     "position": {},
     "group": "edges",
@@ -366,7 +366,7 @@
       "id": "iliin",
       "source": "il",
       "target": "iin",
-      "gain": "(Vo/Vin)"
+      "gain": "D"
     },
     "position": {},
     "group": "edges",
@@ -382,7 +382,7 @@
       "id": "diin",
       "source": "d",
       "target": "iin",
-      "gain": "IL"
+      "gain": "Io"
     },
     "position": {},
     "group": "edges",
