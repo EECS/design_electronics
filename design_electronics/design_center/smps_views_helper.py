@@ -6,10 +6,10 @@ def js_math(transfer_function, cleaned_data, context, num_points = 5000):
     #print("Transfer function is: " + str(transfer_function) + "\n")
 
     start_frequency = 1 #Hz
-    end_frequency = 100 #kHz
-    step_size = int(((end_frequency*1000)-start_frequency)/num_points)
+    end_frequency = 1000 #kHz
+    log_step_size = ((math.log10(end_frequency*1000)-math.log10(start_frequency))/num_points)
 
-    bode_x_range = [step for step in range(start_frequency, end_frequency*1000, step_size)]
+    bode_x_range = [10**((i+1)*log_step_size) for i in range(num_points)]
     phases = []
     mags = []
 

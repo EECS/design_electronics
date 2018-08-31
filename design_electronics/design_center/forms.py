@@ -1,6 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div
+from crispy_forms.layout import Layout, Div, Field, Fieldset
 
 abbrev_design_params = {}
 abbrev_component_params = {}
@@ -15,19 +15,8 @@ class DesignParamForm(forms.Form):
 
     def __init__(self, data = None, *args, **kwargs):
         super(DesignParamForm, self).__init__(data, *args, **kwargs)
-        self.helper = FormHelper()
+        self.helper = FormHelper(self)
         self.helper.form_id = 'id-designParamForm'
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8'
-        self.helper.form_method = 'post'
-        self.helper.form_action = 'submit_survey'
-        self.helper.layout = Layout(
-            Div(
-                Div('field1', css_class="col-xs-6"),
-                Div('field3', css_class='col-xs-6'),
-                css_class='row-fluid'), 
-            )
 
         #Loop through all parameters to be used
         #to build the form.
@@ -49,12 +38,23 @@ class DesignParamForm(forms.Form):
                 self.fields[field_name].help_text = "A"
             elif "frequency" in field_name.lower():
                 self.fields[field_name].help_text = "kHz"
-    
+
+        #Capitalize label of each field in the form.
+        self.helper.label_class = 'col-lg-4 title-case'
+        self.helper.field_class = 'col-lg-4 align-right'
+        
+        self.helper.layout = Layout()
+
+        for field in self.fields:
+            self.helper.layout.append(
+                Field(field, wrapper_class="flex-space-between"),
+            )
+
     def clean(self):
         cleaned_data = self.cleaned_data
         
         if len(cleaned_data) > 0:
-            #Convert to Fs input parameter to kHz
+            #Convert to Fs input parameter to kHz, UPDATE TO IF THERE IS NO SWITCHING FREQUENCY IN PARAM LIST.
             self.cleaned_data[abbrev_design_params["Fs"]] = self.cleaned_data[abbrev_design_params["Fs"]]*1000
         #    if self.cleaned_data[abbrev_design_params["Io"]] <= self.cleaned_data[abbrev_design_params["RipIo"]]:
         #        self.add_error(abbrev_design_params["RipIo"], "Value cannot be equal to or lower than output current.")
@@ -72,13 +72,8 @@ class DesignCompForm(forms.Form):
 
     def __init__(self, data = None, *args, **kwargs):
         super(DesignCompForm, self).__init__(data, *args, **kwargs)
-        self.helper = FormHelper()
+        self.helper = FormHelper(self)
         self.helper.form_id = 'id-designCompForm'
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8'
-        self.helper.form_method = 'post'
-        self.helper.form_action = 'submit_survey'
 
         #Loop through all parameters to be used
         #to build the form.
@@ -106,6 +101,17 @@ class DesignCompForm(forms.Form):
                 self.fields[field_name].help_text = "A"
             elif "frequency" in field_name.lower():
                 self.fields[field_name].help_text = "kHz"
+        
+        #Capitalize label of each field in the form.
+        self.helper.label_class = 'col-lg-4 title-case'
+        self.helper.field_class = 'col-lg-4 align-right'
+
+        self.helper.layout = Layout()
+
+        for field in self.fields:
+            self.helper.layout.append(
+                Field(field, wrapper_class="flex-space-between"),
+            )
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -115,7 +121,7 @@ class DesignCompForm(forms.Form):
         if len(cleaned_data) > 0:
             #Convert to Fs input parameter to kHz
             if "Fs" in abbrev_component_params and abbrev_component_params["Fs"] in cleaned_data.values():
-                self.cleaned_data[abbrev_params["Fs"]] = cleaned_data[abbrev_params["Fs"]]*1000
+                self.cleaned_data[abbrev_design_params["Fs"]] = cleaned_data[abbrev_design_params["Fs"]]*1000
 
             for k in cleaned_data.keys():
                 if "capacitor" in k.lower() or "inductor" in k.lower():

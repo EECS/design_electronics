@@ -23,6 +23,38 @@ strong{
     display: flex;
 }
 
+.flex-space-around{
+    display: flex;
+    justify-content: space-around;
+}
+
+.flex-space-between{
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+}
+
+.title-case{
+    text-transform: capitalize;
+}
+
+.input {
+    height: 100%;
+}
+
+.half-width {
+    width: 50%;
+}
+
+form{
+    margin: 0 auto;
+    width: 50%;
+}
+
 .left-text{
     text-align: left;
 }
