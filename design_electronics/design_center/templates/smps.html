@@ -1,4 +1,12 @@
-{% extends "generic.html" %}
+{% extends "base.html" %}
+
+{% block bodeScripts %}
+<script src="{{ static }}design_center/js/d3.v3.min.js"></script>
+<script src="http://mathjs.org/js/lib/math.js"></script>
+<script src="{{ static }}design_center/js/jquery.min.js"></script>
+<script src="{{ static }}design_center/js/bootstrap.min.js"></script>
+
+{% endblock %}
 
 {% block dynamicPlots %}
   <script>
@@ -46,65 +54,8 @@
 
 {% endblock %}
 
-{% block title %}
-<title>{{header_title}}</title>
-
-{% endblock %}
-
-{% block header %}
-
-<div id = "site-title">
-    <div id="home-button" type="button"> <a href="{{landing_page_url}}">{{header_title}}</a></div>
-</div>
-
-<div id="header-support">
-  <div class="right-hdr-btns"><a href="{{ ABSOLUTE_ROOT }}/{{design_center_url}}">Design Center</a></div>
-  <div class="right-hdr-btns"><a href="#contact-row">Contact</a></div>
-</div>
-
-{% endblock %}
-
-{% block left_sidebar%}
-<ul>
-  Power Electronics
-    <!-- Loops through type of power electronic circuits.  -->
-    {% for pe_type in sidebar_list[0] %}
-        <!-- Sets current power electronic circuit type index. -->
-        {% set pe_row = loop.index0 %}
-        <li>
-            <ul>
-                {{ pe_type }}
-                <!-- Loops through type of SMPS circuits.  -->
-                {% for smps_type in sidebar_list[1][pe_row] %}
-                    <!-- Sets current SMPS circuit type index. E.g. DC/DC converters -->
-                    {% set smps_row = loop.index0 %}
-                    <li>
-                        <ul>
-                            {{ smps_type }}
-                            <!-- Loops through types of DC/DC circuits.  -->
-                            {% for dc_type in sidebar_list[2][pe_row][smps_row] %}
-                                <!-- Sets current DC/DC circuit type index. E.g. CCM -->
-                                {% set dc_row = loop.index0 %}
-                                <li >
-                                    <ul>
-                                        {{ dc_type }}
-                                        <!-- Loops through DC/DC circuit names. E.g. buck-->
-                                        {% for dc_type_name in sidebar_list[3][pe_row][smps_row][dc_row] %}
-                                            <li>
-                                                <a href="{{ ABSOLUTE_ROOT }}/{{design_center_url}}/{{dc_type_name.url}}">{{ dc_type_name }}</a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
-    {% endfor %}
-</ul>
-
+{% block pageStyles%}
+<link rel="stylesheet" href="{{ static }}design_center/css/styles.css">
 {% endblock %}
 
 {% block ee_content %}
@@ -229,24 +180,6 @@
     </div>
 </div>
 
-{% endblock %}
-
-{% block contact_row %}
-<div id="contact-row-content">
-    <h4>Contact me using the links below:</h4>
-    <a class="btn btn-block">
-      <span class="fa fa-google"></span>
-      GMAIL
-    </a>
-    <a class="btn btn-block">
-      <span class="fa fa-linkedin"></span>
-      LINKEDIN
-    </a>
-    <a class="btn btn-block">
-        <span class="fa fa-github"></span>
-        GITHUB
-      </a>
-</div>
 {% endblock %}
 
 {% block ajax_support %}

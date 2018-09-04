@@ -46,6 +46,13 @@ strong{
     height: 100%;
 }
 
+.left-align {
+    margin-right: auto;
+}
+
+.right-align {
+    margin-left: auto;
+}
 .half-width {
     width: 50%;
 }
@@ -75,6 +82,10 @@ form{
     border-bottom-width: 1px;
 }
 
+.right-hdr-btns{
+    padding: 0px 20px;
+}
+
 #header-row{
     display: flex;
     position: fixed;
@@ -95,10 +106,6 @@ form{
 
 #header-support{
     display: flex;
-}
-
-.right-hdr-btns{
-    padding: 0px 20px;
 }
 
 #ee-content{

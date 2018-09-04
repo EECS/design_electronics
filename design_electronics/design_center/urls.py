@@ -17,5 +17,5 @@ from django.urls import re_path
 from design_center import views
 
 urlpatterns = [
-    re_path(r'[design]*', views.home, name="home")
+    re_path(r'[design]*', views.smps, name="smps")
 ]

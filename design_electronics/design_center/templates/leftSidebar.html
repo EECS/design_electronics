@@ -1,0 +1,42 @@
+{% block left_sidebar%}
+<ul>
+  Power Electronics
+    <!-- Loops through type of power electronic circuits.  -->
+    {% for pe_type in sidebar_list[0] %}
+        <!-- Sets current power electronic circuit type index. -->
+        {% set pe_row = loop.index0 %}
+        <li>
+            <ul>
+                {{ pe_type }}
+                <!-- Loops through type of SMPS circuits.  -->
+                {% for smps_type in sidebar_list[1][pe_row] %}
+                    <!-- Sets current SMPS circuit type index. E.g. DC/DC converters -->
+                    {% set smps_row = loop.index0 %}
+                    <li>
+                        <ul>
+                            {{ smps_type }}
+                            <!-- Loops through types of DC/DC circuits.  -->
+                            {% for dc_type in sidebar_list[2][pe_row][smps_row] %}
+                                <!-- Sets current DC/DC circuit type index. E.g. CCM -->
+                                {% set dc_row = loop.index0 %}
+                                <li >
+                                    <ul>
+                                        {{ dc_type }}
+                                        <!-- Loops through DC/DC circuit names. E.g. buck-->
+                                        {% for dc_type_name in sidebar_list[3][pe_row][smps_row][dc_row] %}
+                                            <li>
+                                                <a href="{{ ABSOLUTE_ROOT }}/{{design_center_url}}/{{dc_type_name.url}}">{{ dc_type_name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

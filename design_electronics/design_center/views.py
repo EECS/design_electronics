@@ -13,7 +13,7 @@ context = {}
 design_param_form = 0
 
 # Create your views here.
-def home(request):
+def smps(request):
     #Design parameters received flag and recommended components updated flags set to false on page load.
     design_param_updated = False
     design_comp_updated = False
@@ -54,8 +54,6 @@ def home(request):
         if analyzed_circuit_url == design_center_url:
             analyzed_circuit_url = default_circuit_url
 
-        ####HANDLE 404.#########
-
         analyzed_circuit_object = None
         circuit_found = False
 
@@ -67,16 +65,19 @@ def home(request):
                 analyzed_circuit_object = filtered_circuit[0]
                 break
 
-        if not circuit_found:
-            #Throw 404
-            pass
-    
-        context.update({'analyzed_circuit_object': analyzed_circuit_object})
-
         #####################################
         #Generate the sidebar.              #
         #####################################
         generate_sidebar(power_types, smps_types, dc_dc_types, dc_dc_list, context)
+
+        if not circuit_found:
+            return render(
+                request,
+                '404.html',
+                context=context
+            )
+    
+        context.update({'analyzed_circuit_object': analyzed_circuit_object})
 
         #####################################
         #Generate the design parameters and #
@@ -170,6 +171,6 @@ def home(request):
 
     return render(
         request,
-        'home.html',
+        'smps.html',
         context=context
     )

@@ -40,8 +40,8 @@ class DesignParamForm(forms.Form):
                 self.fields[field_name].help_text = "kHz"
 
         #Capitalize label of each field in the form.
-        self.helper.label_class = 'col-lg-4 title-case'
-        self.helper.field_class = 'col-lg-4 align-right'
+        self.helper.label_class = 'col-lg-6 title-case'
+        self.helper.field_class = 'col-lg-6 align-right'
         
         self.helper.layout = Layout()
 
@@ -103,8 +103,8 @@ class DesignCompForm(forms.Form):
                 self.fields[field_name].help_text = "kHz"
         
         #Capitalize label of each field in the form.
-        self.helper.label_class = 'col-lg-4 title-case'
-        self.helper.field_class = 'col-lg-4 align-right'
+        self.helper.label_class = 'col-lg-6 title-case'
+        self.helper.field_class = 'col-lg-6 align-right'
 
         self.helper.layout = Layout()
 

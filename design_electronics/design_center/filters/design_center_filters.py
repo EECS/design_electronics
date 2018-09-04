@@ -3,7 +3,6 @@ from django.template import Context
 import jinja2
 
 def crispy(form):
-    #return as_crispy_form(form, 'bootstrap3', form.helper.label_class, form.helper.field_class)
     c = Context({
             'formset': form,
             'form_show_errors': True,
