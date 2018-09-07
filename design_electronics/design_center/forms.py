@@ -50,13 +50,18 @@ class DesignParamForm(forms.Form):
                 Field(field, wrapper_class="flex-space-between"),
             )
 
-    def clean(self):
+    #Accepts arguments power electronics circuit type, smps circuit type, dcdc type.
+    def custom_clean(self, pe_ct, smps_ct, dcdc_ct):
         cleaned_data = self.cleaned_data
         
         if len(cleaned_data) > 0:
-            #Convert to Fs input parameter to kHz, UPDATE TO IF THERE IS NO SWITCHING FREQUENCY IN PARAM LIST.
-            self.cleaned_data[abbrev_design_params["Fs"]] = self.cleaned_data[abbrev_design_params["Fs"]]*1000
-        #    if self.cleaned_data[abbrev_design_params["Io"]] <= self.cleaned_data[abbrev_design_params["RipIo"]]:
+            #Convert to Fs input parameter to kHz.
+            if abbrev_design_params["Fs"] in cleaned_data:
+                self.cleaned_data[abbrev_design_params["Fs"]] = self.cleaned_data[abbrev_design_params["Fs"]]*1000
+            
+            if pe_ct == "SMPS":
+                
+            #if self.cleaned_data[abbrev_design_params["Io"]] <= self.cleaned_data[abbrev_design_params["RipIo"]]:
         #        self.add_error(abbrev_design_params["RipIo"], "Value cannot be equal to or lower than output current.")
         #    
         #    if self.cleaned_data[abbrev_design_params["Vo"]] < self.cleaned_data[abbrev_design_params["RipVo"]]:

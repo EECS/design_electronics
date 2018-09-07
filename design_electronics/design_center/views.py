@@ -114,6 +114,15 @@ def smps(request):
         #Generate selected components.
         if "submitdesignparams" in request.POST:
             design_param_form = DesignParamForm(request.POST, context["design_parameters_circuit_object"])
+            circuit_obj = context["analyzed_circuit_object"]
+
+            #Clean data prior to custom clean so that it is available
+            #to custom cleaning method.
+            design_param_form.clean()
+            #Custom clean design_param_form given type of power electronic circuit to be analyzed.
+            design_param_form.custom_clean(circuit_obj.pe_circuit_type, circuit_obj.smps_circuit_type,
+                                    circuit_obj.dcdc_type)
+
             if design_param_form.is_valid():
                 generate_rec_dcdc_components(context["analyzed_circuit_object"], context, design_param_form.cleaned_data)
 

@@ -21,30 +21,27 @@
 
     <body>
 
-      <div id="container-custom" class="container-fluid">
+        <div id="container-custom" class="container-fluid">
 
-        <div id="header-row" class="row grey-bottom-border">
-            {% include "header.html" %}
-        </div>
+            <div id="header-row" class="row grey-bottom-border">
+                {% include "header.html" %}
+            </div>
 
-        <div id="content" class="row flex">
-          <div id="left-sidebar">
-            {% include "leftSidebar.html" %}
-          </div>
+            <div id="content" class="row flex">
+                <div id="left-sidebar">
+                    {% include "leftSidebar.html" %}
+                </div>
       
-          <div>
-            <div id="ee-content" class="row col-md-10">
-                {% block ee_content %}
-                {% endblock %}
+                <div id="ee-content" class="row col-md-10">
+                    {% block ee_content %}
+                    {% endblock %}
+                </div>
             </div>
 
             <div id="contact-row" class="row">
                 {% include "contactRow.html" %}
             </div>
-          </div>
         </div>
-
-      </div>
     </body>
     <footer>
     </footer>

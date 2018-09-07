@@ -19,6 +19,15 @@ strong{
     display: none;
 }
 
+ul {
+    padding: 0px;
+}
+
+li {
+    list-style-type: none;
+    padding: 10%;
+}
+
 .flex{
     display: flex;
 }
@@ -99,9 +108,6 @@ form{
 #left-sidebar{
     margin-top:50px;
     text-align: left;
-    border-style:solid;
-    border-color:black;
-    background:white;
 }
 
 #header-support{
