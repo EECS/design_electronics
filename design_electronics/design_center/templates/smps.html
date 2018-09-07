@@ -2,7 +2,6 @@
 
 {% block bodeScripts %}
 <script src="{{ static }}design_center/js/d3.v3.min.js"></script>
-<script src="http://mathjs.org/js/lib/math.js"></script>
 <script src="{{ static }}design_center/js/jquery.min.js"></script>
 <script src="{{ static }}design_center/js/bootstrap.min.js"></script>
 
@@ -241,6 +240,9 @@
                     }
                 };
                 $("#ee-content-analysis-ajax").html(toReturn);
+            },
+            error: function(json){
+                console.log(json);
             }
           }).done(function(data) {
 

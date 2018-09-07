@@ -50,22 +50,41 @@ class DesignParamForm(forms.Form):
                 Field(field, wrapper_class="flex-space-between"),
             )
 
-    #Accepts arguments power electronics circuit type, smps circuit type, dcdc type.
-    def custom_clean(self, pe_ct, smps_ct, dcdc_ct):
+    #Accepts arguments power electronics circuit type, smps circuit type, dcdc type and circuit name.
+    def custom_clean(self, pe_ct, smps_ct, dcdc_ct, ct_name):
         cleaned_data = self.cleaned_data
         
         if len(cleaned_data) > 0:
+            
             #Convert to Fs input parameter to kHz.
             if abbrev_design_params["Fs"] in cleaned_data:
                 self.cleaned_data[abbrev_design_params["Fs"]] = self.cleaned_data[abbrev_design_params["Fs"]]*1000
             
-            if pe_ct == "SMPS":
-                
-            #if self.cleaned_data[abbrev_design_params["Io"]] <= self.cleaned_data[abbrev_design_params["RipIo"]]:
-        #        self.add_error(abbrev_design_params["RipIo"], "Value cannot be equal to or lower than output current.")
-        #    
-        #    if self.cleaned_data[abbrev_design_params["Vo"]] < self.cleaned_data[abbrev_design_params["RipVo"]]:
-        #        self.add_error(abbrev_design_params["RipVo"], "Value cannot be equal to or lower than than output voltage.")
+            if str(pe_ct) == "SMPS":
+                if str(smps_ct) == "DCDC":
+                    if str(dcdc_ct) == "CCM":
+                        
+                        #Ripple current cannot be larger than output current in a CCM converter.
+                        if (self.cleaned_data[abbrev_design_params["Io"]] <= 
+                                self.cleaned_data[abbrev_design_params["RipIo"]]):
+                            self.add_error(abbrev_design_params["RipIo"], 
+                                "Output ripple current cannot be equal to or greater than output current.")
+
+                        #Ripple voltage cannot be larger than output voltage in a CCM converter.
+                        if (self.cleaned_data[abbrev_design_params["Vo"]] <= 
+                            self.cleaned_data[abbrev_design_params["RipVo"]]):
+                            self.add_error(abbrev_design_params["RipVo"], 
+                                "Output ripple voltage cannot be equal to or greater than output voltage.")
+                        
+                        #BUCK CONVERTER ERRORS
+                        if str(ct_name) == "Buck Converter":
+
+                            #Output Voltage cannot be greater than input voltage in a buck converter.
+                            if (self.cleaned_data[abbrev_design_params["Vo"]] >= 
+                                self.cleaned_data[abbrev_design_params["Vin"]]):
+                                self.add_error(abbrev_design_params["Vin"], 
+                                    "Input voltage cannot be less than output voltage in a buck converter.")
+
 
 class DesignCompForm(forms.Form):
     '''

@@ -116,14 +116,15 @@ def smps(request):
             design_param_form = DesignParamForm(request.POST, context["design_parameters_circuit_object"])
             circuit_obj = context["analyzed_circuit_object"]
 
-            #Clean data prior to custom clean so that it is available
+            #Validate data (and generate self.cleaned_data) 
+            #prior to custom clean so that it is available
             #to custom cleaning method.
-            design_param_form.clean()
+            design_param_form.is_valid()
             #Custom clean design_param_form given type of power electronic circuit to be analyzed.
             design_param_form.custom_clean(circuit_obj.pe_circuit_type, circuit_obj.smps_circuit_type,
-                                    circuit_obj.dcdc_type)
+                                    circuit_obj.dcdc_type, circuit_obj.name)
 
-            if design_param_form.is_valid():
+            if len(design_param_form.errors) == 0:
                 generate_rec_dcdc_components(context["analyzed_circuit_object"], context, design_param_form.cleaned_data)
 
                 #Update design parameter form
@@ -131,7 +132,12 @@ def smps(request):
                 context.update({'design_param_updated': True})
             else:
                 #The entered data was not valid
-                generate_rec_dcdc_components(context["analyzed_circuit_object"], context, None)
+                #generate_rec_dcdc_components(context["analyzed_circuit_object"], context, None)
+                response = JsonResponse({
+                    "error":dict(design_param_form.errors.items())
+                })
+                response.status_code = 403
+                return response
 
             return JsonResponse(context["rec_dcdc_comps"], safe=False)
 
