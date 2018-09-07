@@ -32,6 +32,10 @@ li {
     display: flex;
 }
 
+.error{
+    color: red;
+}
+
 .flex-space-around{
     display: flex;
     justify-content: space-around;

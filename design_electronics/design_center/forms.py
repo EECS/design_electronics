@@ -83,7 +83,7 @@ class DesignParamForm(forms.Form):
                             if (self.cleaned_data[abbrev_design_params["Vo"]] >= 
                                 self.cleaned_data[abbrev_design_params["Vin"]]):
                                 self.add_error(abbrev_design_params["Vin"], 
-                                    "Input voltage cannot be less than output voltage in a buck converter.")
+                                    "Input voltage cannot be less than or equal to output voltage in a buck converter.")
 
 
 class DesignCompForm(forms.Form):

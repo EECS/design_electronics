@@ -101,12 +101,15 @@
                 {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}} Selection Equation: <span lang="latex">{{rec_dcdc_comps[loop.index0][2]}}</span> <br><br>
             {% endfor %}
             <br>
+
+            <span class="error" id="ee-content-rec-comps-ajax-errors">
+            </span>
+
             <span id="ee-content-rec-comps-ajax" >
                 {% for component in rec_dcdc_comps %}
                     {{rec_dcdc_comps[loop.index0][0]}}, {{rec_dcdc_comps[loop.index0][1]}} Value: {{rec_dcdc_comps[loop.index0][3]}} <br>
                 {% endfor %}
             </span>
-            
         </p>
     </div>
 
@@ -203,6 +206,21 @@
                     }
                 };
                 $("#ee-content-rec-comps-ajax").html(toReturn);
+                $("#ee-content-rec-comps-ajax-errors").html("");
+                //$("#ee-content-rec-comps-ajax-errors").setAttribute("hidden", true);
+            },
+            error: function(list){
+                var response = JSON.parse(list.responseText);
+                var toReturn = "";
+                for(var key in response.errors){
+                    if (response.errors.hasOwnProperty(key)) {
+                        console.log(response.errors[key][0]);
+                        toReturn += response.errors[key][0] + "<br>";
+                    }
+                };
+                toReturn += "<br>";
+
+                $("#ee-content-rec-comps-ajax-errors").html(toReturn);
             }
           }).done(function(data) {
 
@@ -242,7 +260,7 @@
                 $("#ee-content-analysis-ajax").html(toReturn);
             },
             error: function(json){
-                console.log(json);
+
             }
           }).done(function(data) {
 

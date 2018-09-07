@@ -7,7 +7,7 @@ from .models import DCDC
 #Import design parameter forms
 from .forms import DesignParamForm, DesignCompForm, abbrev_design_params, abbrev_component_params
 from .smps_views_helper import generate_rec_dcdc_components, analyze_dcdc_converter, generate_sidebar
-from .smps_views_helper import js_math, generate_bode
+from .smps_views_helper import generate_bode
 
 context = {}
 design_param_form = 0
@@ -70,6 +70,7 @@ def smps(request):
         #####################################
         generate_sidebar(power_types, smps_types, dc_dc_types, dc_dc_list, context)
 
+        #Render 404 page if circuit url was not found.
         if not circuit_found:
             return render(
                 request,
@@ -131,12 +132,11 @@ def smps(request):
                 context.update({'design_param_form': design_param_form})
                 context.update({'design_param_updated': True})
             else:
-                #The entered data was not valid
-                #generate_rec_dcdc_components(context["analyzed_circuit_object"], context, None)
-                response = JsonResponse({
-                    "error":dict(design_param_form.errors.items())
-                })
+                #The entered data was not valid, return errors.
+                context.update({'design_param_updated': False})
+                response = JsonResponse({"errors": design_param_form.errors})
                 response.status_code = 403
+
                 return response
 
             return JsonResponse(context["rec_dcdc_comps"], safe=False)
