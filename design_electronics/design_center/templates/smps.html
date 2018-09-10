@@ -218,7 +218,6 @@
             error: function(list){
                 var response = JSON.parse(list.responseText);
                 var toReturn = "";
-                console.log(response);
                 for(var key in response.errors){
                     if (response.errors.hasOwnProperty(key)) {
                         toReturn += response.errors[key][0] + "<br>";
@@ -267,9 +266,7 @@
                 $("#ee-content-analysis-ajax-errors").html("");
             },
             error: function(list){
-                console.log(list);
                 var response = JSON.parse(list.responseText);
-                console.log(response);
                 var toReturn = "";
                 for(var key in response.errors){
                     if (response.errors.hasOwnProperty(key)) {
@@ -329,7 +326,6 @@
                 },
                 error: function(list){
                     var response = JSON.parse(list.responseText);
-                    console.log(response);
                     var toReturn = "";
                     for(var key in response.errors){
                         if (response.errors.hasOwnProperty(key)) {
