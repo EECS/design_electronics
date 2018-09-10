@@ -8,6 +8,7 @@ from .models import DCDC
 from .forms import DesignParamForm, DesignCompForm, abbrev_design_params, abbrev_component_params
 from .smps_views_helper import generate_rec_dcdc_components, analyze_dcdc_converter, generate_sidebar
 from .smps_views_helper import generate_bode
+import json
 
 context = {}
 design_param_form = 0
@@ -146,8 +147,17 @@ def smps(request):
             #Checks if the first recommended component has been populated
             #given valid design parameters.
             if context["design_param_updated"]:
-
                 design_comp_form = DesignCompForm(request.POST, context["selected_components_circuit_object"])
+                circuit_obj = context["analyzed_circuit_object"]
+
+                #Validate data (and generate self.cleaned_data) 
+                #prior to custom clean so that it is available
+                #to custom cleaning method.
+                design_comp_form.is_valid()
+                #Custom clean design_param_form given type of power electronic circuit to be analyzed.
+                design_comp_form.custom_clean(circuit_obj.pe_circuit_type, circuit_obj.smps_circuit_type,
+                                    circuit_obj.dcdc_type, circuit_obj.name)
+                
                 if design_comp_form.is_valid():
                     design_param_form = context["design_param_form"]
                     analyze_dcdc_converter(context["analyzed_circuit_object"], context, dict(chain(design_comp_form.cleaned_data.items(), 
@@ -156,15 +166,31 @@ def smps(request):
                     context.update({'design_comp_updated': True})
                 else:
                     #The entered data was not valid.
-                    analyze_dcdc_converter(context["analyzed_circuit_object"], context, None)
+                    context.update({'design_comp_form': False})
+                    response = JsonResponse({"errors": design_comp_form.errors})
+                    response.status_code = 403
+
+                    return response
 
                 return JsonResponse(context["analyzed_equations"], safe=False)
             else:
                 #Design parameters were not received, must enter design parameters
                 #before being able to analyze the converter.
-                analyze_dcdc_converter(context["analyzed_circuit_object"], context, None)
+                context.update({'design_comp_form': False})
+                design_comp_form = DesignCompForm(request.POST, context["selected_components_circuit_object"])
 
-                return JsonResponse(context["analyzed_equations"], safe=False)
+                #Get a field to associate an error with. NEED TO UPDATE, THIS IS TERRIBLE.
+                for k, v in design_comp_form.fields.items():
+                    field = k
+                    break
+
+                design_comp_form.add_error(field, "Design parameter form entered was not valid." + 
+                " Correct form and resubmit prior to submitting component values.")
+
+                response = JsonResponse({"errors": design_comp_form.errors})
+                response.status_code = 403
+
+                return response
 
         #Generate open loop bode plots
         elif "generateopenplots" in request.POST:

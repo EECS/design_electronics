@@ -136,6 +136,10 @@
                 {{analyzed_equations[loop.index0][0]}} Equation: <span lang="latex">{{analyzed_equations[loop.index0][1]}}</span> <br><br>
             {% endfor %}
             <br>
+
+            <span class="error" id="ee-content-analysis-ajax-errors">
+            </span>
+
             <span id="ee-content-analysis-ajax" >
                 {% for component in analyzed_equations %}
                 {{analyzed_equations[loop.index0][0]}} Value: {{analyzed_equations[loop.index0][2]}} <br><br>
@@ -207,14 +211,13 @@
                 };
                 $("#ee-content-rec-comps-ajax").html(toReturn);
                 $("#ee-content-rec-comps-ajax-errors").html("");
-                //$("#ee-content-rec-comps-ajax-errors").setAttribute("hidden", true);
             },
             error: function(list){
                 var response = JSON.parse(list.responseText);
                 var toReturn = "";
+                console.log(response);
                 for(var key in response.errors){
                     if (response.errors.hasOwnProperty(key)) {
-                        console.log(response.errors[key][0]);
                         toReturn += response.errors[key][0] + "<br>";
                     }
                 };
@@ -258,9 +261,21 @@
                     }
                 };
                 $("#ee-content-analysis-ajax").html(toReturn);
+                $("#ee-content-analysis-ajax-errors").html("");
             },
-            error: function(json){
+            error: function(list){
+                console.log(list);
+                var response = JSON.parse(list.responseText);
+                console.log(response);
+                var toReturn = "";
+                for(var key in response.errors){
+                    if (response.errors.hasOwnProperty(key)) {
+                        toReturn += response.errors[key][0] + "<br>";
+                    }
+                };
+                toReturn += "<br>";
 
+                $("#ee-content-analysis-ajax-errors").html(toReturn);
             }
           }).done(function(data) {
 

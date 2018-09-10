@@ -1,6 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Field, Fieldset
+from crispy_forms.layout import Layout, Div, Field
 
 abbrev_design_params = {}
 abbrev_component_params = {}
@@ -137,16 +137,20 @@ class DesignCompForm(forms.Form):
                 Field(field, wrapper_class="flex-space-between"),
             )
 
-    def clean(self):
+    #Accepts arguments power electronics circuit type, smps circuit type, dcdc type and circuit name.
+    def custom_clean(self, pe_ct, smps_ct, dcdc_ct, ct_name):
         cleaned_data = self.cleaned_data
-        print(cleaned_data)
-        print(cleaned_data.keys())
-
+        
         if len(cleaned_data) > 0:
+            
             #Convert to Fs input parameter to kHz
             if "Fs" in abbrev_component_params and abbrev_component_params["Fs"] in cleaned_data.values():
                 self.cleaned_data[abbrev_design_params["Fs"]] = cleaned_data[abbrev_design_params["Fs"]]*1000
 
             for k in cleaned_data.keys():
+                print(len(self.cleaned_data))
+                if self.cleaned_data[k] < 0:
+                    self.add_error(k, "Parameters cannot be less than 0.")
+
                 if "capacitor" in k.lower() or "inductor" in k.lower():
                     self.cleaned_data[k] = self.cleaned_data[k]/1000000
