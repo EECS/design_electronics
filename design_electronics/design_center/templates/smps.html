@@ -156,6 +156,9 @@
         </form>
     </div>
 
+    <span class="error left-text" id="ee-open-bode-ajax-errors">
+    </span>
+
     <div>
         <h3><u>Open Loop Bode Plots:</u></h3>
     </div>
@@ -318,13 +321,27 @@
                                 bode.phases_min = json[i][5];
                                 bode.phases_max = json[i][6];
                                 bode.redraw();
+
+                                $("#ee-open-bode-ajax-errors").html("");
                             }
                         };
                     });
+                },
+                error: function(list){
+                    var response = JSON.parse(list.responseText);
+                    console.log(response);
+                    var toReturn = "";
+                    for(var key in response.errors){
+                        if (response.errors.hasOwnProperty(key)) {
+                            toReturn += response.errors[key] + "<br>";
+                        }
+                    };
+
+                    $("#ee-open-bode-ajax-errors").html(toReturn);
                 }
-              }).done(function(data) {
+                }).done(function(data) {
     
-              }).fail(function(data) {
+                }).fail(function(data) {
                 // Optionally alert the user of an error here...
               });
             });

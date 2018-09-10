@@ -147,8 +147,7 @@ class DesignCompForm(forms.Form):
             if "Fs" in abbrev_component_params and abbrev_component_params["Fs"] in cleaned_data.values():
                 self.cleaned_data[abbrev_design_params["Fs"]] = cleaned_data[abbrev_design_params["Fs"]]*1000
 
-            for k in cleaned_data.keys():
-                print(len(self.cleaned_data))
+            for k in cleaned_data.copy().keys():
                 if self.cleaned_data[k] < 0:
                     self.add_error(k, "Parameters cannot be less than 0.")
 

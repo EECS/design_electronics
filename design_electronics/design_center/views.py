@@ -166,7 +166,7 @@ def smps(request):
                     context.update({'design_comp_updated': True})
                 else:
                     #The entered data was not valid.
-                    context.update({'design_comp_form': False})
+                    context.update({'design_comp_updated': False})
                     response = JsonResponse({"errors": design_comp_form.errors})
                     response.status_code = 403
 
@@ -176,7 +176,7 @@ def smps(request):
             else:
                 #Design parameters were not received, must enter design parameters
                 #before being able to analyze the converter.
-                context.update({'design_comp_form': False})
+                context.update({'design_comp_updated': False})
                 design_comp_form = DesignCompForm(request.POST, context["selected_components_circuit_object"])
 
                 #Get a field to associate an error with. NEED TO UPDATE, THIS IS TERRIBLE.
@@ -206,9 +206,29 @@ def smps(request):
 
                 return JsonResponse(updated_data, safe=False)
             else:
-                #Design parameters were not received, must enter design parameters
-                #before being able to analyze the converter.
-                analyze_dcdc_converter(context["analyzed_circuit_object"], context, None)    
+                if not(context["design_param_updated"]):
+                    #Design parameters were not received, must enter design parameters
+                    #before being able to analyze the converter.
+
+                    param_error = {}
+                    param_error["Design parameter form"] = ("Design parameter form entered was not valid." + 
+                    " Correct form and resubmit prior to generating open loop bode plots.")
+                    
+                    response = JsonResponse({"errors": param_error})
+
+                elif not(context["design_comp_updated"]):
+                    #Design components were not received, must enter design components
+                    #before being able to analyze the converter.
+
+                    param_error = {}
+                    param_error["Design component form"]= ["Design component form entered was not valid." + 
+                    " Correct form and resubmit prior to generating open loop bode plots."]
+                    
+                    response = JsonResponse({"errors": param_error})
+
+                response.status_code = 403
+
+                return response
 
     return render(
         request,
