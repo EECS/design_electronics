@@ -75,6 +75,14 @@ form{
     width: 50%;
 }
 
+.sidebar-font{
+    font-size: 18px;
+}
+
+.sidebar-font-active{
+    font-weight: bold;
+}
+
 .left-text{
     text-align: left;
 }
