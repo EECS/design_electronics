@@ -2,6 +2,11 @@ body{
     text-align: center;
     font-family: "Whitney SSm A", "Whitney SSm B", "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
     font-weight: 100;
+    width:90%;
+    margin-left: auto;
+    margin-right:auto;
+    margin-top: 0%;
+    min-width: 500px;
 }
 
 a{
@@ -19,17 +24,31 @@ a{
     border-width: 1px;
 }
 
+.black-bottom-border{
+    border-bottom-style: solid;
+    border-color:black;
+    border-bottom-width: 1px;
+}
+
 .grey-bottom-border{
     border-bottom-style: solid;
     border-bottom-color:grey;
     border-bottom-width: 1px;
 }
 
+.right-hdr-btns{
+    padding: 0px 20px;
+}
+
 #header-row{
     display: flex;
     position: fixed;
-    background-color: #c2def0;
     font-size: x-large;
+    width: 90%;
+    justify-content: space-between;
+    background:white;
+    z-index:20;
+
 }
 
 #header-support{
@@ -37,13 +56,8 @@ a{
     margin-left: auto;
 }
 
-#right-hdr-btns{
-    padding: 0px 20px;
-}
-
 #home-row{
     display: flex;
-    background-color: #c2def0;
     text-align: left;
 }
 

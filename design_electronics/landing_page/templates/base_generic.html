@@ -6,7 +6,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script src="http://mathjs.org/js/lib/math.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -23,26 +22,26 @@
 
 <body>
 
-  <div id="container-custom" class="container-fluid">
+  <div id="container-custom" class="container-fluid center-div">
     
-    <div id="header-row" class="row">
-      {% block header %}
-      {% endblock %}
+    <div id="header-row" class="row black-bottom-border">
+        {% block header %}
+        {% endblock %}
     </div>
     
-    <div id="home-row" class="row">
-      {% block home %}
-      {% endblock %}
+    <div id="home-row" class="row grey-bottom-border">
+        {% block home %}
+        {% endblock %}
     </div>
 
     <div id="content-row" class="row grey-bottom-border">
-      {% block content %}
-      {% endblock %}
+        {% block content %}
+        {% endblock %}
     </div>
 
     <div id="example-design" class="row">
-      {% block example_design %}
-      {% endblock %}
+        {% block example_design %}
+        {% endblock %}
     </div>
 
     <div id="contact-row" class="row">

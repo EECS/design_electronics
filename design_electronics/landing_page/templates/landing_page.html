@@ -58,17 +58,17 @@
 </div>
 
 <div id="header-support" class="col-6">
-  <div id="right-hdr-btns"> <a href="#content-row"> Content </a></div>
-  <div id="right-hdr-btns"><a href="#example-design">Example Design</a></div>
+  <div class="right-hdr-btns"> <a href="#content-row"> Content </a></div>
+  <div class="right-hdr-btns"><a href="#example-design">Example Design</a></div>
 
   {% if show_testimonials %}
-  <div id="right-hdr-btns"> <a href="">Testimonials</a></div>
+  <div class="right-hdr-btns"> <a href="">Testimonials</a></div>
   {% endif %}
 
-  <div id="right-hdr-btns"><a href="{{ design_center_url }}">Design Center</a></div>
-  <div id="right-hdr-btns"><a href="#contact-row">Contact</a></div>
+  <div class="right-hdr-btns"><a href="{{ design_center_url }}">Design Center</a></div>
+  <div class="right-hdr-btns"><a href="#contact-row">Contact</a></div>
   {% if paid_site%}
-  <div id="right-hdr-btns">Try Free for {{trial_length}} Days </div>
+  <div class="right-hdr-btns">Try Free for {{trial_length}} Days </div>
   {% endif %}
 </div>
 
@@ -92,7 +92,7 @@
   
 
   <div id="home-row-picture">
-    <img src="{{ static }}landing_page/img/power-converter.jpg" class="rounded" alt="Power Converter" height="400 px">
+    <img src="{{ static }}landing_page/img/ccm-buck-converter.jpg" class="rounded" alt="Buck Converter" height="400 px">
   </div>
 
 </div>
@@ -217,18 +217,10 @@
 
 {% block contact_row %}
 <div id="contact-row-content">
-    <h4>Contact me using the links below:</h4>
-    <a class="btn btn-block">
-      <span class="fa fa-google"></span>
-      GMAIL
-    </a>
+    <h4>Contact me using the link below:</h4>
     <a class="btn btn-block">
       <span class="fa fa-linkedin"></span>
       LINKEDIN
     </a>
-    <a class="btn btn-block">
-        <span class="fa fa-github"></span>
-        GITHUB
-      </a>
 </div>
 {% endblock %}
