@@ -160,10 +160,21 @@ def smps(request):
                 
                 if design_comp_form.is_valid():
                     design_param_form = context["design_param_form"]
-                    analyze_dcdc_converter(context["analyzed_circuit_object"], context, dict(chain(design_comp_form.cleaned_data.items(), 
+                    success = analyze_dcdc_converter(context["analyzed_circuit_object"], context, dict(chain(design_comp_form.cleaned_data.items(), 
                                                                                         design_param_form.cleaned_data.items())))
-                    context.update({'design_comp_form': design_comp_form})
-                    context.update({'design_comp_updated': True})
+                    if success:
+                        context.update({'design_comp_form': design_comp_form})
+                        context.update({'design_comp_updated': True})
+                    else:
+                        context.update({'design_comp_updated': False})
+                        param_error = {}
+                        param_error["DC/DC Analysis"]= ["Design components selected do not result in a feasible converter." + 
+                        " Possible issues could be due to the losses in the parasitic resistances, reduce values and resubmit. "]
+
+                        response = JsonResponse({"errors": param_error})
+                        response.status_code = 403
+
+                        return response
                 else:
                     #The entered data was not valid.
                     context.update({'design_comp_updated': False})

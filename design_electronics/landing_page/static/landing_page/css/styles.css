@@ -2,11 +2,8 @@ body{
     text-align: center;
     font-family: "Whitney SSm A", "Whitney SSm B", "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
     font-weight: 100;
-    width:90%;
-    margin-left: auto;
-    margin-right:auto;
     margin-top: 0%;
-    min-width: 500px;
+    min-width:500px;
 }
 
 a{
@@ -16,6 +13,25 @@ a{
 
 .flex{
     display: flex;
+}
+
+.no-margin{
+    margin:0;
+    width:100%;
+}
+
+.margin-five{
+    margin-left:5%;
+    margin-right:5%;
+}
+.center-div{
+    margin-left: auto;
+    margin-right:auto;
+    width: 90%;
+}
+
+.white-background{
+    background:rgb(20, 13, 13);
 }
 
 .black-border{
@@ -40,6 +56,24 @@ a{
     padding: 0px 20px;
 }
 
+.picture-container{
+    width: 700px;
+}
+
+.card-deck{
+    display: flex;
+    justify-content: center;
+}
+
+.card{
+    border-style: inset;
+    border-color:black;
+    border-width: 1px;
+    margin:0px 20px;
+    text-align: left;
+}
+
+
 #header-row{
     display: flex;
     position: fixed;
@@ -48,7 +82,6 @@ a{
     justify-content: space-between;
     background:white;
     z-index:20;
-
 }
 
 #header-support{
@@ -74,7 +107,6 @@ a{
     font-size: 32pt;
 }
 
-
 #content-row{
     padding: 5% 20%;
 }
@@ -84,19 +116,6 @@ a{
 }
 
 #content-row-content{
-    text-align: left;
-}
-
-.card-deck{
-    display: flex;
-    justify-content: center;
-}
-
-.card{
-    border-style: inset;
-    border-color:black;
-    border-width: 1px;
-    margin:0px 20px;
     text-align: left;
 }
 

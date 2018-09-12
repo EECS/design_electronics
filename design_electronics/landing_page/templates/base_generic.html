@@ -22,34 +22,36 @@
 
 <body>
 
-  <div id="container-custom" class="container-fluid center-div">
-    
-    <div id="header-row" class="row black-bottom-border">
-        {% block header %}
-        {% endblock %}
-    </div>
-    
-    <div id="home-row" class="row grey-bottom-border">
-        {% block home %}
-        {% endblock %}
+    <div>
+        <div id="header-row" class="row black-bottom-border margin-five">
+            {% block header %}
+            {% endblock %}
+        </div>
     </div>
 
-    <div id="content-row" class="row grey-bottom-border">
-        {% block content %}
-        {% endblock %}
-    </div>
+    <div class="container-fluid center-div">
 
-    <div id="example-design" class="row">
-        {% block example_design %}
-        {% endblock %}
-    </div>
+        <div id="home-row" class="row grey-bottom-border">
+            {% block home %}
+            {% endblock %}
+        </div>
 
-    <div id="contact-row" class="row">
-        {% block contact_row %}
-        {% endblock %}
-    </div>
+        <div id="content-row" class="row grey-bottom-border">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <div id="example-design" class="row">
+            {% block example_design %}
+            {% endblock %}
+        </div>
+
+        <div id="contact-row" class="row">
+            {% block contact_row %}
+            {% endblock %}
+        </div>
     
-  </div>
+    </div>
 </body>
 <footer>
   <!-- Add ability to include javascript plots into website -->
