@@ -92,7 +92,7 @@
   
 
   <div id="home-row-picture">
-    <img src="{{ static }}landing_page/img/ccm-buck-converter.jpg" class="rounded" alt="Buck Converter" height="400 px">
+    <img src="{{ static }}landing_page/img/ccm-buck-converter.jpg" class="rounded picture-container" alt="Buck Converter" height="400 px">
   </div>
 
 </div>
@@ -185,31 +185,28 @@
       </div>
     </div>
 
-    <div id="example-design-row-plots" class="flex">
-        <div>
-            <div class="black-border">
-              <h4>Duty Cycle to Output Voltage Transfer Function Bode Plots</h4>
-              <div id= {{ duty_out_mag_div }}></div>
-              <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
-            </div>
-            <div class="black-border">
-              <h4>Output Impedance Bode Plots</h4>
-              <div id= {{ out_imped_mag_div }}></div>
-              <div id= {{ out_imped_phs_div }} style="margin-top: -10px;"></div>
-            </div>
+    <div id="example-design-row-plots">
+        <div class="black-border">
+            <h4>Duty Cycle to Output Voltage Transfer Function Bode Plots</h4>
+            <div id= {{ duty_out_mag_div }}></div>
+            <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
+        </div>
+
+        <div class="black-border">
+            <h4>Output Impedance Bode Plots</h4>
+            <div id= {{ out_imped_mag_div }}></div>
+            <div id= {{ out_imped_phs_div }} style="margin-top: -10px;"></div>
         </div>
     
-        <div>
-            <div class="black-border">
-              <h4>Input Voltage to Output Voltage Transfer Function Bode Plots</h4>
-              <div id= {{ in_out_mag_div }}></div>
-              <div id= {{ in_out_phs_div }} style="margin-top: -10px;"></div>
-            </div>
-            <div class="black-border">
-              <h4>Input Impedance Bode Plots</h4>
-              <div id= {{ in_imped_mag_div }}></div>
-              <div id= {{ in_imped_phs_div }} style="margin-top: -10px;"></div>
-            </div>
+        <div class="black-border">
+            <h4>Input Voltage to Output Voltage Transfer Function Bode Plots</h4>
+            <div id= {{ in_out_mag_div }}></div>
+            <div id= {{ in_out_phs_div }} style="margin-top: -10px;"></div>
+        </div>
+        <div class="black-border">
+            <h4>Input Impedance Bode Plots</h4>
+            <div id= {{ in_imped_mag_div }}></div>
+            <div id= {{ in_imped_phs_div }} style="margin-top: -10px;"></div>
         </div>
     </div>
 </div>

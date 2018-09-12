@@ -212,7 +212,8 @@ def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
     if the analysis requests it.
     '''
     analyzed_equations = []
-    
+    success = True
+
     #Retrieve all components for which recommended design selection will occur.
     dcdc_analysis_eqs = analyzed_circuit_object.open_loop_analysis_equations.all()
 
@@ -271,9 +272,10 @@ def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
                     result = (round((num/denom), 3))
                     if "duty ratio" in parsed_name.lower():
                         #Duty cycle will try to compensate for losses, it is possible that it can be above 1, which is not feasible.
-                        if result >= 1:
+                        if result >= 1 or result < 0:
                             result = "Values resulted in an unfeasible converter."
                             context.update({"duty_cycle": 1})
+                            success = False
                         else:
                             context.update({"duty_cycle": result})
                     else:
@@ -282,6 +284,8 @@ def analyze_dcdc_converter(analyzed_circuit_object, context, cleaned_data=None):
                 analyzed_equations.append([parsed_name, result, units, "Y"])
 
     context.update({"analyzed_equations": analyzed_equations})
+
+    return success
 
 def generate_rec_dcdc_components(analyzed_circuit_object, context, cleaned_data=None):
     '''

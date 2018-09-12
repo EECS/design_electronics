@@ -6,7 +6,7 @@ body{
     margin-left: auto;
     margin-right:auto;
     margin-top: 0%;
-    min-width: 500px;
+    min-width:1000px;
 }
 
 a{
@@ -40,6 +40,10 @@ a{
     padding: 0px 20px;
 }
 
+.picture-container{
+    width: 700px;
+}
+
 #header-row{
     display: flex;
     position: fixed;
@@ -48,7 +52,6 @@ a{
     justify-content: space-between;
     background:white;
     z-index:20;
-
 }
 
 #header-support{
