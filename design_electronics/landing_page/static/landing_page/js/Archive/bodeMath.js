@@ -20,7 +20,6 @@ function leadlag(f) {
     wz = 2*math.pi*fz;
     wp = 2*math.pi*fp;
     var temp = math.multiply(K,math.multiply(math.divide(wp,wz),math.divide(math.add(s,wz),(math.add(s,wp)))));
-    console.log(temp);
     return temp;
 };
 

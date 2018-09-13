@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% block title %}
-  {% endblock %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Add dynamic updates to bode Plots -->
-  {% block dynamicPlots %}
-  {% endblock %}
-  
-  <!-- Add additional CSS in static file -->
-  <link rel="stylesheet" href="{{ static }}landing_page/css/styles.css">
-  <link rel="stylesheet" href="{{ static }}landing_page/css/bode-styles.css">
-  <link rel="stylesheet" href="{{ static }}landing_page/css/bootstrap-social.css">
-  <link rel="stylesheet" href="{{ static }}landing_page/css/font-awesome.css">
+    {% block title %}
+    {% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="{{ static }}landing_page/js/d3.v3.min.js"></script>
+    <link rel="stylesheet" href="{{ static }}landing_page/css/bootstrap-min.css">
+    <script src="{{ static }}landing_page/js/jquery.min.js"></script>
+    <script src="{{ static }}landing_page/js/bootstrap.min.js"></script>
+    <!-- Add dynamic updates to bode Plots -->
+    {% block dynamicPlots %}
+    {% endblock %}
+    
+    <!-- Add additional CSS in static file -->
+    <link rel="stylesheet" href="{{ static }}landing_page/css/styles.css">
+    <link rel="stylesheet" href="{{ static }}landing_page/css/bode-styles.css">
+    <link rel="stylesheet" href="{{ static }}landing_page/css/bootstrap-social.css">
+    <link rel="stylesheet" href="{{ static }}landing_page/css/font-awesome.css">
 </head>
 
-<body class="center-div">
+<body>
 
-    <div>
-        <div id="header-row" class="row black-bottom-border margin-five">
+    <div class="white-background">
+        <div id="header-row" class="row black-bottom-border margin-five min-width">
             {% block header %}
             {% endblock %}
         </div>
     </div>
 
-    <div class="container-fluid center-div">
-
-        <div id="home-row" class="row grey-bottom-border">
-            {% block home %}
-            {% endblock %}
+    <div>
+        <div class="row margin-five min-width">
+            <div id="home-row" class="row grey-bottom-border">
+                {% block home %}
+                {% endblock %}
+            </div>
+            
+            <div id="content-row" class="row grey-bottom-border">
+                {% block content %}
+                {% endblock %}
+            </div>
+                
+            <div id="example-design" class="row">
+                {% block example_design %}
+                {% endblock %}
+            </div>
+        
+            <div id="contact-row" class="row">
+                {% block contact_row %}
+                {% endblock %}
+            </div>
         </div>
-
-        <div id="content-row" class="row grey-bottom-border">
-            {% block content %}
-            {% endblock %}
-        </div>
-
-        <div id="example-design" class="row">
-            {% block example_design %}
-            {% endblock %}
-        </div>
-
-        <div id="contact-row" class="row">
-            {% block contact_row %}
-            {% endblock %}
-        </div>
-    
     </div>
 </body>
 <footer>
