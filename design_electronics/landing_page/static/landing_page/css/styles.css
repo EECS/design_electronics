@@ -2,7 +2,7 @@ body{
     text-align: center;
     font-family: "Whitney SSm A", "Whitney SSm B", "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
     font-weight: 100;
-    margin-top: 0%;
+    margin: 0%;
 }
 
 a{
@@ -12,6 +12,15 @@ a{
 
 .flex{
     display: flex;
+}
+
+.flex-space-between{
+    display: flex;
+    justify-content: space-between
+}
+
+.justify-center{
+    justify-content: center;
 }
 
 .margin-five{
@@ -27,11 +36,10 @@ a{
     min-width: 750px;
 }
 
-.white-background{
-    background-color: red;
-    z-index: 20;
-    overflow: hidden;
-    height: 100%;
+.fixed-parent{
+    background-color: white;
+    position: fixed;
+    width: 100%
 }
 
 .black-border{
@@ -56,10 +64,6 @@ a{
     padding: 0px 20px;
 }
 
-.picture-container{
-    width: 700px;
-}
-
 .card-deck{
     display: flex;
     justify-content: center;
@@ -75,12 +79,7 @@ a{
 
 
 #header-row{
-    display: flex;
-    position: fixed;
     font-size: x-large;
-    width: 90%;
-    justify-content: space-between;
-    background:white;
     z-index:20;
 }
 
@@ -96,7 +95,6 @@ a{
 
 #home-row-content{
     margin: 10%;
-    display: flex;
 }
 
 #home-row-content h2{

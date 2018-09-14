@@ -75,25 +75,27 @@
 {% endblock %}
 
 {% block home %}
-<div id="home-row-content">
-  <div>
-    <h1>Professional circuit design in 5 minutes.</h1>
-    {% for i in tag_break_lines %}
-    <br>
-    {% endfor %}
-    <h2>Design Electronics provides a simplified understanding to complex circuit design problems.</h2>
-    <br>
-    {% if paid_site%}
-    <button type="button" class="btn btn-primary">Try Free for {{trial_length}} Days</button>
-    <br>
-    <p>or <u>purchase now</u>.</p>
-    {% endif %}
-  </div>
-  
+<div id="home-row-content" class="justify-center">
+    <div>
+        <h1>Professional circuit design in 5 minutes.</h1>
+        {% for i in tag_break_lines %}
+        <br>
+        {% endfor %}
+    </div>
 
-  <div id="home-row-picture">
-    <img src="{{ static }}landing_page/img/ccm-buck-converter.jpg" class="rounded picture-container" alt="Buck Converter" height="400 px">
-  </div>
+    <div id="home-row-picture">
+      <img src="{{ static }}landing_page/img/ccm-buck-converter.jpg" alt="Buck Converter" height="400 px">
+    </div>
+
+    <div>
+        <h2>Design Electronics provides a simplified understanding to complex circuit design problems.</h2>
+        <br>
+        {% if paid_site%}
+        <button type="button" class="btn btn-primary">Try Free for {{trial_length}} Days</button>
+        <br>
+        <p>or <u>purchase now</u>.</p>
+        {% endif %}
+    </div>
 
 </div>
 

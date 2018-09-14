@@ -19,7 +19,7 @@ def home(request):
     paid_site = False
     trial_length = 14
     header_title = "Design Electronics"
-    tag_break_lines = range(6)
+    tag_break_lines = range(1)
 
     show_power_electronics = True
     show_ana_electronics = False
