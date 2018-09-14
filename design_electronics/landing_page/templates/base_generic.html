@@ -17,13 +17,14 @@
     <link rel="stylesheet" href="{{ static }}landing_page/css/styles.css">
     <link rel="stylesheet" href="{{ static }}landing_page/css/bode-styles.css">
     <link rel="stylesheet" href="{{ static }}landing_page/css/bootstrap-social.css">
-    <link rel="stylesheet" href="{{ static }}landing_page/css/font-awesome.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
 
 <body>
 
-    <div class="fixed-parent">
-        <div id="header-row" class="row black-bottom-border margin-five min-width flex-space-between">
+    <div class="fixed-parent min-width">
+        <div id="header-row" class="row black-bottom-border margin-five flex-space-between">
             {% block header %}
             {% endblock %}
         </div>
@@ -56,5 +57,6 @@
 <footer>
   <!-- Add ability to include javascript plots into website -->
   <script src="{{ static }}landing_page/js/plotBode.js" type="text/javascript"></script>
+  <script src="{{ static }}landing_page/js/ajaxSupport.js" type="text/javascript"></script>
 </footer>
 </html>

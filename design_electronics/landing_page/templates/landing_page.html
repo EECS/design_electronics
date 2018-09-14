@@ -163,7 +163,7 @@
     </div>
 
     <div id="example-design-picture">
-      <img src="{{ static }} landing_page/img/buck-converter.jpg" alt="Buck Converter" height="400 px">
+      <img src="{{ static }}landing_page/img/buck-converter.jpg" alt="Buck Converter" height="400 px">
     </div>
 
     <div id="example-design-input-title">
@@ -187,8 +187,16 @@
       </div>
     </div>
 
+    <div>
+      <form action = "" method = "post" gen-openloop-bodeplot>
+            <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+            <input type="hidden" name="generateopenplots">
+            <input type="submit" name="submitform" value="Generate Open-Loop Bode Plots" class="btn btn-primary" id="submit-id-generateopenplots">
+      </form>
+    </div>
+
     <div id="example-design-row-plots">
-        <div class="black-border">
+        <div class="black-border margin-top">
             <h4>Duty Cycle to Output Voltage Transfer Function Bode Plots</h4>
             <div id= {{ duty_out_mag_div }}></div>
             <div id= {{ duty_out_phs_div }} style="margin-top: -10px;"></div>
@@ -217,9 +225,8 @@
 {% block contact_row %}
 <div id="contact-row-content">
     <h4>Contact me using the link below:</h4>
-    <a class="btn btn-block">
-      <span class="fa fa-linkedin"></span>
-      LINKEDIN
+    <a href= "https://www.linkedin.com/in/jacobshannon/" target="_blank">
+        <i class="fab fa-linkedin fa-7x"></i>
     </a>
 </div>
 {% endblock %}

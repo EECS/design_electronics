@@ -10,6 +10,10 @@ a{
     text-decoration: none;
 }
 
+li{
+    list-style-type: none;
+}
+
 .flex{
     display: flex;
 }
@@ -28,12 +32,16 @@ a{
     margin-right:5%;
 }
 
+.margin-top{
+    margin-top:2%;
+}
+
 .width{
     min-width: 90%;
 }
 
 .min-width{
-    min-width: 750px;
+    min-width: 1000px;
 }
 
 .fixed-parent{

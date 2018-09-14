@@ -326,16 +326,29 @@ BodePlot.prototype = {
     
     redraw: function()
     {
-        // Get container div of graph to be re-drawn
-        var div = this.parentElement.parentElement.id;
+        // Get container div of graph to be re-drawn on initial page load.
+        var div = this.mag_plot_div;
         var bode;
 
-        //Select object associated with graph to update.
-        graphs.forEach(function(element){
-            if(element.mag_plot_div == div || element.phase_plot_div == div){
-                bode = element;
-            }
-        });
+        //Div is not undefined on initial page load.
+        if (div != undefined){
+            //Select object associated with graph to update.
+            graphs.forEach(function(element){
+                if(element.mag_plot_div == div){
+                    bode = element;
+                }
+            });
+        //Div will be undefined on subsequent page loads, now need to
+        //retrieve div from graph element.
+        }else{
+            div = this.parentElement.parentElement.id;
+            //Select object associated with graph to update.
+            graphs.forEach(function(element){
+                if(element.mag_plot_div == div || element.phase_plot_div == div){
+                    bode = element;
+                }
+            });
+        }
 
         if(bode != undefined)
         {
