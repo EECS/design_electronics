@@ -14,7 +14,8 @@
         <link rel="stylesheet" href="{{ static }}design_center/css/bootstrap-min.css">
         <link rel="stylesheet" href="{{ static }}design_center/css/bode-styles.css">
         <link rel="stylesheet" href="{{ static }}design_center/css/bootstrap-social.css">
-        <link rel="stylesheet" href="{{ static }}design_center/css/font-awesome.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         {% block pageStyles %}
         {% endblock %}
     </head>
@@ -23,11 +24,13 @@
 
         <div id="container-custom" class="container-fluid">
 
-            <div id="header-row" class="row grey-bottom-border">
-                {% include "header.html" %}
+            <div class="fixed-parent white-background margin-five min-width">
+                <div id="header-row" class="row grey-bottom-border flex-space-between">
+                    {% include "header.html" %}
+                </div>
             </div>
 
-            <div id="content" class="row flex">
+            <div id="content" class="row flex margin-five">
                 <div id="left-sidebar">
                     {% include "leftSidebar.html" %}
                 </div>
@@ -38,7 +41,7 @@
                 </div>
             </div>
 
-            <div id="contact-row" class="row">
+            <div id="contact-row" class="row margin-five">
                 {% include "contactRow.html" %}
             </div>
         </div>
@@ -47,6 +50,8 @@
     </footer>
     <!-- Add ability to include javascript plots into website -->
     <script src="{{ static }}design_center/js/plotBode.js" type="text/javascript"></script>
+    <script src="{{ static }}design_center/js/ajaxSupport.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
     {% block ajax_support %}
     {% endblock %}
 </html>

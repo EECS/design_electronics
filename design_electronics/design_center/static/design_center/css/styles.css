@@ -2,7 +2,7 @@ body{
     text-align: center;
     font-family: "Whitney SSm A", "Whitney SSm B", "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
     font-weight: 100;
-    margin: 0 5%;
+    margin: 0;
     min-width:1000px;
 }
 
@@ -107,14 +107,28 @@ form{
     padding: 0px 20px;
 }
 
-#header-row{
-    display: flex;
+.fixed-parent{
     position: fixed;
+    width:100%;
+    z-index:20;
+}
+
+.white-background{
+    background-color: white;
+}
+
+.margin-five{
+    margin-left:5%;
+    margin-right:5%;
+}
+
+.min-width{
+    min-width: 1000px;
+}
+
+#header-row{
     font-size: x-large;
     width: 90%;
-    justify-content: space-between;
-    background:white;
-    z-index:20;
 }
 
 #left-sidebar{
