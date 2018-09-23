@@ -156,7 +156,7 @@ STATICFILES_FINDERS = [
 # According to the Channels docs, only the redis layer is updated to match Channels 2.
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLalyer',
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             'hosts': [('localhost', 6379)]
         }
