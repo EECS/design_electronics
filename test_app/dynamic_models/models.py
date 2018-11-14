@@ -3,6 +3,12 @@ from django.db import models
 #Import all models from power_models.py 
 from .power_models import DCDC, DesignParamChoices, RecommendedComponents, SelectedComponents, OpenLoopAnalysisEquations
 
+#Import all models from fpga_models.py 
+from .fpga_models import FPGA
+
+#Import all models from fpga_models.py 
+from .analog_models import Analog
+
 class CircuitDesign(models.Model):
     CIRCUIT_TYPES = [
         ("FPGA", "FPGA Design"),
@@ -18,7 +24,9 @@ class CircuitDesign(models.Model):
     dc_dc_analysis = models.ManyToManyField(DCDC)
 
     fpga_analysis = models.BooleanField(help_text="Check if this is FPGA Circuit Analysis", default=False)
+    fpga_design = models.ManyToManyField(FPGA)
     analog_analysis = models.BooleanField(help_text="Check if this is Analog Circuit Analysis", default=False)
+    analog_design = models.ManyToManyField(Analog)
 
     def __str__(self):
         """

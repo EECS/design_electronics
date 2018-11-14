@@ -47,7 +47,7 @@ class DCDC(models.Model):
 
     selected_components = models.ManyToManyField(SelectedComponents)
 
-    open_loop_analysis_equations = models.ManyToManyField(OpenLoopAnalysisEquations)
+    open_loop_analysis_equations = models.ManyToManyField(OpenLoopAnalysisEquations, help_text="For example, efficient, output current, etc.")
 
     #Open loop bode plots of the converter.
     open_input_output_transfer = models.TextField(max_length=5000, help_text="Enter the input to output transfer function of the converter.",
