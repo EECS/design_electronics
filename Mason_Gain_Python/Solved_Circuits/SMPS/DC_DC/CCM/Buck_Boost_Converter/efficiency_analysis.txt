@@ -1,0 +1,16 @@
+ID Dictionary: {'vl': 2, 'vrs1': 8, 'ic': 5, 'vo': 6, 'io': 7, 'vin': 0, 'iin': 1, 'il': 3, 'vrl': 4, 'vrs2': 9}
+
+Input Voltage to Output Voltage analysis:
+
+Standard form of Equation: D*Rload*(D - 1)*(C1*RC1*s + 1)/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RS1 + RL1 - RS2*(D - 1)) + L1*s*(C1*RC1*s + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*RC1*s + 1)*(D*RS1 + RL1 - RS2*(D - 1)))
+
+DC Value of Standard Form Equation: D*Rload*(D - 1)/(D*RS1 + RL1 - RS2*(D - 1) + Rload*(D - 1)**2)
+
+Efficiency equation: ((((Vo)*(Io)))/(((Vin)*((RS1*Vo - RS2*Vo + (Vo/Io)*Vin - 2*(Vo/Io)*Vo - sqrt(4*RL1*(Vo/Io)*Vin*Vo - 4*RL1*(Vo/Io)*Vo**2 + RS1**2*Vo**2 - 2*RS1*RS2*Vo**2 + 2*RS1*(Vo/Io)*Vin*Vo - 4*RS1*(Vo/Io)*Vo**2 + RS2**2*Vo**2 + 2*RS2*(Vo/Io)*Vin*Vo + (Vo/Io)**2*Vin**2))/(2*(Vo/Io)*(Vin - Vo))*Io))))
+
+Efficiency equation simplified: 2*Vo**2*(-Vin + Vo)/(Vin*(Io*(-RS1*Vo + RS2*Vo + sqrt(Vo**2*(Io**2*(RS1**2 - 2*RS1*RS2 + RS2**2) + 2*Io*(2*RL1*Vin - 2*RL1*Vo + RS1*Vin - 2*RS1*Vo + RS2*Vin) + Vin**2)/Io**2)) - Vin*Vo + 2*Vo**2))
+
+Duty Cycle: (-Io*(-RS1*Vo + RS2*Vo + sqrt(Vo**2*(Io**2*(RS1**2 - 2*RS1*RS2 + RS2**2) + 2*Io*(2*RL1*Vin - 2*RL1*Vo + RS1*Vin - 2*RS1*Vo + RS2*Vin) + Vin**2)/Io**2)) + Vin*Vo - 2*Vo**2)/(2*Vo*(Vin - Vo))
+
+Input Current: -Io*(Io*(-RS1*Vo + RS2*Vo + sqrt(Vo**2*(Io**2*(RS1**2 - 2*RS1*RS2 + RS2**2) + 2*Io*(2*RL1*Vin - 2*RL1*Vo + RS1*Vin - 2*RS1*Vo + RS2*Vin) + Vin**2)/Io**2)) - Vin*Vo + 2*Vo**2)/(2*Vo*(Vin - Vo))
+

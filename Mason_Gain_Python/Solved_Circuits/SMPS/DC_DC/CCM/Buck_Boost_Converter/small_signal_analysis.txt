@@ -1,0 +1,34 @@
+ID Dictionary: {'vrs1': 8, 'd': 10, 'vl': 2, 'vo': 6, 'vin': 0, 'io': 7, 'vrs2': 9, 'iin': 1, 'ic': 5, 'il': 3, 'vrl': 4}
+
+Input Impedance analysis:
+
+Standard form of Equation: (C1*L1*Rload*s**2 + C1*Rload*s*(D*RS1 + RL1 - RS2*(D - 1)) + L1*s*(C1*RC1*s + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*RC1*s + 1)*(D*RS1 + RL1 - RS2*(D - 1)))/(D**2*(C1*RC1*s + C1*Rload*s + 1))
+
+DC Value of Standard Form Equation: (D*RS1 + RL1 - RS2*(D - 1) + Rload*(D - 1)**2)/D**2
+
+Output Impedance analysis:
+
+Standard form of Equation: -Rload*(C1*RC1*s + 1)*(D*RS1 + L1*s + RL1 - RS2*(D - 1))/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RS1 + RL1 - RS2*(D - 1)) + L1*s*(C1*RC1*s + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*RC1*s + 1)*(D*RS1 + RL1 - RS2*(D - 1)))
+
+DC Value of Standard Form Equation: -Rload*(D*RS1 + RL1 - RS2*(D - 1))/(D*RS1 + RL1 - RS2*(D - 1) + Rload*(D - 1)**2)
+
+Duty to Output Voltage Transfer analysis:
+
+Standard form of Equation: Rload*(IL1*(L1*s + RS1) + (D - 1)*(Vin - Vo))*(C1*RC1*s + 1)/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RS1 + RL1 - RS2*(D - 1)) + L1*s*(C1*RC1*s + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*RC1*s + 1)*(D*RS1 + RL1 - RS2*(D - 1)))
+
+DC Value of Standard Form Equation: Rload*(IL1*RS1 + (D - 1)*(Vin - Vo))/(D*RS1 + RL1 - RS2*(D - 1) + Rload*(D - 1)**2)
+
+Input Voltage to Output Voltage analysis:
+
+Standard form of Equation: D*Rload*(D - 1)*(C1*RC1*s + 1)/(C1*L1*Rload*s**2 + C1*Rload*s*(D*RS1 + RL1 - RS2*(D - 1)) + L1*s*(C1*RC1*s + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*RC1*s + 1)*(D*RS1 + RL1 - RS2*(D - 1)))
+
+DC Value of Standard Form Equation: D*Rload*(D - 1)/(D*RS1 + RL1 - RS2*(D - 1) + Rload*(D - 1)**2)
+
+Input Impedance Equation Simplified: (C1*L1*Vo*s**2 + C1*Vo*s*(D*RS1 + RL1 - RS2*(D - 1)) + Io*(C1*RC1*s + 1)*(D*RS1 + L1*s + RL1 - RS2*(D - 1)) + Vo*(D - 1)**2*(C1*RC1*s + 1))/(D**2*(C1*Vo*s + Io*(C1*RC1*s + 1)))
+
+Output Impedance Equation Simplified: -Vo*(C1*RC1*s + 1)*(D*RS1 + L1*s + RL1 - RS2*(D - 1))/(C1*L1*Vo*s**2 + C1*Vo*s*(D*RS1 + RL1 - RS2*(D - 1)) + Io*(C1*RC1*s + 1)*(D*RS1 + L1*s + RL1 - RS2*(D - 1)) + Vo*(D - 1)**2*(C1*RC1*s + 1))
+
+Duty Cycle to Output Voltage Equation Simplified: Vo*(IL1*(L1*s + RS1) + (D - 1)*(Vin - Vo))*(C1*RC1*s + 1)/(C1*L1*Vo*s**2 + C1*Vo*s*(D*RS1 + RL1 - RS2*(D - 1)) + Io*(C1*RC1*s + 1)*(D*RS1 + L1*s + RL1 - RS2*(D - 1)) + Vo*(D - 1)**2*(C1*RC1*s + 1))
+
+Input Voltage to Output Voltage Equation Simplified: D*Vo*(D - 1)*(C1*RC1*s + 1)/(C1*L1*Vo*s**2 + C1*Vo*s*(D*RS1 + RL1 - RS2*(D - 1)) + Io*(C1*RC1*s + 1)*(D*RS1 + L1*s + RL1 - RS2*(D - 1)) + Vo*(D - 1)**2*(C1*RC1*s + 1))
+

@@ -5,20 +5,20 @@ from sympy.solvers import solve
 from graphAnalysis_general import *
 import ast, json, re
 
-circuitPath = "Solved_Circuits\SMPS\DC_DC\CCM\Buck_Converter"
+circuitPath = "Solved_Circuits\SMPS\DC_DC\CCM\Buck_Boost_Converter"
 EFFICIENCY_ANALYSIS = False
 input_output_transfer_current = "D"
 
 if EFFICIENCY_ANALYSIS:
     outputFile = "efficiency_analysis"
 
-    circuitNodesAnalyzed = "buck_nodes_gains_efficiency"
-    circuitObjectAnalyzed = "buck_object_efficiency"
+    circuitNodesAnalyzed = "buck_boost_nodes_gains_efficiency"
+    circuitObjectAnalyzed = "buck_boost_object_efficiency"
 else:
     outputFile = "small_signal_analysis"
 
-    circuitNodesAnalyzed = "buck_nodes_gains_small_signal"
-    circuitObjectAnalyzed = "buck_object_small_signal"
+    circuitNodesAnalyzed = "buck_boost_nodes_gains_small_signal"
+    circuitObjectAnalyzed = "buck_boost_object_small_signal"
 
 
 
@@ -67,7 +67,10 @@ def calcInputCurrent():
 
 def calcDutyCycle():
     D = sympy.symbols("D")
-    temp = solve(minStr(addStr(multStr("Vin", input_output_transfer), multStr("VD1", input_output_transfer_diode)), "Vo"), D)
+    if "von" in json_id_dict:
+        temp = solve(minStr(addStr(multStr("Vin", input_output_transfer), multStr("VD1", input_output_transfer_diode)), "Vo"), D)
+    else:
+        temp = solve(minStr(multStr("Vin", input_output_transfer), "Vo"), D)
     #print("temp is "+ str(temp))
     return str(temp[0])
 
@@ -121,9 +124,11 @@ if not EFFICIENCY_ANALYSIS:
 
     transfers = [[input_impedance, "Input Impedance analysis:"], [output_impedance, "Output Impedance analysis:"], [duty_to_output_transfer, "Duty to Output Voltage Transfer analysis:"]]
 else:
+    transfers = []
     #Input to output transfer function, diode contribution, only used in the efficiency analysis.
-    input_output_transfer_diode = genGraphAnalysis(nodes, gains, json_id_dict["von"], json_id_dict["vo"])
-    transfers = [[input_output_transfer_diode, "Input Voltage to Output Voltage Analysis, Diode contribution:"]]
+    if "von" in json_id_dict:
+        input_output_transfer_diode = genGraphAnalysis(nodes, gains, json_id_dict["von"], json_id_dict["vo"])
+        transfers = [[input_output_transfer_diode, "Input Voltage to Output Voltage Analysis, Diode contribution:"]]
 
 #Input to output transfer function, used in both small signal and efficiency analyses
 input_output_transfer = genGraphAnalysis(nodes, gains, json_id_dict["vin"], json_id_dict["vo"])
@@ -186,8 +191,12 @@ if not EFFICIENCY_ANALYSIS:
     outStr = "Input Voltage to Output Voltage Equation Simplified: "+ str(sympy.simplify(input_output_transfer))+"\n"
     logPrint(outStr)
 else:
-    input_output_transfer_diode = transfers[0][0]
-    input_output_transfer = transfers[1][0]
+    idx = 0
+    if "von" in json_id_dict:
+        idx += 1
+        input_output_transfer_diode = transfers[0][0]
+
+    input_output_transfer = transfers[idx][0]
 
     #Calculate input current
     input_current = calcInputCurrent()

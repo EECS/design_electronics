@@ -1,0 +1,445 @@
+[
+  {
+    "data": {
+      "id": "vin",
+      "nodeNumber": 0
+    },
+    "position": {
+      "x": 173.22690714820982,
+      "y": 106.89230537739616
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "iin",
+      "nodeNumber": 1
+    },
+    "position": {
+      "x": 326.3425045203778,
+      "y": 255.12337778473935
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vl",
+      "nodeNumber": 2
+    },
+    "position": {
+      "x": 366.74614120290863,
+      "y": 109.1269214197987
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "il",
+      "nodeNumber": 3
+    },
+    "position": {
+      "x": 620.5307012047834,
+      "y": 105.16857518373918
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vrl",
+      "nodeNumber": 4
+    },
+    "position": {
+      "x": 539.3663911357864,
+      "y": 299.416387896466
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vlil",
+      "source": "vl",
+      "target": "il",
+      "gain": "(1/(s*L1))"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "ic",
+      "nodeNumber": 5
+    },
+    "position": {
+      "x": 871.530124004422,
+      "y": 118.48936509455905
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vo",
+      "nodeNumber": 6
+    },
+    "position": {
+      "x": 1074.3910129604285,
+      "y": 37.7647641091238
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "io",
+      "nodeNumber": 7
+    },
+    "position": {
+      "x": 1042.2460733745927,
+      "y": 268.18588063324023
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vovl",
+      "source": "vo",
+      "target": "vl",
+      "gain": "(1-D)"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vinvl",
+      "source": "vin",
+      "target": "vl",
+      "gain": "D"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "iliin",
+      "source": "il",
+      "target": "iin",
+      "gain": "D"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "icvo",
+      "source": "ic",
+      "target": "vo",
+      "gain": "RC1+(1/(s*C1))"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "voio",
+      "source": "vo",
+      "target": "io",
+      "gain": "1/Rload"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "ioic",
+      "source": "io",
+      "target": "ic",
+      "gain": "-1"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "ilic",
+      "source": "il",
+      "target": "ic",
+      "gain": "-(1-D)"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "ilvrl",
+      "source": "il",
+      "target": "vrl",
+      "gain": "RL1"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vrlvl",
+      "source": "vrl",
+      "target": "vl",
+      "gain": "-1"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vrs1",
+      "nodeNumber": 8
+    },
+    "position": {
+      "x": 758.2539849233297,
+      "y": -28.283292520760455
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vrs2",
+      "nodeNumber": 9
+    },
+    "position": {
+      "x": 715.3406772256001,
+      "y": 230.88904959176918
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "ilvrs2",
+      "source": "il",
+      "target": "vrs2",
+      "gain": "RS2"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vrs2vl",
+      "source": "vrs2",
+      "target": "vl",
+      "gain": "-(1-D)"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "ilvrs1",
+      "source": "il",
+      "target": "vrs1",
+      "gain": "RS1"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "vrs1vl",
+      "source": "vrs1",
+      "target": "vl",
+      "gain": "-D"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "d",
+      "nodeNumber": 10
+    },
+    "position": {
+      "x": 59.4479499559706,
+      "y": 259.9366537830359
+    },
+    "group": "nodes",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "dvl",
+      "source": "d",
+      "target": "vl",
+      "gain": "(Vin-Vo-(IL1*(s*L1+RS1)*(1/(1-D))))"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  },
+  {
+    "data": {
+      "id": "diin",
+      "source": "d",
+      "target": "iin",
+      "gain": "IL1"
+    },
+    "position": {},
+    "group": "edges",
+    "removed": false,
+    "selected": false,
+    "selectable": true,
+    "locked": false,
+    "grabbable": true,
+    "classes": ""
+  }
+]
