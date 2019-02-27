@@ -15,8 +15,8 @@ if __name__=="__main__":
     Vin = "Vin"
     Vout = "Vout"
 
-    components = {"Ron":10e-3, "RL1": 10e-3, "L1": 25e-6, "Rload": 0.63, RC1: 10e-3, "C1": 612e-6, "D": 0.612}
-    params = {Vin: 20, Vout: 31.5}
+    components = {"Ron":10e-3, "RL1": 10e-3, "L1": 25e-6, "Rload": 0.63, RC1: 10e-3, "C1": 612e-6}
+    params = {Vin: -20, Vout: 31.5}
 
     load_stage = parallel(Rload, addStr(RC1, C1))
 
@@ -51,15 +51,12 @@ if __name__=="__main__":
     output_impedance_transfer = sympy.simplify(output_impedance_transfer)
 
     #Control to output transfer function
-    secondary_current_vout = divStr(Vout, addStr(Ron2, multStr(squared(n_coeff), addStr(Ron1, induct_stage_primary))))
-    v2_vout = minStr(multStr(secondary_current_vout, Ron2), Vout)
-    v1_vout = divStr(multStr("-1", v2_vout), n_coeff)
+    v1_control_output = minStr(Vin, multStr(primary_current, addStr(Ron1, induct_stage_primary)))
+    v1_primary_current = divStr(divStr(v1_control_output, multStr(duty_cycle, inv_duty_cycle)), primary_impedance)
+    v1_secondary_current = multStr(v1_primary_current, divStr("1", n_coeff))
+    v1_output_voltage = multStr(secondary_current, "-1", load_stage)
 
-    #Same equation as primary current with vin contribution, different voltage source
-    primary_current_vout = divStr(divStr(v1_vout, multStr(duty_cycle, inv_duty_cycle)), primary_impedance)
-    secondary_current_vout = multStr(primary_current_vout, divStr("1", n_coeff))
-    output_voltage_vout = multStr(secondary_current_vout, "-1", load_stage)
-    duty_output_transfer = divStr(output_voltage_vout, Vout)
+    duty_output_transfer = divStr(v1_output_voltage, duty_cycle)
 
     duty_output_transfer = sympy.simplify(duty_output_transfer)
 
@@ -68,7 +65,14 @@ if __name__=="__main__":
                             "Output Impedance Transfer Function": output_impedance_transfer,
                             "Control to Output Transfer Function": duty_output_transfer}
 
-    duty_cycle_value = calculate_duty_cycle(input_output_transfer)
-    #print_transfers(transfer_functions)
+    #Calculate duty cycle for converter.
+    all_values = {**components, **params}
+    duty_cycle_expr = str(calculate_duty_cycle(input_output_transfer, 0))
+
+    duty_cycle_value = evaluate_expression(substitute_expression(duty_cycle_expr, all_values), True)
+    print("Duty Cycle Value is {:.3}".format(duty_cycle_value))
+    all_values.update({"D": duty_cycle_value})
+
+    print_transfers(transfer_functions)
     
-    #graph_transfers(transfer_functions=transfer_functions, components=components)
+    graph_transfers(transfer_functions, all_values)

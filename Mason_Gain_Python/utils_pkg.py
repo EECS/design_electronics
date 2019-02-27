@@ -73,29 +73,33 @@ def squared(a):
     '''
     return "(({})^2)".format(a)
 
-def calculate_duty_cycle(input_output_transfer):
+def calculate_duty_cycle(input_output_transfer, d_idx=0):
     '''
     params: input_output_transfer (Sympy expression) - A
     sympy variable in the s-domain to be used to calculate the duty cycle.
+    d_idx (int) - Index of solved duty_cycle equation to return (important for
+    sqrt operations.)
     '''
     Vin = "Vin"
     Vout = "Vout"
 
     s = sympy.symbols("s")
 
-    dc_value = lambdify(s, input_output_transfer)(0)
+    dc_duty = lambdify(s, input_output_transfer)(0)
 
     D = sympy.symbols("D")
 
-    duty_cycle = minStr(Vout, multStr(dc_value, Vin))
+    duty_cycle = minStr(divStr(Vout,Vin),dc_duty)
     duty_cycle = sympy.solve(duty_cycle, D)
 
-    return duty_cycle[0]
+    return duty_cycle[d_idx]
 
 def print_transfers(transfer_functions):
     '''
     Prints transfer functions of converter.
     '''
+    s = sympy.symbols("s")
+
     for transfer_name, transfer in transfer_functions.items():
         print("{}:".format(transfer_name))
         print(transfer)    
@@ -103,7 +107,19 @@ def print_transfers(transfer_functions):
         print(lambdify(s, transfer)(0))
         print("\n")
 
-def evaluate_expression(expression, values):
+def evaluate_expression(expression, real_only=True):
+    '''
+    params: expression (string) - Expression to be evaluated with
+    values already subsituted in string.
+    '''
+
+    if real_only:
+        print(expression)
+        return abs(eval(expression))
+
+    return eval(expression)
+
+def substitute_expression(expression, values):
     '''
     params: expression (string) - An expression that needs 
     values substituted.
@@ -112,13 +128,57 @@ def evaluate_expression(expression, values):
     expression string.
     '''
     function = expression
+    universal_params = {"sqrt": "math.sqrt"}
 
     for k, v in values.items():
+        function = re.sub(r"\b{}\b".format(k), "({})".format(str(v)), function)
+    
+    for k, v in universal_params.items():
         function = re.sub(r"\b{}\b".format(k), str(v), function)
     
     return function
 
-def graph_transfers(**kwargs):
+def generate_transfer_data(transfer_function, bode_x_range):
+    '''
+    params: transfer_function (string) s-domain transfer function consisting of values to
+    be used for evaluation.
+    bode_x_range: (list) Hz values spaced by logarithmic steps to be used to generate
+    phase and magnitude data.
+    '''
+    denom_start = transfer_function.find("/")
+    mags = []
+    phases = []
+
+    #Create numerator and denominator strings of the transfer function.
+    if denom_start != -1:
+        numerator = transfer_function[:denom_start]
+        denominator = transfer_function[denom_start+1:]
+    else:
+        numerator = transfer_function
+        denominator = str(1)
+
+    #Create magnitude and phase arrays for transfer function, replacing s with 
+    #the angular frequency representation.
+    for f in bode_x_range:
+        complex_replace = str(2j*cmath.pi*f)
+        complex_replace = "({})".format(complex_replace)
+
+        if denom_start != -1:
+            num = numerator.replace("s", complex_replace)
+            c_num = complex(eval(num))
+            denom = denominator.replace("s", complex_replace)
+            c_denom = complex(eval(denom))
+            c_denom_conj = c_denom.conjugate()
+            c_transfer = (c_num/c_denom)*(c_denom_conj/c_denom_conj)
+        else:
+            c_transfer = complex(transfer_function.replace("s", complex_replace))
+
+        mags.append(20*math.log10(abs(c_transfer)))
+        phases.append(cmath.phase(c_transfer)*180/cmath.pi)
+    
+    return mags, phases
+
+def graph_transfers(transfer_functions, components):
     '''
     Prints transfer functions of converter.
     '''
@@ -127,9 +187,6 @@ def graph_transfers(**kwargs):
     num_points = 5000
     log_step_size = ((math.log10(end_frequency*1000)-math.log10(start_frequency))/num_points)
     bode_x_range = [10**((i+1)*log_step_size) for i in range(num_points)]
-
-    components = kwargs.get("components", {})
-    transfer_functions = kwargs.get("transfer_functions", {})
 
     plot_idx = 1
 
@@ -140,37 +197,10 @@ def graph_transfers(**kwargs):
 
         transfer_function = str(transfer)
 
-        #Replace symbols with values defined in components dictionary
-        transfer_function = evaluate_expression(transfer_function)
+        #Replace symbols with values defined in components dictionary.
+        transfer_function = substitute_expression(transfer_function, components)
 
-        denom_start = transfer_function.find("/")
-
-        #Create numerator and denominator strings of the transfer function.
-        if denom_start != -1:
-            numerator = transfer_function[:denom_start]
-            denominator = transfer_function[denom_start+1:]
-        else:
-            numerator = transfer_function
-            denominator = str(1)
-
-        #Create magnitude and phase arrays for transfer function, replacing s with 
-        #the angular frequency representation.
-        for f in bode_x_range:
-            complex_replace = str(2j*cmath.pi*f)
-            complex_replace = "({})".format(complex_replace)
-
-            if denom_start != -1:
-                num = numerator.replace("s", complex_replace)
-                c_num = complex(eval(num))
-                denom = denominator.replace("s", complex_replace)
-                c_denom = complex(eval(denom))
-                c_denom_conj = c_denom.conjugate()
-                c_transfer = (c_num/c_denom)*(c_denom_conj/c_denom_conj)
-            else:
-                c_transfer = complex(transfer_function.replace("s", complex_replace))
-
-            mags.append(20*math.log10(abs(c_transfer)))
-            phases.append(cmath.phase(c_transfer)*180/cmath.pi)
+        mags, phases = generate_transfer_data(transfer_function, bode_x_range)
         
         #Create plots
         ax1 = plt.subplot(2,len(transfer_functions),plot_idx)
