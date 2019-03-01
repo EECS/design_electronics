@@ -1,0 +1,126 @@
+Closed Loop Input Voltage to Output Voltage Transfer Function:
+C21*D*R21*Rload*VM*s*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Input Voltage to Output Voltage Transfer Function:
+0
+
+
+Closed Loop Output Impedance Transfer Function:
+-C21*R21*Rload*VM*s*(C1*RC1*s + 1)*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))*(D*Ron + L1*s + RL1 - Ron*(D - 1))/((C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))*(Rload*(D - 1)**2*(C1*RC1*s + 1) - Ron*(D - 1)*(C1*s*(RC1 + Rload) + 1) + (C1*s*(RC1 + Rload) + 1)*(D*Ron + L1*s + RL1)))
+DC Value of Closed Loop Output Impedance Transfer Function:
+0
+
+
+Closed Loop Reference to Output Voltage Transfer Function:
+-Rload*Vin*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Reference to Output Voltage Transfer Function:
+1/H
+
+
+Closed Loop Input Voltage to Output Voltage Transfer Function:
+C21*D*R21*Rload*VM*s*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Input Voltage to Output Voltage Transfer Function:
+0
+
+
+Closed Loop Reference to Output Voltage Transfer Function:
+-Rload*Vin*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Reference to Output Voltage Transfer Function:
+1/H
+
+
+Closed Loop Output Impedance Transfer Function:
+-C21*R21*Rload*VM*s*(C1*RC1*s + 1)*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))*(D*Ron + L1*s + RL1 - Ron*(D - 1))/((C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))*(Rload*(D - 1)**2*(C1*RC1*s + 1) - Ron*(D - 1)*(C1*s*(RC1 + Rload) + 1) + (C1*s*(RC1 + Rload) + 1)*(D*Ron + L1*s + RL1)))
+DC Value of Closed Loop Output Impedance Transfer Function:
+0
+
+
+Closed Loop Input Voltage to Output Voltage Transfer Function:
+C21*D*R21*Rload*VM*s*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Input Voltage to Output Voltage Transfer Function:
+0
+
+
+Closed Loop Reference to Output Voltage Transfer Function:
+-Rload*Vin*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Reference to Output Voltage Transfer Function:
+1/H
+
+
+Closed Loop Output Impedance Transfer Function:
+-C21*R21*Rload*VM*s*(C1*RC1*s + 1)*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))*(D*Ron + L1*s + RL1 - Ron*(D - 1))/((C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))*(Rload*(D - 1)**2*(C1*RC1*s + 1) - Ron*(D - 1)*(C1*s*(RC1 + Rload) + 1) + (C1*s*(RC1 + Rload) + 1)*(D*Ron + L1*s + RL1)))
+DC Value of Closed Loop Output Impedance Transfer Function:
+0
+
+
+Closed Loop Input Voltage to Output Voltage Transfer Function:
+C21*D*R21*Rload*VM*s*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Input Voltage to Output Voltage Transfer Function:
+0
+
+
+Closed Loop Reference to Output Voltage Transfer Function:
+-Rload*Vin*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Reference to Output Voltage Transfer Function:
+1/H
+
+
+Closed Loop Output Impedance Transfer Function:
+-C21*R21*Rload*VM*s*(C1*RC1*s + 1)*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))*(D*Ron + L1*s + RL1 - Ron*(D - 1))/((C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))*(Rload*(D - 1)**2*(C1*RC1*s + 1) - Ron*(D - 1)*(C1*s*(RC1 + Rload) + 1) + (C1*s*(RC1 + Rload) + 1)*(D*Ron + L1*s + RL1)))
+DC Value of Closed Loop Output Impedance Transfer Function:
+0
+
+
+Closed Loop Output Impedance Transfer Function:
+-C21*R21*Rload*VM*s*(C1*RC1*s + 1)*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))*(D*Ron + L1*s + RL1 - Ron*(D - 1))/((C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))*(Rload*(D - 1)**2*(C1*RC1*s + 1) - Ron*(D - 1)*(C1*s*(RC1 + Rload) + 1) + (C1*s*(RC1 + Rload) + 1)*(D*Ron + L1*s + RL1)))
+DC Value of Closed Loop Output Impedance Transfer Function:
+0
+
+
+Closed Loop Reference to Output Voltage Transfer Function:
+-Rload*Vin*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Reference to Output Voltage Transfer Function:
+1/H
+
+
+Closed Loop Input Voltage to Output Voltage Transfer Function:
+C21*D*R21*Rload*VM*s*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Input Voltage to Output Voltage Transfer Function:
+0
+
+
+Closed Loop Output Impedance Transfer Function:
+-C21*R21*Rload*VM*s*(C1*RC1*s + 1)*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))*(D*Ron + L1*s + RL1 - Ron*(D - 1))/((C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))*(Rload*(D - 1)**2*(C1*RC1*s + 1) - Ron*(D - 1)*(C1*s*(RC1 + Rload) + 1) + (C1*s*(RC1 + Rload) + 1)*(D*Ron + L1*s + RL1)))
+DC Value of Closed Loop Output Impedance Transfer Function:
+0
+
+
+Closed Loop Input Voltage to Output Voltage Transfer Function:
+C21*D*R21*Rload*VM*s*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Input Voltage to Output Voltage Transfer Function:
+0
+
+
+Closed Loop Reference to Output Voltage Transfer Function:
+-Rload*Vin*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Reference to Output Voltage Transfer Function:
+1/H
+
+
+Closed Loop Input Voltage to Output Voltage Transfer Function:
+C21*D*R21*Rload*VM*s*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Input Voltage to Output Voltage Transfer Function:
+0
+
+
+Closed Loop Reference to Output Voltage Transfer Function:
+-Rload*Vin*(D - 1)*(C1*RC1*s + 1)/(C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))
+DC Value of Closed Loop Reference to Output Voltage Transfer Function:
+1/H
+
+
+Closed Loop Output Impedance Transfer Function:
+-C21*R21*Rload*VM*s*(C1*RC1*s + 1)*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))*(D*Ron + L1*s + RL1 - Ron*(D - 1))/((C21*R21*VM*s*(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1))) - H*Rload*Vin*(D - 1)*(C1*RC1*s + 1))*(Rload*(D - 1)**2*(C1*RC1*s + 1) - Ron*(D - 1)*(C1*s*(RC1 + Rload) + 1) + (C1*s*(RC1 + Rload) + 1)*(D*Ron + L1*s + RL1)))
+DC Value of Closed Loop Output Impedance Transfer Function:
+0
+
+

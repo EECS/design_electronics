@@ -1,0 +1,24 @@
+Input Impedance Transfer Function:
+(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))/(D**2*(C1*s*(RC1 + Rload) + 1))
+DC Value of Input Impedance Transfer Function:
+(D*Ron + RL1 + Rload*(D - 1)**2 - Ron*(D - 1))/D**2
+
+
+Output Impedance Transfer Function:
+Rload*(C1*RC1*s + 1)*(D*Ron + L1*s + RL1 - Ron*(D - 1))/(Rload*(D - 1)**2*(C1*RC1*s + 1) - Ron*(D - 1)*(C1*s*(RC1 + Rload) + 1) + (C1*s*(RC1 + Rload) + 1)*(D*Ron + L1*s + RL1))
+DC Value of Output Impedance Transfer Function:
+Rload*(D*Ron + RL1 - Ron*(D - 1))/(D*Ron + RL1 + Rload*(D - 1)**2 - Ron*(D - 1))
+
+
+Control to Output Transfer Function:
+Rload*Vin*(D - 1)*(C1*RC1*s + 1)/(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))
+DC Value of Control to Output Transfer Function:
+Rload*Vin*(D - 1)/(D*Ron + RL1 + Rload*(D - 1)**2 - Ron*(D - 1))
+
+
+Input to Output Transfer Function:
+D*Rload*(D - 1)*(C1*RC1*s + 1)/(D*Ron*(C1*s*(RC1 + Rload) + 1) + Rload*(D - 1)**2*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(L1*s + RL1 - Ron*(D - 1)))
+DC Value of Input to Output Transfer Function:
+D*Rload*(D - 1)/(D*Ron + RL1 + Rload*(D - 1)**2 - Ron*(D - 1))
+
+

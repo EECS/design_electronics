@@ -1,0 +1,18 @@
+# General Analysis Parameters Flag (# and then space is important).
+Name = Inverting Buck Boost Converter with Synchronous Rectifiers
+Ron1 = (Ron/D)
+Ron2 = (Ron/(1-D))
+RL1 = RL1
+L1 = s*L1
+Rload = Rload
+RC1 = RC1
+C1 = (1/(s*C1))
+## Parameters (Open Loop Parameters Flag) (## and then space is important)
+Ron = 10e-3
+RL1 = 1e-3
+L1 = 25e-6
+Rload = 0.63
+RC1 = 10e-3
+C1 = 612e-6
+Vin = -20
+Vout = 31.5
