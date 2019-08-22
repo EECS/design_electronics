@@ -25,7 +25,7 @@ closed_vref_vo_string = "Closed Loop Reference to Output Voltage Transfer Functi
 closed_vg_vo_string = "Closed Loop Input Voltage to Output Voltage Transfer Function"
 closed_output_impedance_string = "Closed Loop Output Impedance Transfer Function"
 
-def load_pickled_transfers(path, analysis_type="Open"):
+def load_pickled_transfers(path, analysis_type="Open", error_type = ""):
     '''
     params: path (string) - Path to pickled transfer functions file.
     file (string) - Analysis type of pickled transfer function at location.
@@ -47,7 +47,7 @@ def load_pickled_transfers(path, analysis_type="Open"):
                 except EOFError:
                     break
     elif analysis_type == "Closed":
-        with(open(os.path.join(path, closed_loop_output_pickle_file+typeI_error_path+".txt"), "rb")) as f:
+        with(open(os.path.join(path, closed_loop_output_pickle_file+error_type+".txt"), "rb")) as f:
             while True:
                 try:
                     transfer_functions = pickle.load(f)
@@ -246,6 +246,28 @@ def calculate_duty_cycle(input_output_transfer, d_idx=0):
 
     return duty_cycle[d_idx]
 
+def print_and_log_transfers(transfer_functions, out_file=""):
+    '''
+    Prints transfer functions of converter.
+    '''
+    s = sympy.symbols("s")
+
+    out = open(out_file, "w")
+    out.close()
+    for transfer_name, transfer in transfer_functions.items():
+        print_and_log("{}:".format(transfer_name), out_file)
+        print_and_log(transfer, out_file)    
+        print_and_log("DC Value of {}:".format(transfer_name), out_file)
+        dc_value = lambdify(s, transfer)(0)
+        print_and_log(dc_value, out_file)
+
+        if "Efficiency" in transfer_name:
+            D = sympy.symbols("D")
+            print_and_log("Solution for the duty cycle:", out_file)
+            print_and_log(sympy.solve(minStr("Vo", dc_value), D), out_file)
+
+        print_and_log("\n", out_file)
+
 def print_transfers(transfer_functions, out_file=""):
     '''
     Prints transfer functions of converter.
@@ -253,11 +275,18 @@ def print_transfers(transfer_functions, out_file=""):
     s = sympy.symbols("s")
 
     for transfer_name, transfer in transfer_functions.items():
-        print_and_log("{}:".format(transfer_name), out_file)
-        print_and_log(transfer, out_file)    
-        print_and_log("DC Value of {}:".format(transfer_name), out_file)
-        print_and_log(lambdify(s, transfer)(0), out_file)
-        print_and_log("\n", out_file)
+        print("{}:".format(transfer_name))
+        print(transfer)    
+        print("DC Value of {}:".format(transfer_name))
+        dc_value = lambdify(s, transfer)(0)
+        print(dc_value)
+
+        if "Efficiency" in transfer_name:
+            D = sympy.symbols("D")
+            print("Solution for the duty cycle:")
+            print(sympy.solve(minStr("Vo", dc_value), D))
+
+        print("\n")
 
 def evaluate_expression(expression, real_only=True):
     '''
@@ -280,13 +309,9 @@ def substitute_expression(expression, values):
     expression string.
     '''
     function = expression
-    universal_params = {"sqrt": "math.sqrt"}
 
     for k, v in values.items():
         function = re.sub(r"\b{}\b".format(k), "({})".format(str(v)), function)
-    
-    for k, v in universal_params.items():
-        function = re.sub(r"\b{}\b".format(k), str(v), function)
     
     return function
 
@@ -330,12 +355,21 @@ def generate_transfer_data(transfer_function, bode_x_range):
     
     return mags, phases
 
-def graph_transfers(transfer_functions, components):
+def generate_bode_range(start_freq, end_freq, num_points):
+    log_step_size = ((math.log10(end_frequency*1000)-math.log10(start_frequency))/num_points)
+    bode_x_range = [10**((i+1)*log_step_size) for i in range(num_points)]
+
+    return bode_x_range
+
+def graph_transfers(transfer_functions, components, end_freq=100):
     '''
     Graphs transfer functions of converter.
+    components (dict)
+    transfer_functions (dict)
+    end_freq (int in kHz)
     '''
     start_frequency = 1 #Hz
-    end_frequency = 100 #kHz
+    end_frequency = end_freq #kHz
     num_points = 5000
     log_step_size = ((math.log10(end_frequency*1000)-math.log10(start_frequency))/num_points)
     bode_x_range = [10**((i+1)*log_step_size) for i in range(num_points)]
@@ -372,3 +406,19 @@ def graph_transfers(transfer_functions, components):
         plot_idx += 1
 
     plt.show()
+
+def create_typeII_transfer():
+    #Control analysis for SMPS design, do not modify!!!!
+    #Type II compensator:
+    typeII = divStr(multStr(addStr("R22", "(1/(s*C21))"), "(1/(s*C23))"), addStr("R22", "(1/(s*C21))", "(1/(s*C23))"))
+    
+    return sympy.simplify(typeII)
+
+def create_typeIII_transfer():
+    #Control analysis for SMPS design, do not modify!!!!
+    #Type III compensator:
+    typeIII_num = divStr(multStr(addStr("(1/(s*Cf1))", "Rf2"), "(1/(s*Cf3))"), addStr("(1/(s*Cf1))", "Rf2", "(1/(s*Cf3))"))
+    typeIII_denom = divStr(multStr(addStr("(1/(s*Cf2))", "Rf1"), "Rf1"), addStr("(1/(s*Cf2))", "Rf3", "Rf1"))
+    typeIII = divStr(typeIII_num, typeIII_denom)
+
+    return sympy.simplify(typeIII)

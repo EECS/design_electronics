@@ -15,31 +15,33 @@ if __name__=="__main__":
     #Create path to output results of analysis.
     output_path = os.path.join(os.path.dirname(__file__), args["p"])
 
+    closed_parameters = find_circuit_params(args["p"], "General", "Closed")
+
+    if args["t"] == "1":
+        output_file += typeI_error_path+".txt"
+        output_pickle_file += typeI_error_path+".txt"
+        error_type = typeI_error_path
+        
+        #Sympy symbol returned.
+        error_transfer = load_pickled_transfers(typeI_error_path, "Compensator")
+    elif args["t"] == "2":
+        output_file += typeII_error_path+".txt"
+        output_pickle_file += typeII_error_path+".txt"
+        error_type = typeII_error_path
+
+        #Sympy symbol returned.
+        error_transfer = load_pickled_transfers(typeII_error_path, "Compensator")
+    elif args["t"] == "3":
+        output_file += typeIII_error_path+".txt"
+        output_pickle_file += typeIII_error_path+".txt"
+        error_type = typeIII_error_path
+        pass
+
     #Conduct general analysis if it is requested.
     if args["ga"]:
-
-        closed_parameters = find_circuit_params(args["p"], "General", "Closed")
         open_loop_transfers = load_pickled_transfers(args["p"], "Open")
         H = "H"
         VM = "VM"
-
-        if args["t"] == "1":
-            output_file += typeI_error_path+".txt"
-            output_pickle_file += typeI_error_path+".txt"
-
-            R21 = closed_parameters["R21"]
-            C21 = closed_parameters["C21"]
-            
-            #Sympy symbol returned.
-            error_transfer = load_pickled_transfers(typeI_error_path, "Compensator")
-        elif args["t"] == "2":
-            output_file += typeII_error_path+".txt"
-            output_pickle_file += typeII_error_path+".txt"
-            pass
-        elif args["t"] == "3":
-            output_file += typeIII_error_path+".txt"
-            output_pickle_file += typeIII_error_path+".txt"
-            pass
         
         plant_transfer = divStr(multStr(open_loop_transfers[control_to_output_string], error_transfer, H), VM)
         plant_transfer = sympy.simplify(plant_transfer)
@@ -52,8 +54,8 @@ if __name__=="__main__":
         closed_vg_vo_transfer = sympy.simplify(closed_vg_vo_transfer)
         closed_output_impedance = sympy.simplify(closed_output_impedance)
 
-        closed_transfer_functions = {closed_vref_vo_string: closed_vref_vo_transfer, closed_vg_vo_string: closed_vg_vo_transfer,
-                                    closed_output_impedance_string: closed_output_impedance}
+        closed_transfer_functions = {"Plant Transfer Function": plant_transfer, closed_vref_vo_string: closed_vref_vo_transfer,
+                                    closed_vg_vo_string: closed_vg_vo_transfer, closed_output_impedance_string: closed_output_impedance}
 
         print_transfers(closed_transfer_functions, os.path.join(output_path, output_file))
 
@@ -71,7 +73,7 @@ if __name__=="__main__":
         #else we need to import them from our previously conducted analysis.
         if not args["ga"]:
             open_loop_transfers = load_pickled_transfers(args["p"], "Open")
-            closed_transfer_functions = load_pickled_transfers(args["p"], "Closed")
+            closed_transfer_functions = load_pickled_transfers(args["p"], "Closed", error_type)
 
         #Convert transfer functions that are currently type string to sympy variables to be 
         #used for analysis.

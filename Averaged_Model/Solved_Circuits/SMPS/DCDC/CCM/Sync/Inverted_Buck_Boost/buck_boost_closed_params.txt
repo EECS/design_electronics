@@ -2,7 +2,7 @@
 R21 = R21
 C21 = (1/(s*C21))
 ## Parameters (Closed Loop Parameters Flag, resistors in Ohm, capacitor in nF) (## and then space is important)
-R21 = 10000
-C21 = 500e-9
+R21 = 1000
+C21 = 10e-9
 VM = 5
-H = 0.1
+H = 0.16

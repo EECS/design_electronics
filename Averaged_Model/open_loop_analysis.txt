@@ -1,0 +1,26 @@
+Control to Output Transfer Function:
+Rload*Vin*(C1*RC1*s + 1)/(Rload*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(D*RQ1 + L1*s + RL1))
+DC Value of Control to Output Transfer Function:
+Rload*Vin/(D*RQ1 + RL1 + Rload)
+
+
+Efficiency Transfer Function:
+Rload*(D*Vin + VD1*(D - 1))*(C1*RC1*s + 1)/(Rload*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(D*RQ1 + L1*s + RL1))
+DC Value of Efficiency Transfer Function:
+Rload*(D*Vin + VD1*(D - 1))/(D*RQ1 + RL1 + Rload)
+Solution for the duty cycle:
+[(RL1*Vo + Rload*VD1 + Rload*Vo)/(-RQ1*Vo + Rload*VD1 + Rload*Vin)]
+
+
+Output Impedance Transfer Function:
+Rload*(C1*RC1*s + 1)*(D*RQ1 + L1*s + RL1)/(Rload*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(D*RQ1 + L1*s + RL1))
+DC Value of Output Impedance Transfer Function:
+Rload*(D*RQ1 + RL1)/(D*RQ1 + RL1 + Rload)
+
+
+Vin to Vo Transfer Function:
+D*Rload*(C1*RC1*s + 1)/(Rload*(C1*RC1*s + 1) + (C1*s*(RC1 + Rload) + 1)*(D*RQ1 + L1*s + RL1))
+DC Value of Vin to Vo Transfer Function:
+D*Rload/(D*RQ1 + RL1 + Rload)
+
+
